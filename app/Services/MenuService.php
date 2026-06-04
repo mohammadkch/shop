@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Menu1ImageModel;
 use App\Models\Menu1Model;
 use App\Models\Menu2Model;
 use App\Models\Menu3Model;
-use App\Models\Menu1ImageModel;
 use Config\Database;
 
 class MenuService

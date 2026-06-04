@@ -26,11 +26,8 @@ class UrlFilter implements FilterInterface
             'auth/register' => 'ثبت نام | فروشگاه لباس',
         ];
 
-        $url = service('Url');
+        $url = service('url');
         $router = service('router');
-
-
-
 
         $controllerName = $router->controllerName();
         $className = str_replace('_', '-', strtolower(basename(str_replace('\\', '/', $controllerName))));

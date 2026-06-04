@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Menu1ImageModel;
 use CodeIgniter\Model;
 
 class Menu1ImageTypeModel extends Model

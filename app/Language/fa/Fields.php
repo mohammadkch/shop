@@ -28,6 +28,16 @@ return [
 
     'product_id'        => 'محصول',
 
+    // Menu1 fields
+    'slug'              => 'slug (لینک دستی)',
+    'menu1_image_type_id' => 'نوع تصویر',
+    'image_name'        => 'نام فایل تصویر',
+    'original_name'     => 'نام اصلی فایل',
+    'alt'               => 'متن جایگزین (alt)',
+    'menu_1_id'         => 'منو سطح 1',
+    'menu_2_id'         => 'منو سطح 2',
+    'menu_3_id'         => 'منو سطح 3',
+
     // Common fields
     'id'                => 'شناسه',
     'status'            => 'وضعیت',

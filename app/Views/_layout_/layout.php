@@ -23,7 +23,7 @@
 </head>
 
 <body class="relative bg-custom-light dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 transition-colors duration-300" >
-<?= $this->include('_layout_/partials/header') ?>
+<?= $this->include('_layout_/layout_header') ?>
 
 <?= $this->renderSection('content') ?>
 

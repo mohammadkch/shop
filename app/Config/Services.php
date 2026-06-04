@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Libraries\AuthenticationLib;
+use App\Libraries\AdminAuthLib;
 use App\Libraries\UrlLib;
 use App\Services\MenuService;
 use CodeIgniter\Config\BaseService;
@@ -33,18 +33,18 @@ class Services extends BaseService
      * }
      */
 
-    public static function Authentication($getShared = true)
+    public static function adminAuth($getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('Authentication');
+            return static::getSharedInstance('adminAuth');
         }
-        return new AuthenticationLib();
+        return new AdminAuthLib();
     }
 
-    public static function Url($getShared = true)
+    public static function url($getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('Url');
+            return static::getSharedInstance('url');
         }
         return new UrlLib();
     }

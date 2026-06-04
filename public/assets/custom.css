@@ -1,0 +1,72 @@
+/* راه حل فوتر چسبنده */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/* حذف فضای خالی اضافی فوتر در موبایل */
+footer .py-10 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+}
+
+footer .py-8 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+footer .py-2\.5 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+/* در موبایل فوتر جمع‌وجورتر */
+@media (max-width: 640px) {
+    footer .py-10 {
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+    }
+
+    footer .py-8 {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+
+    footer .container > div > div > .flex-wrap {
+        gap: 0.5rem !important;
+    }
+
+    footer .text-xs {
+        font-size: 0.65rem !important;
+    }
+}
+
+/* فقط کوچک‌تر شدن دکمه‌ها در موبایل */
+@media (max-width: 640px) {
+    .pagination-wrapper .px-3,
+    .pagination-wrapper li a,
+    .pagination-wrapper li span {
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+    }
+
+    .pagination-wrapper ul {
+        gap: 4px !important;
+    }
+}
+

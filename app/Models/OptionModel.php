@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\LabelModel;
 use CodeIgniter\Model;
 
 class OptionModel extends Model

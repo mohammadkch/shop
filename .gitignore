@@ -134,3 +134,9 @@ builds/
 
 # فایل لاگ خطاهای PHP
 php_errors.log
+
+# Ignore uploaded images but keep folders
+public/images/banners/*
+!public/images/banners/.gitkeep
+public/images/menus/*
+!public/images/menus/.gitkeep

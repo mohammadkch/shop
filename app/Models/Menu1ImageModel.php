@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Menu1ImageTypeModel;
+use App\Models\Menu1Model;
 use CodeIgniter\Model;
 
 class Menu1ImageModel extends Model
@@ -12,7 +14,7 @@ class Menu1ImageModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['menu_1_image_type_id', 'menu_1_id', 'image_name', 'original_name', 'alt', 'sort_order'];
+    protected $allowedFields = ['menu_1_image_type_id', 'menu_1_id', 'image_name', 'original_name', 'alt', 'sort_order', 'is_active'];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'int';

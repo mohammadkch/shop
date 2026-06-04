@@ -45,7 +45,7 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
     }
 
     $html .= '</ul>
-                        </div>
+                        </div> <!-- col-span-2 ends -->
                         <div class="col-span-10 bg-white dark:bg-zinc-900">';
 
     // رندر محتوای هر منو (سطح 2 و 3)
@@ -53,10 +53,51 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
         $displayClass = $index === 0 ? '' : 'hidden';
         $html .= '<div data-mega-target="' . $menu['id'] . '" class="grid ' . $displayClass . ' h-[400px] overflow-y-scroll grid-cols-8 gap-10 m-3">';
 
-        // دسته‌بندی منوهای سطح 2 به ستون‌ها (هر 4 آیتم یک ستون)
-        $chunkedChildren = array_chunk($menu['children'], 4);
+        // حداکثر آیتم در هر ستون (سطح 2 + سطح 3)
+        $maxItemsPerColumn = 14;
 
-        foreach ($chunkedChildren as $columnIndex => $columnItems) {
+        $columns = [];
+        $currentColumn = [];
+        $currentColumnItemCount = 0;
+
+        foreach ($menu['children'] as $menu2) {
+            // تعداد آیتم‌های این منوی سطح 2 (خودش + زیرمنوهایش)
+            $itemCount = 1 + count($menu2['children']);
+
+            // اگر آیتم فعلی به تنهایی از max بیشتر است
+            if ($itemCount > $maxItemsPerColumn) {
+                // ستون قبلی را ذخیره کن (اگر خالی نباشد)
+                if (!empty($currentColumn)) {
+                    $columns[] = $currentColumn;
+                    $currentColumn = [];
+                    $currentColumnItemCount = 0;
+                }
+                // این آیتم بزرگ را در یک ستون تنها قرار بده
+                $columns[] = [$menu2];
+                continue;
+            }
+
+            // اگر با اضافه شدن این آیتم از max رد می‌شویم
+            if ($currentColumnItemCount + $itemCount > $maxItemsPerColumn) {
+                // ستون فعلی را ذخیره کن
+                $columns[] = $currentColumn;
+                // شروع ستون جدید با آیتم فعلی
+                $currentColumn = [$menu2];
+                $currentColumnItemCount = $itemCount;
+            } else {
+                // به ستون فعلی اضافه کن
+                $currentColumn[] = $menu2;
+                $currentColumnItemCount += $itemCount;
+            }
+        }
+
+        // آخرین ستون را هم اضافه کن
+        if (!empty($currentColumn)) {
+            $columns[] = $currentColumn;
+        }
+
+        // رندر ستون‌ها
+        foreach ($columns as $columnItems) {
             $html .= '<div class="col-span-2">';
             foreach ($columnItems as $menu2) {
                 $html .= '<div class="mb-4">
@@ -80,7 +121,7 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
         $html .= '<div class="col-span-2">
                     <div class="me-4">';
         if (!empty($menu['image']) && !empty($menu['image']['image_name'])) {
-            $imagePath = base_url(). 'images/banners/' . $menu['image']['image_name'];
+            $imagePath = base_url() . 'images/banners/' . $menu['image']['image_name'];
             $html .= '<a href="' . base_url('category/' . $menu['slug']) . '">
                         <img src="' . $imagePath . '" loading="lazy" alt="' . htmlspecialchars($menu['image']['alt'] ?? $menu['name']) . '" class="w-full rounded-lg">
                       </a>';

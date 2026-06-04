@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Menu1Model;
 use CodeIgniter\Model;
 
 class Menu2Model extends Model

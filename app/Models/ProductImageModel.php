@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\ProductImageTypeModel;
+use App\Models\ProductModel;
 use CodeIgniter\Model;
 
 class ProductImageModel extends Model

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\OptionModel;
+use App\Models\ProductModel;
 use CodeIgniter\Model;
 
 class ProductOptionModel extends Model

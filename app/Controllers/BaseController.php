@@ -46,6 +46,7 @@ abstract class BaseController extends Controller
             $this->viewData['shopMenus'] = $menuService->getShopMenus();
         }
 
+
 //        $this->print_mine($this->viewData['shopMenus']);
 
         $this->viewData['assetsPath'] = base_url('assets/');

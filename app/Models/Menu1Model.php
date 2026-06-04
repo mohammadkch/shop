@@ -23,21 +23,18 @@ class Menu1Model extends Model
     {
         $builder = $this->db->table($this->table);
 
-        // فیلتر بر اساس id
         if (isset($where['id']) && !empty($where['id'])) {
-            $builder->where('id', $where['id']);
+            $builder->where('menu_1.id', $where['id']);
             unset($where['id']);
         }
 
-        // جستجو در name
         if (isset($where['name']) && !empty($where['name'])) {
-            $builder->like('name', $where['name']);
+            $builder->like('menu_1.name', $where['name']);
             unset($where['name']);
         }
 
-        // جستجو در slug
         if (isset($where['slug']) && !empty($where['slug'])) {
-            $builder->like('slug', $where['slug']);
+            $builder->like('menu_1.slug', $where['slug']);
             unset($where['slug']);
         }
 
@@ -46,26 +43,42 @@ class Menu1Model extends Model
             unset($where['is_active']);
         }
 
-        // شرط‌های معمولی
         if (!empty($where)) {
             $builder->where($where);
         }
 
+        // برای count، کوئری ساده بدون جوین
         if ($count) {
             return $builder->countAllResults();
         }
+
+        // برای دیتا، جوین و group by
+        $builder->select('
+        menu_1.*,
+        COUNT(menu_1_image.id) as images_count,
+        GROUP_CONCAT(
+            CONCAT_WS("|||", 
+                menu_1_image.id,
+                menu_1_image.menu_1_image_type_id,
+                menu_1_image.image_name,
+                menu_1_image.original_name,
+                menu_1_image.alt,
+                menu_1_image.sort_order,
+                menu_1_image_type.name,
+                menu_1_image_type.path
+            ) SEPARATOR ";;;"
+        ) as images_data
+    ');
+        $builder->join('menu_1_image', 'menu_1_image.menu_1_id = menu_1.id', 'left');
+        $builder->join('menu_1_image_type', 'menu_1_image_type.id = menu_1_image.menu_1_image_type_id', 'left');
+        $builder->groupBy('menu_1.id');
 
         if ($limit !== null) {
             $builder->limit($limit, $offset);
         }
 
-        $builder->orderBy("{$this->table}.created_at", 'DESC');
+        $builder->orderBy("menu_1.created_at", 'DESC');
 
         return $builder->get()->getResultArray();
-    }
-
-    public function menu2()
-    {
-        return $this->hasMany(Menu2Model::class, 'menu_1_id');
     }
 }

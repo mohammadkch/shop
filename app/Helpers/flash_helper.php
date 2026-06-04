@@ -5,18 +5,16 @@ use App\Config\FlashMessages;
 function setFlash($key, $customMessage = null)
 {
     $message = FlashMessages::get($key, $customMessage);
-    session()->setFlashdata('flash_type', $message['type']);
-    session()->setFlashdata('flash_title', $message['title']);
     session()->setFlashdata('flash_message', $message['message']);
+    session()->setFlashdata('flash_type', $message['type']);
 }
 
 function getFlash()
 {
-    if (session()->has('flash_type')) {
+    if (session()->has('flash_message')) {
         return [
-            'type' => session()->get('flash_type'),
-            'title' => session()->get('flash_title'),
-            'message' => session()->get('flash_message')
+            'message' => session()->get('flash_message'),
+            'type' => session()->get('flash_type')
         ];
     }
     return null;
@@ -26,6 +24,6 @@ function showFlash()
 {
     $flash = getFlash();
     if ($flash) {
-        echo "<script>showNotif('{$flash['type']}', '{$flash['title']}', '{$flash['message']}');</script>";
+        echo "<script>showNotification('" . addslashes($flash['message']) . "', '" . $flash['type'] . "');</script>";
     }
 }

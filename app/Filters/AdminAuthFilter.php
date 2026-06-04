@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Filters;
+
+use \CodeIgniter\Filters\FilterInterface;
+use \CodeIgniter\HTTP\RequestInterface;
+use \CodeIgniter\HTTP\ResponseInterface;
+
+
+class AdminAuthFilter implements FilterInterface
+{
+
+    public function before(RequestInterface $request, $arguments = null)
+    {
+        $titles = [
+            'home/index' => 'صفحه اصلی | فروشگاه لباس',
+            'product/index' => 'محصولات | فروشگاه لباس',
+            'product/show' => 'جزئیات محصول | فروشگاه لباس',
+            'category/index' => 'دسته‌بندی | فروشگاه لباس',
+            'cart/index' => 'سبد خرید | فروشگاه لباس',
+            'checkout/index' => 'تسویه حساب | فروشگاه لباس',
+            'blog/index' => 'وبلاگ | فروشگاه لباس',
+            'contact/index' => 'تماس با ما | فروشگاه لباس',
+            'about/index' => 'درباره ما | فروشگاه لباس',
+            'auth/login' => 'ورود | فروشگاه لباس',
+            'auth/register' => 'ثبت نام | فروشگاه لباس',
+            'admin/login' => 'ورود ادمین | فروشگاه لباس',
+        ];
+
+        $auth = service('adminAuth');
+        $router = service('router');
+
+        $controllerName = $router->controllerName();
+        $className = str_replace('_', '-', strtolower(basename(str_replace('\\', '/', $controllerName))));
+        $methodName = $router->methodName();
+        $fullRoute = $className . '/' . $methodName;
+        $title = $titles[$fullRoute] ?? 'فروشگاه لباس';
+
+        $auth->setControllerName($controllerName);
+        $auth->setClassName($className);
+        $auth->setMethodName($methodName);
+        $auth->setTitle($title);
+
+        if ($className == 'login') {
+            if ($auth->isLoggedIn() === true) {
+                return redirect()->to('admin/dashboard');
+            }
+        } else {
+            if ($auth->isLoggedIn() === false) {
+                return redirect()->to('admin/login');
+            }
+        }
+
+    }
+
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    {
+
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Filters\AdminAuthFilter;
 use App\Filters\UrlFilter;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
@@ -35,7 +36,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'parse_url'     => UrlFilter::class
+        'parse_url'     => UrlFilter::class,
+        'admin_auth'    => AdminAuthFilter::class
     ];
 
     /**
@@ -77,7 +79,6 @@ class Filters extends BaseFilters
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
-            'parse_url'
         ],
         'after' => [
             // 'honeypot',

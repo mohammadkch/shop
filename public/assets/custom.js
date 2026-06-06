@@ -85,7 +85,7 @@ function closeOffcanvas() {
 /**
  * صفحه‌بندی و جستجوی AJAX
  */
-function showPage(url = null, searchFormId = 'searchForm', resultContainerId = 'search-result') {
+function showPage(url = null, searchFormId = 'searchForm', resultContainerId = 'search-result', resetPage = false) {
     if (!url) {
         url = window.location.href;
     }
@@ -97,7 +97,6 @@ function showPage(url = null, searchFormId = 'searchForm', resultContainerId = '
     const formElement = document.getElementById(searchFormId);
     const formData = new FormData(formElement);
 
-    // فقط فیلدهایی که مقدار دارند رو نگه دار
     const filteredData = new FormData();
     for (let pair of formData.entries()) {
         if (pair[1].trim() !== '') {
@@ -105,7 +104,9 @@ function showPage(url = null, searchFormId = 'searchForm', resultContainerId = '
         }
     }
 
-    if (page) {
+    if (resetPage) {
+        filteredData.append('page', 1);
+    } else if (page) {
         filteredData.append('page', page);
     }
 
@@ -119,17 +120,25 @@ function showPage(url = null, searchFormId = 'searchForm', resultContainerId = '
         .then(response => response.text())
         .then(html => {
             document.getElementById(resultContainerId).innerHTML = html;
-            window.history.pushState({}, '', url);
+
+            let newUrl = baseUrl;
+            if (!resetPage && page && page != 1) {
+                newUrl = baseUrl + '?page=' + page;
+            }
+
+            window.history.pushState({}, '', newUrl);
+
             bindDeleteButtons();
             bindToggleActiveButtons();
         })
         .catch(error => console.error('Error:', error));
 }
+
 function resetFilters(searchFormId = 'searchForm') {
     document.querySelectorAll(`#${searchFormId} input, #${searchFormId} select`).forEach(input => {
         input.value = '';
     });
-    showPage();
+    showPage(null, searchFormId, 'search-result', true);  // resetPage = true
 }
 
 // ==================== Delete Modal Functions ====================
@@ -278,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // دکمه‌های جستجو
     const searchBtn = document.getElementById('searchBtn');
     const resetBtn = document.getElementById('resetBtn');
-    if (searchBtn) searchBtn.addEventListener('click', () => showPage());
+    if (searchBtn) searchBtn.addEventListener('click', () => showPage(null, 'searchForm', 'search-result', true));  // resetPage = true
     if (resetBtn) resetBtn.addEventListener('click', () => resetFilters());
 
     // اینتر در فیلدهای جستجو
@@ -358,7 +367,7 @@ function confirmToggleActive() {
 
     const newStatus = currentToggleStatus == '1' ? 0 : 1;
 
-    // تشخیص کنترلر از URL فعلی صفحه
+
     let currentUrl = window.location.pathname;
     let controller = '';
 

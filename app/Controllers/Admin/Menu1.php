@@ -164,21 +164,42 @@ class Menu1 extends BaseController
             return redirect()->to('admin/menu1');
         }
 
-        // دریافت تصاویر موجود این منو
         $existingImages = $menu1ImageModel
             ->select('menu_1_image.*, menu_1_image_type.name as type_name')
             ->join('menu_1_image_type', 'menu_1_image_type.id = menu_1_image.menu_1_image_type_id')
             ->where('menu_1_image.menu_1_id', $id)
+            ->orderBy('menu_1_image.is_active', 'DESC')  // اول تصاویر فعال
+            ->orderBy('menu_1_image.created_at', 'DESC')
             ->findAll();
 
-        // گروه‌بندی تصاویر بر اساس type_id برای استفاده در view
+        // گروه‌بندی صحیح - همه تصاویر را نگه دار
         $groupedImages = [];
         foreach ($existingImages as $img) {
-            $groupedImages[$img['menu_1_image_type_id']] = $img;
+            $typeId = $img['menu_1_image_type_id'];
+            if (!isset($groupedImages[$typeId])) {
+                $groupedImages[$typeId] = [];
+            }
+            $groupedImages[$typeId][] = $img;  // آرایه‌ای از تصاویر
         }
 
+        // فقط تصویر فعال را برای نمایش در پیش‌نمایش انتخاب کن
+        $activeImages = [];
+        foreach ($groupedImages as $typeId => $images) {
+            foreach ($images as $img) {
+                if ($img['is_active'] == 1) {
+                    $activeImages[$typeId] = $img;
+                    break;
+                }
+            }
+            // اگر تصویر فعال نبود، اولین تصویر را بگیر
+            if (!isset($activeImages[$typeId]) && !empty($images)) {
+                $activeImages[$typeId] = $images[0];
+            }
+        }
+
+        $this->viewData['groupedImages'] = $activeImages;  // فقط تصاویر فعال برای پیش‌نمایش
+        $this->viewData['allImages'] = $groupedImages;     // همه تصاویر (اگر بعداً خواستید لیست بدهید)
         $this->viewData['imageTypes'] = $imageTypes;
-        $this->viewData['groupedImages'] = $groupedImages;
         $this->viewData['form_action'] = 'admin/menu1/edit/' . $id . '/handle';
         $this->viewData['edit_row'] = $edit_row;
         $this->viewData['inputs'] = [
@@ -290,8 +311,31 @@ class Menu1 extends BaseController
         }
 
         foreach ($imageTypes as $type) {
-            $file = $this->request->getFile('image_' . $type['id']);
+            // دریافت alt از POST
+            $newAlt = $this->request->getPost('alt_' . $type['id']);
 
+            // پیدا کردن تصویر فعال فعلی برای این تایپ
+            $existingImage = $menu1ImageModel
+                ->where('menu_1_id', $menuId)
+                ->where('menu_1_image_type_id', $type['id'])
+                ->where('is_active', 1)
+                ->first();
+
+            // اگر تصویر فعال وجود دارد و alt تغییر کرده، آپدیت کن
+            if ($existingImage) {
+                // توجه: $newAlt می‌تواند رشته خالی هم باشد (مجاز است)
+                if ($newAlt !== null && $newAlt != $existingImage['alt']) {
+                    $updateAltResult = $menu1ImageModel->update($existingImage['id'], ['alt' => $newAlt]);
+                    // دیباگ: لاگ کن ببینیم آپدیت شده یا نه
+                    log_message('debug', 'Updating alt for type_id ' . $type['id'] . ': old="' . $existingImage['alt'] . '", new="' . $newAlt . '", result=' . ($updateAltResult ? 'success' : 'failed'));
+                }
+            } else {
+                // اگر تصویر فعالی وجود ندارد، پیام لاگ بده
+                log_message('debug', 'No active image found for menu_id ' . $menuId . ', type_id ' . $type['id']);
+            }
+
+            // پردازش آپلود فایل جدید
+            $file = $this->request->getFile('image_' . $type['id']);
             // اگه فایلی آپلود شده
             if ($file && $file->getError() !== UPLOAD_ERR_NO_FILE) {
                 if (!$file->isValid()) {

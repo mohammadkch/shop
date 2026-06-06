@@ -68,6 +68,26 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->post('menu2-image', 'Menu2Image::index');
     $routes->delete('menu2-image/delete/(:num)', 'Menu2Image::delete/$1');
     $routes->post('menu2-image/toggleActive/(:num)', 'Menu2Image::toggleActive/$1');
+
+    // menu_3
+    $routes->get('menu3', 'Menu3::index');
+    $routes->post('menu3', 'Menu3::index');
+    $routes->get('menu3/create', 'Menu3::create');
+    $routes->post('menu3/create/handle', 'Menu3::create/handle');
+    $routes->get('menu3/edit/(:num)', 'Menu3::edit/$1');
+    $routes->post('menu3/edit/(:num)/handle', 'Menu3::edit/$1/handle');
+    $routes->delete('menu3/delete/(:num)', 'Menu3::delete/$1');
+    $routes->post('menu3/toggleActive/(:num)', 'Menu3::toggleActive/$1');
+    $routes->get('menu3/getAllMenu2', 'Menu3::getAllMenu2');
+    $routes->get('menu3/getMenu2ByMenu1/(:num)', 'Menu3::getMenu2ByMenu1/$1');
+
+    // menu_3_image
+    $routes->get('menu3-image', 'Menu3Image::index');
+    $routes->post('menu3-image', 'Menu3Image::index');
+    $routes->delete('menu3-image/delete/(:num)', 'Menu3Image::delete/$1');
+    $routes->post('menu3-image/toggleActive/(:num)', 'Menu3Image::toggleActive/$1');
+    $routes->get('menu3-image/getMenu2ByMenu1/(:num)', 'Menu3Image::getMenu2ByMenu1/$1');
+    $routes->get('menu3-image/getMenu3ByMenu2/(:num)', 'Menu3Image::getMenu3ByMenu2/$1');
 });
 
 

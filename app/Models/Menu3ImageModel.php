@@ -14,7 +14,7 @@ class Menu3ImageModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['menu_3_image_type_id', 'menu_3_id', 'image_name', 'original_name', 'alt', 'sort_order'];
+    protected $allowedFields    = ['menu_3_image_type_id', 'menu_3_id', 'image_name', 'original_name', 'alt', 'sort_order', 'is_active'];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'int';
@@ -38,6 +38,24 @@ class Menu3ImageModel extends Model
         if (isset($where['menu_3_id']) && $where['menu_3_id'] !== '') {
             $builder->where('menu_3_image.menu_3_id', $where['menu_3_id']);
             unset($where['menu_3_id']);
+        }
+
+        if (isset($where['menu_3_image.is_active']) && $where['menu_3_image.is_active'] !== '') {
+            $builder->where('menu_3_image.is_active', $where['menu_3_image.is_active']);
+            unset($where['menu_3_image.is_active']);
+        }
+
+        if (isset($where['menu_3_image.menu_3_id IN'])) {
+            $inValue = $where['menu_3_image.menu_3_id IN'];
+            if (is_array($inValue)) {
+                $builder->whereIn('menu_3_image.menu_3_id', $inValue);
+            } else {
+                // حذف پرانتزهای اضافی و تبدیل به آرایه
+                $cleanValue = trim($inValue, '()');
+                $ids = explode(',', $cleanValue);
+                $builder->whereIn('menu_3_image.menu_3_id', $ids);
+            }
+            unset($where['menu_3_image.menu_3_id IN']);
         }
 
         if (isset($where['alt']) && !empty($where['alt'])) {
@@ -65,10 +83,14 @@ class Menu3ImageModel extends Model
             menu_3_image_type.height,
             menu_3_image_type.path,
             menu_3.name as menu_name,
-            menu_3.slug as menu_slug
+            menu_3.slug as menu_slug,
+            menu_2.name as menu_2_name,
+            menu_1.name as menu_1_name
         ');
         $builder->join('menu_3_image_type', 'menu_3_image_type.id = menu_3_image.menu_3_image_type_id', 'left');
         $builder->join('menu_3', 'menu_3.id = menu_3_image.menu_3_id', 'left');
+        $builder->join('menu_2', 'menu_2.id = menu_3.menu_2_id', 'left');
+        $builder->join('menu_1', 'menu_1.id = menu_2.menu_1_id', 'left');
 
         if ($limit !== null) {
             $builder->limit($limit, $offset);

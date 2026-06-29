@@ -17,81 +17,55 @@
 
 <!-- SLIDER SECTION -->
 <section class="py-5">
-    <h2 class="sr-only">اسلایدر فروشگاه </h2>
-    <!-- for seo -->
+    <h2 class="sr-only">اسلایدر فروشگاه</h2>
     <div class="container">
-        <!-- Main slider -->
         <div class="w-full overflow-hidden">
             <div class="swiper max-w-[1920px] mx-auto !relative default-carousel swiper-container"
                  aria-label="اسلایدر فروشگاه">
                 <div class="swiper-wrapper" style="padding-bottom: 0 !important;">
-                    <div class="swiper-slide" role="group" aria-roledescription="slide">
-                        <a href="#" aria-label="تصویر 1 از اسلایدر فروشگاه">
-                            <div class="lg:h-90 h-50 flex justify-center items-center">
-                                <img src="<?= $assetsPath ?>images/slider/landing/laptop-1.webp"
-                                     class="h-full object-cover w-full rounded-lg" loading="lazy"
-                                     alt="تصویر تبلیغاتی اسلایدر فروشگاه - محصول ویژه 1">
+                    <?php if (!empty($sliders)): ?>
+                        <?php foreach ($sliders as $slider): ?>
+                            <div class="swiper-slide" role="group" aria-roledescription="slide">
+                                <a href="<?= !empty($slider['link']) ? esc($slider['link']) : '#' ?>"
+                                   aria-label="<?= esc($slider['alt'] ?? 'اسلاید فروشگاه') ?>">
+                                    <div class="lg:h-90 h-50 flex justify-center items-center">
+                                        <img src="<?= $slider['image'] ?>"
+                                             class="h-full object-cover w-full rounded-lg" loading="lazy"
+                                             alt="<?= esc($slider['alt'] ?? 'تصویر اسلایدر') ?>">
+                                    </div>
+                                </a>
                             </div>
-                        </a>
-                    </div>
-                    <div class="swiper-slide" role="group" aria-roledescription="slide">
-                        <a href="#" aria-label="تصویر 2 از اسلایدر فروشگاه">
-                            <div class="lg:h-90 h-50 flex justify-center items-center">
-                                <img src="<?= $assetsPath ?>images/slider/landing/laptop-2.webp"
-                                     class="h-full object-cover w-full rounded-lg" loading="lazy"
-                                     alt="تصویر تبلیغاتی اسلایدر فروشگاه - محصول ویژه 2">
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <!-- اسلاید پیش‌فرض در صورت نبود دیتا -->
+                        <div class="swiper-slide">
+                            <div class="lg:h-90 h-50 flex justify-center items-center bg-gray-200 dark:bg-gray-700 rounded-lg">
+                                <span class="text-gray-500 dark:text-gray-400">اسلایدری موجود نیست</span>
                             </div>
-                        </a>
-                    </div>
-                    <div class="swiper-slide" role="group" aria-roledescription="slide">
-                        <a href="#" aria-label="تصویر 3 از اسلایدر فروشگاه">
-                            <div class="lg:h-90 h-50 flex justify-center items-center">
-                                <img src="<?= $assetsPath ?>images/slider/landing/laptop-3.webp"
-                                     class="h-full object-cover w-full rounded-lg" loading="lazy"
-                                     alt="تصویر تبلیغاتی اسلایدر فروشگاه - محصول ویژه 3">
-                            </div>
-                        </a>
-                    </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <!-- prev button -->
+                <!-- دکمه‌های قبلی و بعدی -->
                 <div class="absolute lg:block hidden cursor-pointer custom-swiper-prev top-1/2 -translate-y-1/2 start-0 !z-30">
-                    <svg width="83" height="285" viewBox="0 0 83 285" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.14"
-                              d="M80.0469 7.4043V284.222V251.904C80.0469 236.962 74.4721 222.559 64.4132 211.51L30.6937 174.474C13.323 155.395 13.323 126.231 30.6937 107.152L64.4132 70.116C74.4721 59.0678 80.0469 44.664 80.0469 29.7226V7.4043Z"
-                              fill="black"></path>
-                        <path
-                                d="M82.0469 0.404297V277.222V244.904C82.0469 229.962 76.4721 215.559 66.4132 204.51L32.6937 167.474C15.323 148.395 15.323 119.231 32.6937 100.152L66.4132 63.116C76.4721 52.0678 82.0469 37.664 82.0469 22.7226V0.404297Z"
-                                fill="white"></path>
-                        <path
-                                d="M55.1719 141.413L60.6052 135.98C61.2469 135.338 61.2469 134.288 60.6052 133.646L55.1719 128.213"
-                                stroke="#C3CDDC" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round"
-                                stroke-linejoin="round"></path>
+                    <svg width="83" height="285" viewBox="0 0 83 285" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- کد SVG قبلی -->
+                        <path opacity="0.14" d="M80.0469 7.4043V284.222V251.904C80.0469 236.962 74.4721 222.559 64.4132 211.51L30.6937 174.474C13.323 155.395 13.323 126.231 30.6937 107.152L64.4132 70.116C74.4721 59.0678 80.0469 44.664 80.0469 29.7226V7.4043Z" fill="black"></path>
+                        <path d="M82.0469 0.404297V277.222V244.904C82.0469 229.962 76.4721 215.559 66.4132 204.51L32.6937 167.474C15.323 148.395 15.323 119.231 32.6937 100.152L66.4132 63.116C76.4721 52.0678 82.0469 37.664 82.0469 22.7226V0.404297Z" fill="white"></path>
+                        <path d="M55.1719 141.413L60.6052 135.98C61.2469 135.338 61.2469 134.288 60.6052 133.646L55.1719 128.213" stroke="#C3CDDC" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </div>
-                <!-- next button -->
-                <div class="absolute lg:block hidden cursor-pointer  custom-swiper-next top-1/2 -translate-y-1/2 end-0 !z-30">
-                    <svg width="83" height="285" viewBox="0 0 83 285" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.14"
-                              d="M2.80469 7.5332V284.351V252.033C2.80469 237.091 8.37946 222.688 18.4383 211.639L52.1578 174.603C69.5286 155.524 69.5286 126.36 52.1578 107.281L18.4383 70.2449C8.37946 59.1967 2.80469 44.7929 2.80469 29.8515V7.5332Z"
-                              fill="black"></path>
-                        <path
-                                d="M0.804688 0.533203V277.351V245.033C0.804688 230.091 6.37946 215.688 16.4383 204.639L50.1578 167.603C67.5286 148.524 67.5286 119.36 50.1578 100.281L16.4383 63.2449C6.37946 52.1967 0.804688 37.7929 0.804688 22.8515V0.533203Z"
-                                fill="white"></path>
-                        <path
-                                d="M27.6797 141.542L22.2464 136.108C21.6047 135.467 21.6047 134.417 22.2464 133.775L27.6797 128.342"
-                                stroke="#C3CDDC" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round"
-                                stroke-linejoin="round"></path>
+                <div class="absolute lg:block hidden cursor-pointer custom-swiper-next top-1/2 -translate-y-1/2 end-0 !z-30">
+                    <svg width="83" height="285" viewBox="0 0 83 285" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.14" d="M2.80469 7.5332V284.351V252.033C2.80469 237.091 8.37946 222.688 18.4383 211.639L52.1578 174.603C69.5286 155.524 69.5286 126.36 52.1578 107.281L18.4383 70.2449C8.37946 59.1967 2.80469 44.7929 2.80469 29.8515V7.5332Z" fill="black"></path>
+                        <path d="M0.804688 0.533203V277.351V245.033C0.804688 230.091 6.37946 215.688 16.4383 204.639L50.1578 167.603C67.5286 148.524 67.5286 119.36 50.1578 100.281L16.4383 63.2449C6.37946 52.1967 0.804688 37.7929 0.804688 22.8515V0.533203Z" fill="white"></path>
+                        <path d="M27.6797 141.542L22.2464 136.108C21.6047 135.467 21.6047 134.417 22.2464 133.775L27.6797 128.342" stroke="#C3CDDC" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </div>
-                <!-- pagination -->
                 <div class="swiper-pagination"></div>
             </div>
         </div>
     </div>
 </section>
-<!-- END SLIDER SECTION -->
 
 <!-- START AMAZING SECTION -->
 <section class="py-5">
@@ -582,227 +556,50 @@
 <!-- END AMAZING SECTION -->
 
 <!-- START CATEGORY SECTION -->
-<section class="py-5">
+<?php if (!empty($categories)): ?>
+    <section class="py-5">
+        <h2 class="sr-only">دسته بندی های فروشگاه</h2>
 
-    <h2 class="sr-only">محصولات شگفت انگیز فروشگاه</h2>
-
-    <div class="container">
-        <!-- header -->
-        <header class="flex flex-wrap mb-2 justify-between items-center">
-            <!-- title -->
-            <h2 class="font-bold text-lg mb-4 relative pb-4 text-gray-900 dark:text-gray-200
+        <div class="container">
+            <!-- header -->
+            <header class="flex flex-wrap mb-2 justify-between items-center">
+                <h2 class="font-bold text-lg mb-4 relative pb-4 text-gray-900 dark:text-gray-200
                 before:absolute before:start-0 before:bottom-0 before:size-2 before:rounded-full before:bg-primary
                 after:absolute after:w-40 after:h-2 after:bottom-0 after:start-4 after:bg-primary after:rounded-lg">
-                دسته بندی های فروشگاه
-            </h2>
-            <!-- link -->
-            <a href="#"
-               class="text-xs font-medium bg-primary text-white py-1.5 px-4 rounded-lg hover:bg-primary/90 active:scale-95 transition duration-200 shadow-sm hover:shadow dark:bg-primary/80 dark:hover:bg-primary/60 dark:text-white">
-                مشاهده همه
-            </a>
-        </header>
-        <!-- categories swiper -->
-        <div class="swiper free-mode">
-            <div class="swiper-wrapper" style="padding: 20px 0 !important;">
+                    دسته بندی های فروشگاه
+                </h2>
+                <a href="<?= site_url() ?>"
+                   class="text-xs font-medium bg-primary text-white py-1.5 px-4 rounded-lg hover:bg-primary/90 active:scale-95 transition duration-200 shadow-sm hover:shadow dark:bg-primary/80 dark:hover:bg-primary/60 dark:text-white">
+                    مشاهده همه
+                </a>
+            </header>
 
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/laptop.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                لپتاپ
-                            </h3>
+            <!-- categories swiper -->
+            <div class="swiper free-mode">
+                <div class="swiper-wrapper" style="padding: 20px 0 !important;">
+                    <?php foreach ($categories as $category): ?>
+                        <div class="swiper-slide !size-40">
+                            <a href="<?= $category['link'] ?>">
+                                <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
+                                    <figure>
+                                        <?php if (!empty($category['image'])): ?>
+                                            <img src="<?= $category['image'] ?>" alt="<?= esc($category['name']) ?>" class="w-20 h-20 object-contain dark:invert-0">
+                                        <?php else: ?>
+                                            <img src="<?= $assetsPath ?>images/category/default.png" alt="<?= esc($category['name']) ?>" class="w-20 h-20 object-contain dark:invert-0">
+                                        <?php endif; ?>
+                                    </figure>
+                                    <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
+                                        <?= esc($category['name']) ?>
+                                    </h3>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                    <?php endforeach; ?>
                 </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/araeshi.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                آرایشی
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/ashpazkhane.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                آشپزخانه
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/lavazem-tahrir.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                لوازم تحریر
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/mobile.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                موبایل
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/poshak.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                پوشاک
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/laptop.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                لپتاپ
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/araeshi.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                آرایشی
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/ashpazkhane.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                آشپزخانه
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/lavazem-tahrir.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                لوازم تحریر
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/mobile.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                موبایل
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <!-- item -->
-                <div class="swiper-slide !size-40">
-                    <a href="">
-                        <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
-                            <!-- thumbnail -->
-                            <figure>
-                                <img src="<?= $assetsPath ?>images/category/poshak.png" alt="" class="w-20 dark:invert-0">
-                            </figure>
-
-                            <!-- title -->
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">
-                                پوشاک
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-
             </div>
         </div>
-    </div>
-
-</section>
+    </section>
+<?php endif; ?>
 <!-- END CATEGORY SECTION -->
 
 <!-- START BANNER SECTION -->

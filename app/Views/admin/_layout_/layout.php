@@ -21,12 +21,12 @@
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>css/app.css">
     <!-- CUSTOM STYLES -->
-    <link rel="stylesheet" href="<?= $assetsPath ?>custom.css">
+    <link rel="stylesheet" href="<?= $assetsPath ?>custom/admin.css">
     <!-- CUSTOM STYLES END -->
 </head>
 
 <!-- FLASH MESSAGES -->
-<script src="<?= $assetsPath ?>custom.js"></script>
+<script src="<?= $assetsPath ?>custom/admin.js"></script>
 <!-- END FLASH MESSAGES -->
 
 <body class="relative bg-custom-light dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 transition-colors duration-300">

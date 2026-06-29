@@ -40,19 +40,27 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
         helper('html');
         $this->urlLib = service('Url');
+        $menuService = service('menuService');
+
+        $scriptMap = [
+            'category' => ['category'],
+            'product'  => ['product', 'cart'],
+            'cart'     => ['cart'],
+            'home'     => ['home'],
+        ];
 
         if (!$request->isAJAX()) {
-            $menuService = service('menuService');
             $this->viewData['shopMenus'] = $menuService->getShopMenus();
         }
 
-
-//        $this->print_mine($this->viewData['shopMenus']);
-
         $this->viewData['assetsPath'] = base_url('assets/');
+        $this->viewData['mediaPath'] = base_url('images/');
+
+        $className = $this->urlLib->getClassName();
+        $this->viewData['controllerScripts'] = $scriptMap[$className] ?? [];
 
         $this->viewData['className'] = $this->urlLib->getClassName();
-        $this->viewData['controllerName'] = $this->urlLib->getControllerName() ;
+        $this->viewData['controllerName'] = $this->urlLib->getControllerName();
         $this->viewData['methodName'] = $this->urlLib->getMethodName();
         $this->viewData['title'] = $this->urlLib->getTitle();
     }
@@ -62,10 +70,5 @@ abstract class BaseController extends Controller
         setFlash($key, $customMessage);
     }
 
-    protected function print_mine($data)
-    {
-        echo '<pre>';
-        print_r($data);
-        exit();
-    }
+
 }

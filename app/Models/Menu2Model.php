@@ -13,7 +13,7 @@ class Menu2Model extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['menu_1_id', 'name', 'slug', 'is_active'];
+    protected $allowedFields = ['menu_1_id', 'name', 'slug', 'is_active', 'description'];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'int';

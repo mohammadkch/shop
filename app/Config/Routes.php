@@ -19,7 +19,23 @@ $routes->get('/dbtest', function () {
 // --------------------
 
 $routes->group('', ['filter' => 'parse_url'], function ($routes) {
+
     $routes->get('/', 'Home::index');
+    $routes->get('home', 'Home::index');
+    $routes->get('product/(:any)', 'Product::show/$1');
+
+    // بعد روت‌های category (به ترتیب از طولانی‌ترین به کوتاه‌ترین)
+    $routes->get('category/(:any)/(:any)/(:any)', 'Category::index/$1/$2/$3');
+    $routes->get('category/(:any)/(:any)', 'Category::index/$1/$2');
+    $routes->get('category/(:any)', 'Category::index/$1');
+
+    // Cart routes
+    $routes->get('cart', 'Cart::index');
+    $routes->post('cart/add', 'Cart::add');
+    $routes->post('cart/remove', 'Cart::remove');
+    $routes->post('cart/update', 'Cart::update');
+    $routes->get('cart/count', 'Cart::count');
+    $routes->get('cart/offcanvas', 'Cart::offcanvas');
 });
 
 // --------------------

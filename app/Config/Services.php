@@ -57,4 +57,45 @@ class Services extends BaseService
 
         return new MenuService();
     }
+
+    public static function productService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('productService');
+        }
+        return new \App\Services\ProductService();
+    }
+
+    public static function cartService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('cartService');
+        }
+        return new \App\Services\CartService();
+    }
+
+
+    public static function breadcrumbService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('breadcrumbService');
+        }
+        return new \App\Services\BreadcrumbService();
+    }
+
+    public static function categoryService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('categoryService');
+        }
+        return new \App\Services\CategoryService();
+    }
+
+    public static function homeService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('homeService');
+        }
+        return new \App\Services\HomeService();
+    }
 }

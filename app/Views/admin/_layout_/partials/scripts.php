@@ -112,6 +112,9 @@
             link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
         },
     ];
+    // if (document.getElementById('stories-container')) {
+    //     new StoryPlayer('stories-container', stories);
+    // }
 
     // new StoryPlayer('stories-container', stories); #comment by mammad
 </script>

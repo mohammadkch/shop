@@ -23,12 +23,12 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
                         <div class="col-span-2 h-[400px] overflow-y-scroll border-e border-gray-400">
                             <ul class="my-2 space-y-1">';
 
-    // رندر منوهای سطح 1 (سمت راست مگامنو)
+    // رندر منوهای سطح 1 (سمت راست مگامنو) - با لینک
     foreach ($shopMenus as $index => $menu) {
         $menuId = $menu['id'];
         $activeClass = $index === 0 ? 'bg-gray-200 dark:bg-[#1f242c]' : '';
         $html .= '<li data-mega-id="' . $menuId . '" class="px-4 w-full rounded-lg border-opacity-0 hover:border-opacity-100 mega-menu-li dark:bg-custom-dark hover:bg-gray-200 dark:hover:bg-[#1f242c] text-gray-800 dark:text-gray-200 transition-colors duration-200 ' . $activeClass . '">
-                    <a href="javascript:void(0)" class="flex items-center justify-between py-3">
+                    <a href="' . site_url('category/' . $menu['slug']) . '" class="flex items-center justify-between py-3">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm11 1H6v8l4-2 4 2V6z" clip-rule="evenodd"/>
@@ -53,45 +53,34 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
         $displayClass = $index === 0 ? '' : 'hidden';
         $html .= '<div data-mega-target="' . $menu['id'] . '" class="grid ' . $displayClass . ' h-[400px] overflow-y-scroll grid-cols-8 gap-10 m-3">';
 
-        // حداکثر آیتم در هر ستون (سطح 2 + سطح 3)
         $maxItemsPerColumn = 14;
-
         $columns = [];
         $currentColumn = [];
         $currentColumnItemCount = 0;
 
         foreach ($menu['children'] as $menu2) {
-            // تعداد آیتم‌های این منوی سطح 2 (خودش + زیرمنوهایش)
             $itemCount = 1 + count($menu2['children']);
 
-            // اگر آیتم فعلی به تنهایی از max بیشتر است
             if ($itemCount > $maxItemsPerColumn) {
-                // ستون قبلی را ذخیره کن (اگر خالی نباشد)
                 if (!empty($currentColumn)) {
                     $columns[] = $currentColumn;
                     $currentColumn = [];
                     $currentColumnItemCount = 0;
                 }
-                // این آیتم بزرگ را در یک ستون تنها قرار بده
                 $columns[] = [$menu2];
                 continue;
             }
 
-            // اگر با اضافه شدن این آیتم از max رد می‌شویم
             if ($currentColumnItemCount + $itemCount > $maxItemsPerColumn) {
-                // ستون فعلی را ذخیره کن
                 $columns[] = $currentColumn;
-                // شروع ستون جدید با آیتم فعلی
                 $currentColumn = [$menu2];
                 $currentColumnItemCount = $itemCount;
             } else {
-                // به ستون فعلی اضافه کن
                 $currentColumn[] = $menu2;
                 $currentColumnItemCount += $itemCount;
             }
         }
 
-        // آخرین ستون را هم اضافه کن
         if (!empty($currentColumn)) {
             $columns[] = $currentColumn;
         }
@@ -100,14 +89,19 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
         foreach ($columns as $columnItems) {
             $html .= '<div class="col-span-2">';
             foreach ($columnItems as $menu2) {
+                // ====== منوی سطح ۲ با لینک ======
+                $menu2Link = site_url('category/' . $menu2['menu_1_slug'] . '/' . $menu2['slug']);
                 $html .= '<div class="mb-4">
-                            <p class="text-sm font-bold">' . htmlspecialchars($menu2['name']) . '</p>
+                            <a href="' . $menu2Link . '" class="text-sm font-bold hover:text-primary transition block">
+                                ' . htmlspecialchars($menu2['name']) . '
+                            </a>
                             <div class="mt-3 space-y-4">';
 
-                // منوهای سطح 3
+                // منوهای سطح 3 با لینک کامل
                 if (!empty($menu2['children'])) {
                     foreach ($menu2['children'] as $menu3) {
-                        $html .= '<a href="' . base_url('category/' . $menu3['slug']) . '" class="text-xs text-gray-600 block hover:text-primary dark:text-gray-300">' . htmlspecialchars($menu3['name']) . '</a>';
+                        $fullSlug = $menu3['menu_1_slug'] . '/' . $menu3['menu_2_slug'] . '/' . $menu3['slug'];
+                        $html .= '<a href="' . site_url('category/' . $fullSlug) . '" class="text-xs text-gray-600 block hover:text-primary dark:text-gray-300">' . htmlspecialchars($menu3['name']) . '</a>';
                     }
                 }
 
@@ -117,17 +111,16 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
             $html .= '</div>';
         }
 
-        // ستون آخر برای بنر (عکس منوی سطح 1)
+        // ستون آخر برای بنر
         $html .= '<div class="col-span-2">
                     <div class="me-4">';
         if (!empty($menu['image']) && !empty($menu['image']['image_name'])) {
             $imagePath = base_url() . 'images/banners/' . $menu['image']['image_name'];
-            $html .= '<a href="' . base_url('category/' . $menu['slug']) . '">
+            $html .= '<a href="' . site_url('category/' . $menu['slug']) . '">
                         <img src="' . $imagePath . '" loading="lazy" alt="' . htmlspecialchars($menu['image']['alt'] ?? $menu['name']) . '" class="w-full rounded-lg">
                       </a>';
         } else {
-            // تصویر پیش‌فرض
-            $html .= '<a href="' . base_url('category/' . $menu['slug']) . '">
+            $html .= '<a href="' . site_url('category/' . $menu['slug']) . '">
                         <img src="' . $assetsPath . 'images/banner/banner-placeholder.jpg" loading="lazy" alt="' . htmlspecialchars($menu['name']) . '" class="w-full rounded-lg">
                       </a>';
         }

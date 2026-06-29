@@ -17,7 +17,7 @@
             </div>
             <!-- logo -->
             <div class="lg:col-span-2 lg:order-1 order-2 col-span-4 w-full">
-                <a href="index.html">
+                <a href="<?= site_url('/') ?>">
                     <div class="xl:text-start text-center flex items-center xl:justify-start justify-center">
                         <img class="h-12 dark:invert" src="<?= $assetsPath ?>images/logo.png" loading="lazy" alt="">
                     </div>
@@ -52,9 +52,10 @@
             </div>
             <!-- login and basket and favorite and dark mode -->
             <div class="lg:col-span-4 col-span-4 order-3 w-full">
-                <div class="flex items-baseline justify-end">
+                <!-- تغییر از items-baseline به items-center -->
+                <div class="flex items-center justify-end">  <!-- ← این خط تغییر کرده -->
                     <!-- basket and call and darkmode -->
-                    <div class="flex items-baseline md:me-5 me-2">
+                    <div class="flex items-center md:me-5 me-2"> <!-- ← این خط هم اضافه شد -->
                         <!-- heart -->
                         <a href="" class="lg:block hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -64,15 +65,14 @@
                             </svg>
                         </a>
                         <!-- basket -->
-                        <div onclick="toggleOffcanvas('offcanvas-left')" class="relative md:ms-5 ms-2 flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
-                            </svg>
-                            <span
-                                class="size-4 text-sm -top-2 -start-2 absolute bg-secondary dark:bg-primary-400 text-white dark:text-gray-100 rounded-lg text-center shadow-sm dark:shadow-[0_0_4px_rgba(255,255,255,0.2)] transition-colors duration-300">2</span>
-                        </div>
+                        <?php if (($className ?? '') !== 'cart'): ?>
+                            <div onclick="toggleOffcanvas('offcanvas-left')" class="relative md:ms-5 ms-2 flex cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+                                </svg>
+                                <span id="cart-badge" class="size-4 text-sm -top-2 -start-2 absolute bg-secondary dark:bg-primary-400 text-white dark:text-gray-100 rounded-lg text-center shadow-sm dark:shadow-[0_0_4px_rgba(255,255,255,0.2)] transition-colors duration-300">0</span>
+                            </div>
+                        <?php endif; ?>
                         <!-- dark mode -->
                         <div class="md:ms-5 ms-2">
                             <button id="dark-mode-toggle">

@@ -1,117 +1,36 @@
+<script>
+    const BASE_URL = '<?= base_url() ?>';
+</script>
+
+<!-- ====== فایل‌های داخل plugin ====== -->
 <script src="<?= $assetsPath ?>js/plugin/story-player/story-player.js"></script>
 <script src="<?= $assetsPath ?>js/plugin/swiper/swiper-bundle.min.js"></script>
+
+<!-- ====== فایل‌های داخل dependencies ====== -->
 <script src="<?= $assetsPath ?>js/dependencies/swiper-script.js"></script>
 <script src="<?= $assetsPath ?>js/dependencies/auth.js"></script>
 <script src="<?= $assetsPath ?>js/dependencies/app.js"></script>
 
-<!-- INITIAL STORY SECTION -->
-<script>
-    const stories = [
-        {
-            type: 'image',
-            user: 'استوری ۱',
-            avatar: '<?= $assetsPath ?>images/story/1.jpg',
-            url: '<?= $assetsPath ?>images/story/1.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 2',
-            avatar: '<?= $assetsPath ?>images/story/2.jpg',
-            url: '<?= $assetsPath ?>images/story/2.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 3',
-            avatar: '<?= $assetsPath ?>images/story/3.jpg',
-            url: '<?= $assetsPath ?>images/story/3.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 4',
-            avatar: '<?= $assetsPath ?>images/story/5.jpg',
-            url: '<?= $assetsPath ?>images/story/5.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 5',
-            avatar: '<?= $assetsPath ?>images/story/6.jpg',
-            url: '<?= $assetsPath ?>images/story/6.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 6',
-            avatar: '<?= $assetsPath ?>images/story/7.jpg',
-            url: '<?= $assetsPath ?>images/story/7.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 7',
-            avatar: '<?= $assetsPath ?>images/story/8.jpg',
-            url: '<?= $assetsPath ?>images/story/8.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'video',
-            user: 'استوری 8',
-            avatar: '<?= $assetsPath ?>images/story/4.jpg',
-            url: '<?= $assetsPath ?>images/story/video/1.mp4',
-            duration: null,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری ۱',
-            avatar: '<?= $assetsPath ?>images/story/1.jpg',
-            url: '<?= $assetsPath ?>images/story/1.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 2',
-            avatar: '<?= $assetsPath ?>images/story/2.jpg',
-            url: '<?= $assetsPath ?>images/story/2.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 3',
-            avatar: '<?= $assetsPath ?>images/story/3.jpg',
-            url: '<?= $assetsPath ?>images/story/3.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 4',
-            avatar: '<?= $assetsPath ?>images/story/5.jpg',
-            url: '<?= $assetsPath ?>images/story/5.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-        {
-            type: 'image',
-            user: 'استوری 5',
-            avatar: '<?= $assetsPath ?>images/story/6.jpg',
-            url: '<?= $assetsPath ?>images/story/6.jpg',
-            duration: 5000,
-            link: 'https://www.rtl-theme.com/author/amir_rezaii/products/'
-        },
-    ];
+<!-- ====== فایل‌های داخل custom ====== -->
+<script src="<?= $assetsPath ?>custom/shop.js"></script>
 
-    new StoryPlayer('stories-container', stories);
-</script>
+<!-- ====== دیتای استوری‌ها برای صفحه خانه (داینامیک) ====== -->
+<?php if (!empty($stories)): ?>
+    <script>
+        window.storiesData = <?= json_encode($stories, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
+    </script>
+<?php endif; ?>
+
+<?php
+// ====== اسکریپت‌های مخصوص کنترلر ======
+if (!empty($controllerScripts)):
+    foreach ($controllerScripts as $script):
+        $filePath = FCPATH . 'assets/custom/' . $script . '.js';
+        if (file_exists($filePath)):
+            ?>
+            <script src="<?= $assetsPath ?>custom/<?= $script ?>.js"></script>
+        <?php
+        endif;
+    endforeach;
+endif;
+?>

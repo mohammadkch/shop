@@ -6,12 +6,10 @@
             <thead class="text-xs bg-gray-100 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 sticky top-0">
             <tr>
                 <th class="px-5 py-4">شناسه</th>
-                <th class="px-5 py-4">نام منو</th>
+                <th class="px-5 py-4">نام محصول</th>
                 <th class="px-5 py-4">slug</th>
-                <th class="px-5 py-4">ترتیب</th>
-                <th class="px-5 py-4">تعداد تصاویر</th>
                 <th class="px-5 py-4">وضعیت</th>
-                <th class="px-5 py-4">تاریخ ایجاد</th>
+                <th class="px-5 py-4">تاریخ انتشار</th>
                 <th class="px-5 py-4">عملیات</th>
             </tr>
             </thead>
@@ -21,12 +19,6 @@
                     <td class="px-5 py-4 font-bold text-gray-900 dark:text-white"><?= $item['id'] ?></td>
                     <td class="px-5 py-4"><?= esc($item['name']) ?></td>
                     <td class="px-5 py-4"><?= esc($item['slug']) ?></td>
-                    <td class="px-5 py-4"><?= $item['sort_order'] ?? 0 ?></td>
-                    <td class="px-5 py-4">
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">
-                            <?= count($item['images'] ?? []) ?> تصویر
-                        </span>
-                    </td>
                     <td class="px-5 py-4">
                         <?php if ($item['is_active'] == 1): ?>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">فعال</span>
@@ -34,14 +26,47 @@
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300">غیرفعال</span>
                         <?php endif; ?>
                     </td>
-                    <td class="px-5 py-4"><?= jdate('Y/m/d', $item['created_at']) ?></td>
+                    <td class="px-5 py-4"><?= jdate('Y/m/d', $item['published_at'] ?? $item['created_at']) ?></td>
                     <td class="px-5 py-4">
-                        <div class="flex space-x-2">
-                            <a href="<?= site_url('admin/menu1/edit/' . $item['id']) ?>" class="text-primary hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300">
+                        <div class="flex space-x-2 rtl:space-x-reverse">
+                            <!-- ======== دکمه مدیریت تصاویر ======== -->
+                            <a href="<?= site_url('admin/product-image/manage/' . $item['id']) ?>"
+                               class="text-amber-500 hover:text-amber-700"
+                               title="مدیریت تصاویر">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="20" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="2.5" stroke="currentColor" stroke-width="2"></circle>
+                                    <polyline points="21 15 16 10 5 21" stroke="currentColor" stroke-width="2"></polyline>
+                                </svg>
+                            </a>
+
+                            <!-- ======== دکمه مدیریت آپشن‌ها ======== -->
+                            <a href="<?= site_url('admin/product-option/form/' . $item['id']) ?>"
+                               class="text-purple-500 hover:text-purple-700"
+                               title="مدیریت آپشن‌ها">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                                </svg>
+                            </a>
+
+                            <!-- ======== دکمه مدیریت منوی سطح ۳ ======== -->
+                            <a href="<?= site_url('admin/product-menu3/manage/' . $item['id']) ?>"
+                               class="text-emerald-500 hover:text-emerald-700"
+                               title="مدیریت منو">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6v12"></path>
+                                </svg>
+                            </a>
+
+                            <!-- ======== دکمه ویرایش (همون قبلی) ======== -->
+                            <a href="<?= site_url('admin/product/edit/' . $item['id']) ?>" class="text-primary hover:text-primary-800">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                 </svg>
                             </a>
+
+                            <!-- ======== دکمه‌های toggle و delete (همون قبلی) ======== -->
                             <button type="button" class="toggle-active-btn text-blue-600 hover:text-blue-800" data-id="<?= $item['id'] ?>" data-status="<?= $item['is_active'] ?>">
                                 <?php if ($item['is_active'] == 1): ?>
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,7 +78,8 @@
                                     </svg>
                                 <?php endif; ?>
                             </button>
-                            <button type="button" class="delete-btn text-red-600 hover:text-red-800" data-id="<?= $item['id'] ?>" data-url="<?= site_url('admin/menu1/delete') ?>">
+
+                            <button type="button" class="delete-btn text-blue-600 hover:text-blue-800" data-id="<?= $item['id'] ?>" data-url="<?= site_url('admin/product/delete') ?>">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                 </svg>
@@ -77,7 +103,7 @@
         <svg class="w-12 h-12 text-yellow-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
-        <h5 class="text-lg font-semibold text-gray-800 dark:text-gray-200">منویی یافت نشد</h5>
-        <p class="text-gray-600 dark:text-gray-400">هیچ منویی با جستجوی شما مطابقت ندارد</p>
+        <h5 class="text-lg font-semibold text-gray-800 dark:text-gray-200">محصولی یافت نشد</h5>
+        <p class="text-gray-600 dark:text-gray-400">هیچ محصولی با جستجوی شما مطابقت ندارد</p>
     </div>
 <?php endif; ?>

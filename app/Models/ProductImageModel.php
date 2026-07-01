@@ -14,7 +14,7 @@ class ProductImageModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['product_image_type_id', 'product_id', 'image_name', 'original_name', 'alt', 'sort_order', 'is_main'];
+    protected $allowedFields    = ['product_image_type_id', 'product_id', 'image_name', 'original_name', 'alt', 'sort_order', 'is_active'];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'int';
@@ -40,10 +40,12 @@ class ProductImageModel extends Model
             unset($where['product_id']);
         }
 
-        if (isset($where['is_main']) && $where['is_main'] !== '') {
-            $builder->where('product_image.is_main', $where['is_main']);
-            unset($where['is_main']);
+        // ======== اضافه شد ========
+        if (isset($where['is_active']) && $where['is_active'] !== '') {
+            $builder->where('product_image.is_active', $where['is_active']);
+            unset($where['is_active']);
         }
+        // ======== پایان ========
 
         if (isset($where['alt']) && !empty($where['alt'])) {
             $builder->like('product_image.alt', $where['alt']);

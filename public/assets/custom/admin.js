@@ -1,10 +1,7 @@
-/**
- * custom.js
- * توابع عمومی و مشترک کل سایت ادمین
- */
+// ==================== Base URL ====================
+var baseUrl = '/shop/public/';  // یا هر چی که پروژه‌ات هست
 
 // ==================== Notification ====================
-
 function showNotification(message, type = 'success') {
     const colors = {
         success: 'bg-green-500',
@@ -174,7 +171,7 @@ function confirmDelete() {
             .then(data => {
                 if (data.status === 'success') {
                     showNotification(data.message, 'success');
-                    showPage();
+                    showPage();  // <-- همیشه showPage
                 } else {
                     showNotification(data.message, 'error');
                 }
@@ -211,7 +208,7 @@ function previewImage(input, previewContainerId = null) {
             previewContainer = input.closest('.border')?.querySelector('.preview-img, img');
         }
 
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             if (previewContainer && previewContainer.tagName === 'IMG') {
                 previewContainer.src = e.target.result;
             } else if (previewContainer) {
@@ -266,12 +263,12 @@ function initDarkMode() {
 
 function scrollToTop(event) {
     if (event) event.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 // ==================== Initialization ====================
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // دارک مود
     initDarkMode();
     const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -287,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // اینتر در فیلدهای جستجو
     document.querySelectorAll('.search-input').forEach(input => {
-        input.addEventListener('keypress', function(e) {
+        input.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 showPage();
@@ -302,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (confirmBtn) confirmBtn.addEventListener('click', confirmDelete);
     if (cancelBtn) cancelBtn.addEventListener('click', closeDeleteModal);
     if (deleteModal) {
-        deleteModal.addEventListener('click', function(e) {
+        deleteModal.addEventListener('click', function (e) {
             if (e.target === this) closeDeleteModal();
         });
     }
@@ -318,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cancelConfirmBtn.addEventListener('click', closeConfirmModal);
     }
     if (confirmModal) {
-        confirmModal.addEventListener('click', function(e) {
+        confirmModal.addEventListener('click', function (e) {
             if (e.target === this) closeConfirmModal();
         });
     }
@@ -326,6 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // بایند اولیه دکمه‌های حذف و toggle
     bindDeleteButtons();
     bindToggleActiveButtons();
+
 });
 
 // ==================== Toggle Active ====================
@@ -357,11 +355,11 @@ function handleToggleClick(e) {
         confirmModal.classList.remove('hidden');
     }
 }
+
 function confirmToggleActive() {
     if (!currentToggleId) return;
 
     const newStatus = currentToggleStatus == '1' ? 0 : 1;
-
 
     let currentUrl = window.location.pathname;
     let controller = '';
@@ -378,9 +376,19 @@ function confirmToggleActive() {
         controller = 'menu3-image';
     } else if (currentUrl.includes('/menu3')) {
         controller = 'menu3';
+    } else if (currentUrl.includes('/product-image')) {
+        controller = 'product-image';
+    } else if (currentUrl.includes('/product')) {
+        controller = 'product';
+    } else if (currentUrl.includes('/home-story')) {
+        controller = 'home-story';
+    } else if (currentUrl.includes('/home-slider')) {
+        controller = 'home-slider';
+    } else if (currentUrl.includes('/home-selected-category')) {
+        controller = 'home-selected-category';
     }
 
-    let url = '/shop/public/admin/' + controller + '/toggleActive/' + currentToggleId;
+    let url = baseUrl + 'admin/' + controller + '/toggleActive/' + currentToggleId;
 
     fetch(url, {
         method: 'POST',
@@ -388,21 +396,22 @@ function confirmToggleActive() {
             'X-Requested-With': 'XMLHttpRequest',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ is_active: newStatus })
+        body: JSON.stringify({is_active: newStatus})
     })
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             if (data.status === 'success') {
                 showNotification(data.message, 'success');
+                // ======== همیشه از showPage استفاده کن ========
                 showPage();
             } else {
                 showNotification(data.message, 'error');
             }
             closeConfirmModal();
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error('Error:', error);
             showNotification('خطا در تغییر وضعیت', 'error');
             closeConfirmModal();

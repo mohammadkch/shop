@@ -104,6 +104,69 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->post('menu3-image/toggleActive/(:num)', 'Menu3Image::toggleActive/$1');
     $routes->get('menu3-image/getMenu2ByMenu1/(:num)', 'Menu3Image::getMenu2ByMenu1/$1');
     $routes->get('menu3-image/getMenu3ByMenu2/(:num)', 'Menu3Image::getMenu3ByMenu2/$1');
+
+    // product
+    $routes->get('product', 'Product::index');
+    $routes->post('product', 'Product::index');
+    $routes->get('product/create', 'Product::create');
+    $routes->post('product/create/handle', 'Product::create/handle');
+    $routes->get('product/edit/(:num)', 'Product::edit/$1');
+    $routes->post('product/edit/(:num)/handle', 'Product::edit/$1/handle');
+    $routes->delete('product/delete/(:num)', 'Product::delete/$1');
+    $routes->post('product/toggleActive/(:num)', 'Product::toggleActive/$1');
+
+    // product-image
+    $routes->get('product-image/manage/(:num)', 'ProductImage::manage/$1');
+    $routes->post('product-image/manage/(:num)', 'ProductImage::manage/$1');
+    $routes->post('product-image/toggleActive/(:num)', 'ProductImage::toggleActive/$1');
+    $routes->delete('product-image/delete/(:num)', 'ProductImage::delete/$1');
+    $routes->post('product-image/updateAlt/(:num)', 'ProductImage::updateAlt/$1');
+    $routes->get('product-image/create/(:num)', 'ProductImage::create/$1');
+    $routes->post('product-image/create/(:num)', 'ProductImage::create/$1');
+
+    // ======== Product Menu3 ========
+    $routes->get('product-menu3/manage/(:num)', 'ProductMenu3::manage/$1');
+    $routes->post('product-menu3/manage/(:num)', 'ProductMenu3::manage/$1');
+    $routes->post('product-menu3/update/(:num)', 'ProductMenu3::update/$1');
+    $routes->delete('product-menu3/delete/(:num)', 'ProductMenu3::delete/$1');
+    $routes->get('product-menu3/getMenu2/(:num)', 'ProductMenu3::getMenu2/$1');
+    $routes->get('product-menu3/getMenu3/(:num)', 'ProductMenu3::getMenu3/$1');
+    $routes->get('product-menu3/create/(:num)', 'ProductMenu3::create/$1');
+    $routes->post('product-menu3/create/(:num)', 'ProductMenu3::create/$1');
+
+    // ======== Product Option ========
+    $routes->get('product-option/form/(:num)', 'ProductOption::form/$1');
+    $routes->post('product-option/form/(:num)', 'ProductOption::form/$1');
+
+    // ======== Home Story ========
+    $routes->get('home-story', 'HomeStory::index');
+    $routes->post('home-story', 'HomeStory::index');
+    $routes->get('home-story/create', 'HomeStory::create');
+    $routes->post('home-story/create/handle', 'HomeStory::create/handle');
+    $routes->get('home-story/edit/(:num)', 'HomeStory::edit/$1');
+    $routes->post('home-story/edit/(:num)/handle', 'HomeStory::edit/$1/handle');
+    $routes->delete('home-story/delete/(:num)', 'HomeStory::delete/$1');
+    $routes->post('home-story/toggleActive/(:num)', 'HomeStory::toggleActive/$1');
+
+    // ======== Home Slider ========
+    $routes->get('home-slider', 'HomeSlider::index');
+    $routes->post('home-slider', 'HomeSlider::index');
+    $routes->get('home-slider/create', 'HomeSlider::create');
+    $routes->post('home-slider/create/handle', 'HomeSlider::create/handle');
+    $routes->get('home-slider/edit/(:num)', 'HomeSlider::edit/$1');
+    $routes->post('home-slider/edit/(:num)/handle', 'HomeSlider::edit/$1/handle');
+    $routes->delete('home-slider/delete/(:num)', 'HomeSlider::delete/$1');
+    $routes->post('home-slider/toggleActive/(:num)', 'HomeSlider::toggleActive/$1');
+
+    // ======== Home Selected Category ========
+    $routes->get('home-selected-category/manage', 'HomeSelectedCategory::manage');
+    $routes->post('home-selected-category/manage', 'HomeSelectedCategory::manage');
+    $routes->get('home-selected-category/create', 'HomeSelectedCategory::create');
+    $routes->post('home-selected-category/create/handle', 'HomeSelectedCategory::create/handle');
+    $routes->delete('home-selected-category/delete/(:num)', 'HomeSelectedCategory::delete/$1');
+    $routes->post('home-selected-category/toggleActive/(:num)', 'HomeSelectedCategory::toggleActive/$1');
+    $routes->get('home-selected-category/getMenu2/(:num)', 'HomeSelectedCategory::getMenu2/$1');
+    $routes->get('home-selected-category/getMenu3/(:num)', 'HomeSelectedCategory::getMenu3/$1');
 });
 
 

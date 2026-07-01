@@ -16,7 +16,16 @@
                                 <h1 class="font-black text-2xl with-highlight dark:text-gray-200">مدیریت منوهای سطح 3</h1>
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">لیست تمام منوهای سطح سوم فروشگاه</p>
                             </div>
-                            <div class="mt-4 md:mt-0">
+                            <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
+                                <a href="<?= site_url('admin/menu3-image') ?>"
+                                   class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center">
+                                    <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <rect x="2" y="2" width="20" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="2.5" stroke="currentColor" stroke-width="2"></circle>
+                                        <polyline points="21 15 16 10 5 21" stroke="currentColor" stroke-width="2"></polyline>
+                                    </svg>
+                                    مدیریت تصاویر منوی 3
+                                </a>
                                 <a href="<?= site_url('admin/menu3/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -25,7 +34,6 @@
                                 </a>
                             </div>
                         </div>
-
                         <!-- فرم جستجو -->
                         <div class="search-filters mb-6">
                             <form id="searchForm" method="post" action="<?= current_url() ?>">

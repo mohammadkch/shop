@@ -14,10 +14,40 @@
                     <div class="bg-white rounded-2xl drop-shadow-lg p-6 dark:bg-custom-dark dark:border dark:border-gray-700">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
                             <h1 class="font-black text-2xl with-highlight dark:text-gray-200">
-                                <?= isset($edit_row) ? 'ویرایش منو سطح 2' : 'افزودن منو سطح 2' ?>
+                                <?= isset($edit_row) ? 'ویرایش محصول' : 'افزودن محصول جدید' ?>
                             </h1>
-                            <div class="mt-4 md:mt-0">
-                                <a href="<?= site_url('admin/menu2') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block">
+                            <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
+                                <?php if (isset($edit_row)): ?>
+                                    <!-- ======== دکمه مدیریت تصاویر ======== -->
+                                    <a href="<?= site_url('admin/product-image/manage/' . $edit_row['id']) ?>"
+                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
+                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <rect x="2" y="2" width="20" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
+                                            <circle cx="8.5" cy="8.5" r="2.5" stroke="currentColor" stroke-width="2"></circle>
+                                            <polyline points="21 15 16 10 5 21" stroke="currentColor" stroke-width="2"></polyline>
+                                        </svg>
+                                        مدیریت تصاویر
+                                    </a>
+                                    <!-- ======== دکمه مدیریت آپشن ======== -->
+                                    <a href="<?= site_url('admin/product-option/form/' . $edit_row['id']) ?>"
+                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
+                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                                        </svg>
+                                        مدیریت آپشن‌ها
+                                    </a>
+                                    <!-- ======== دکمه مدیریت منو ======== -->
+                                    <a href="<?= site_url('admin/product-menu3/manage/' . $edit_row['id']) ?>"
+                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
+                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6v12"></path>
+                                        </svg>
+                                        مدیریت منو
+                                    </a>
+                                    <!-- ======== پایان ======== -->
+                                <?php endif; ?>
+                                <a href="<?= site_url('admin/product') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block text-sm">
                                     بازگشت به لیست
                                 </a>
                             </div>
@@ -56,50 +86,11 @@
                                 <?php endforeach; ?>
                             </div>
 
-                            <?php if (!empty($imageTypes)): ?>
-                                <hr class="my-6 border-gray-200 dark:border-gray-700">
-
-                                <div class="space-y-4">
-                                    <h3 class="font-black text-lg with-highlight dark:text-gray-200">تصاویر منو</h3>
-
-                                    <?php foreach ($imageTypes as $type): ?>
-                                        <?php
-                                        $existingImage = isset($groupedImages[$type['id']]) ? $groupedImages[$type['id']] : null;
-                                        ?>
-                                        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                                <div>
-                                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                                        <?= esc($type['name']) ?>
-                                                        <?php if ($type['width'] && $type['height']): ?>
-                                                            <span class="text-xs text-gray-500">(<?= $type['width'] ?>x<?= $type['height'] ?>)</span>
-                                                        <?php endif; ?>
-                                                    </label>
-                                                    <?php if ($existingImage && !empty($existingImage['image_name'])): ?>
-                                                        <div class="mb-2">
-                                                            <img src="<?= base_url($type['path'] . '/' . $existingImage['image_name']) ?>" class="w-20 h-20 object-cover rounded-lg border">
-                                                        </div>
-                                                    <?php endif; ?>
-                                                    <input type="file" name="image_<?= $type['id'] ?>" accept="image/jpeg,image/png,image/gif,image/webp" class="w-full text-sm">
-                                                    <?php if ($type['file_size_limit']): ?>
-                                                        <p class="text-xs text-gray-500 mt-1">حداکثر: <?= $type['file_size_limit'] ?>KB</p>
-                                                    <?php endif; ?>
-                                                </div>
-                                                <div class="md:col-span-3">
-                                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">متن جایگزین (alt)</label>
-                                                    <input type="text" name="alt_<?= $type['id'] ?>" value="<?= $existingImage ? esc($existingImage['alt']) : '' ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="توضیح کوتاه برای تصویر">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endif; ?>
-
                             <div class="mt-6 flex gap-3">
                                 <button type="submit" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-600 transition">
                                     <?= isset($edit_row) ? 'بروزرسانی' : 'ذخیره' ?>
                                 </button>
-                                <a href="<?= site_url('admin/menu2') ?>" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">انصراف</a>
+                                <a href="<?= site_url('admin/product') ?>" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">انصراف</a>
                             </div>
                         </form>
                     </div>

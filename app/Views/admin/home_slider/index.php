@@ -13,27 +13,15 @@
                     <div class="bg-white rounded-2xl drop-shadow-lg p-6 dark:bg-custom-dark dark:border dark:border-gray-700">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
                             <div>
-                                <h1 class="font-black text-2xl with-highlight dark:text-gray-200">مدیریت منوهای سطح 1</h1>
-                                <p class="text-gray-600 dark:text-gray-400 mt-1">لیست تمام منوهای اصلی فروشگاه</p>
+                                <h1 class="font-black text-2xl with-highlight dark:text-gray-200">مدیریت اسلایدرها</h1>
+                                <p class="text-gray-600 dark:text-gray-400 mt-1">لیست تمام اسلایدرهای صفحه اصلی</p>
                             </div>
-                            <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
-                                <!-- ======== اضافه شد: لینک مدیریت تصاویر ======== -->
-                                <a href="<?= site_url('admin/menu2-image') ?>"
-                                   class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center">
-                                    <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <rect x="2" y="2" width="20" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
-                                        <circle cx="8.5" cy="8.5" r="2.5" stroke="currentColor" stroke-width="2"></circle>
-                                        <polyline points="21 15 16 10 5 21" stroke="currentColor" stroke-width="2"></polyline>
-                                    </svg>
-                                    مدیریت تصاویر منوی 2
-                                </a>
-                                <!-- ======== پایان اضافه شد ======== -->
-
-                                <a href="<?= site_url('admin/menu2/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
+                            <div class="mt-4 md:mt-0">
+                                <a href="<?= site_url('admin/home-slider/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                     </svg>
-                                    افزودن منو جدید
+                                    افزودن اسلایدر جدید
                                 </a>
                             </div>
                         </div>
@@ -41,7 +29,7 @@
                         <!-- فرم جستجو -->
                         <div class="search-filters mb-6">
                             <form id="searchForm" method="post" action="<?= current_url() ?>">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                     <?php helper('form'); ?>
                                     <?php foreach ($search_fields as $field_name => $field): ?>
                                         <div>
@@ -50,16 +38,16 @@
                                             </label>
                                             <?php if ($field['input'] == 'form_input'): ?>
                                                 <?= form_input(
-                                                        array_merge($field['data'], ['name' => $field_name, 'id' => $field_name, 'value' => '']),
-                                                        '',
-                                                        ['class' => $field['data']['class']]
+                                                    array_merge($field['data'], ['name' => $field_name, 'id' => $field_name, 'value' => '']),
+                                                    '',
+                                                    ['class' => $field['data']['class']]
                                                 ) ?>
                                             <?php elseif ($field['input'] == 'form_dropdown'): ?>
                                                 <?= form_dropdown(
-                                                        $field_name,
-                                                        $field['options'],
-                                                        '',
-                                                        array_merge($field['data'], ['id' => $field_name])
+                                                    $field_name,
+                                                    $field['options'],
+                                                    '',
+                                                    array_merge($field['data'], ['id' => $field_name])
                                                 ) ?>
                                             <?php endif; ?>
                                         </div>
@@ -74,7 +62,7 @@
 
                         <!-- نتیجه جستجو -->
                         <div id="search-result">
-                            <?= $this->include('admin/menu2/index_data_table') ?>
+                            <?= $this->include('admin/home_slider/index_data_table') ?>
                         </div>
                     </div>
 
@@ -89,7 +77,7 @@
             <div class="bg-white relative w-full dark:bg-custom-dark rounded-2xl shadow-soft p-6">
                 <div class="text-center">
                     <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">آیا اطمینان دارید؟</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">آیا از حذف این منو اطمینان دارید؟</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">آیا از حذف این اسلایدر اطمینان دارید؟</p>
                     <div class="flex gap-3 justify-center">
                         <button type="button" id="cancelDeleteBtn" class="bg-gray-300 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-400 transition">خیر</button>
                         <button type="button" id="confirmDeleteBtn" class="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 transition">بله، حذف شود</button>

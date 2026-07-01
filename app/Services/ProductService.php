@@ -53,12 +53,11 @@ class ProductService
 
         return $product;
     }
-
     public function getProductImages($productId)
     {
         $images = $this->productImageModel
             ->where('product_id', $productId)
-            ->orderBy('is_main', 'DESC')
+            ->where('is_active', 1)
             ->orderBy('sort_order', 'ASC')
             ->findAll();
 
@@ -67,19 +66,44 @@ class ProductService
             'gallery' => []
         ];
 
+        if (empty($images)) {
+            return $result;
+        }
+
+        // جداسازی عکس‌ها بر اساس نوع
+        $type1 = []; // عکس‌های گالری اصلی
+        $type2 = []; // عکس‌های thumbnail
+
         foreach ($images as $image) {
-            if ($image['is_main'] == 1) {
-                $result['main'] = $image;
+            if ($image['product_image_type_id'] == 1) {
+                $type1[] = $image;
             } else {
-                $result['gallery'][] = $image;
+                $type2[] = $image;
             }
         }
 
-        if (!$result['main'] && !empty($images)) {
+        // اگه thumbnail (تایپ 2) وجود داره، اولین‌ش رو به عنوان main بذار
+        if (!empty($type2)) {
+            $result['main'] = $type2[0];
+            // بقیه thumbnail ها رو هم به گالری اضافه کن
+            for ($i = 1; $i < count($type2); $i++) {
+                $result['gallery'][] = $type2[$i];
+            }
+        }
+        // اگه thumbnail نبود، از عکس‌های تایپ 1 استفاده کن
+        else if (!empty($type1)) {
+            $result['main'] = $type1[0];
+            for ($i = 1; $i < count($type1); $i++) {
+                $result['gallery'][] = $type1[$i];
+            }
+        }
+
+        // اگه هیچ عکسی نبود
+        if (empty($result['main']) && !empty($images)) {
             $result['main'] = $images[0];
-            $result['gallery'] = array_filter($result['gallery'], function($img) use ($images) {
-                return $img['id'] != $images[0]['id'];
-            });
+            for ($i = 1; $i < count($images); $i++) {
+                $result['gallery'][] = $images[$i];
+            }
         }
 
         return $result;

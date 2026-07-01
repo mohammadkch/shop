@@ -46,6 +46,77 @@
                 </li>
 
                 <?php
+                $isActive = ($className == 'homestory');
+                $activeClass = $isActive
+                        ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
+                        : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+                $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
+                ?>
+                <li class="py-2.5 px-1">
+                    <a href="<?= site_url('admin/home-story') ?>"
+                       class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path d="M8 6v12"></path>
+                        </svg>
+                        صفحه اصلی - استوری
+                    </a>
+                </li>
+                <?php
+                $isActive = ($className == 'homeslider');
+                $activeClass = $isActive
+                        ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
+                        : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+                $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
+                ?>
+                <li class="py-2.5 px-1">
+                    <a href="<?= site_url('admin/home-slider') ?>"
+                       class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path d="M8 6v12"></path>
+                        </svg>
+                        صفحه اصلی - اسلایدر
+                    </a>
+                </li>
+                <?php
+                $isActive = ($className == 'homeselectedcategory');
+                $activeClass = $isActive
+                        ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
+                        : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+                $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
+                ?>
+                <li class="py-2.5 px-1">
+                    <a href="<?= site_url('admin/home-selected-category/manage') ?>"
+                       class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path d="M8 6v12"></path>
+                        </svg>
+                        صفحه اصلی - دسته بندی منتخب
+                    </a>
+                </li>
+
+
+                <?php
+                $isActive = ($className == 'product' || $className == 'productimage' || $className == 'productmenu3' || $className == 'productoption');
+                $activeClass = $isActive
+                        ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
+                        : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+                $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
+                ?>
+                <li class="py-2.5 px-1">
+                    <a href="<?= site_url('admin/product') ?>"
+                       class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path d="M8 6v12"></path>
+                        </svg>
+                        مدیریت محصول
+                    </a>
+                </li>
+
+                <?php
                 $isActive = ($className == 'menu1');
                 $activeClass = $isActive
                         ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
@@ -63,6 +134,7 @@
                 </li>
 
                 <?php
+                /*
                 $isActive = ($className == 'menu1image');
                 $activeClass = $isActive
                         ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
@@ -80,6 +152,7 @@
                         مدیریت تصاویر منو ۱
                     </a>
                 </li>
+                */?>
 
                 <?php
                 $isActive = ($className == 'menu2');
@@ -99,6 +172,7 @@
                 </li>
 
                 <?php
+                /*
                 $isActive = ($className == 'menu2image');
                 $activeClass = $isActive
                         ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
@@ -116,6 +190,7 @@
                         مدیریت تصاویر منو ۲
                     </a>
                 </li>
+                */?>
 
                 <?php
                 $isActive = ($className == 'menu3');
@@ -136,6 +211,7 @@
                 </li>
 
                 <?php
+                /*
                 $isActive = ($className == 'menu3image');
                 $activeClass = $isActive
                         ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
@@ -153,6 +229,7 @@
                         مدیریت تصاویر منو ۳
                     </a>
                 </li>
+                */?>
 
 
                 <li class="py-2.5 px-1">
@@ -242,6 +319,62 @@
             </li>
 
             <?php
+            $isActiveHomestory = ($className == 'homestory');
+            $activeClassHomestory = $isActiveHomestory ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+            $iconStrokeHomestory = $activeClassHomestory ? '#4f46e5' : 'currentColor';
+            ?>
+            <li class="py-2.5 px-1">
+                <a href="<?= site_url('admin/home-story') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomestory ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomestory ?>"></path>
+                    </svg>
+                    استوری
+                </a>
+            </li>
+
+            <?php
+            $isActiveHomeslider = ($className == 'homeslider');
+            $activeClassHomeslider = $isActiveHomeslider ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+            $iconStrokeHomeslider = $activeClassHomeslider ? '#4f46e5' : 'currentColor';
+            ?>
+            <li class="py-2.5 px-1">
+                <a href="<?= site_url('admin/home-slider') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomeslider ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomeslider ?>"></path>
+                    </svg>
+                    اسلایدر
+                </a>
+            </li>
+
+            <?php
+            $isActiveHomeselectedcategory = ($className == 'homeselectedcategory');
+            $activeClassHomeselectedcategory = $isActiveHomeselectedcategory ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+            $iconStrokeHomeselectedcategory = $activeClassHomeselectedcategory ? '#4f46e5' : 'currentColor';
+            ?>
+            <li class="py-2.5 px-1">
+                <a href="<?= site_url('admin/home-selected-category/manage') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomeselectedcategory ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomeselectedcategory ?>"></path>
+                    </svg>
+                    دسته بندی منتخب
+                </a>
+            </li>
+
+            <?php
+            $isActiveProduct = ($className == 'product' || $className == 'productimage' || $className == 'productmenu3' || $className == 'productoption');
+            $activeClassProduct = $isActiveProduct ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+            $iconStrokeProduct = $activeClassProduct ? '#4f46e5' : 'currentColor';
+            ?>
+            <li class="py-2.5 px-1">
+                <a href="<?= site_url('admin/product') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassProduct ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeProduct ?>"></path>
+                    </svg>
+                    مدیریت محصول
+                </a>
+            </li>
+
+            <?php
             $isActiveMenu1 = ($className == 'menu1');
             $activeClassMenu1 = $isActiveMenu1 ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
             $iconStrokeMenu1 = $isActiveMenu1 ? '#4f46e5' : 'currentColor';
@@ -255,7 +388,9 @@
                 </a>
             </li>
 
+
             <?php
+            /*
             $isActiveMenu1Image = ($className == 'menu1image');
             $activeClassMenu1Image = $isActiveMenu1Image ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
             $iconStrokeMenu1Image = $isActiveMenu1Image ? '#4f46e5' : 'currentColor';
@@ -270,6 +405,7 @@
                     مدیریت تصاویر منو ۱
                 </a>
             </li>
+            */?>
 
             <?php
             $isActive = ($className == 'menu2');
@@ -289,6 +425,7 @@
             </li>
 
             <?php
+            /*
             $isActiveMenu2Image = ($className == 'menu2image');
             $activeClassMenu2Image = $isActiveMenu2Image ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
             $iconStrokeMenu2Image = $isActiveMenu2Image ? '#4f46e5' : 'currentColor';
@@ -303,7 +440,7 @@
                     مدیریت تصاویر منو ۲
                 </a>
             </li>
-
+            */?>
 
             <?php
             $isActiveMenu3 = ($className == 'menu3');
@@ -320,6 +457,7 @@
             </li>
 
             <?php
+            /*
             $isActiveMenu3Image = ($className == 'menu3image');
             $activeClassMenu3Image = $isActiveMenu3Image ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
             $iconStrokeMenu3Image = $isActiveMenu3Image ? '#4f46e5' : 'currentColor';
@@ -334,6 +472,7 @@
                     مدیریت تصاویر منو ۳
                 </a>
             </li>
+            */?>
 
             <li class="py-2.5 px-1">
                 <a href="<?= site_url('admin/logout') ?>" class="relative flex justify-start items-center pt-6 px-5 text-red-500 border-t border-gray-300 dark:border-t-gray-700 before:hidden hover:text-red-500">

@@ -186,6 +186,18 @@ class Menu3 extends BaseController
                 'data' => ['class' => 'form-control', 'id' => 'slug', 'name' => 'slug', 'placeholder' => 'slug (لینک دستی) - خالی بگذارید خودکار می‌شود'],
                 'type' => 'text'
             ],
+            // ======== اضافه شد ========
+            'description' => [
+                'input' => 'form_textarea',
+                'data' => ['class' => 'form-control', 'id' => 'description', 'name' => 'description', 'placeholder' => 'توضیحات منو (اختیاری)', 'rows' => 4],
+                'type' => 'textarea'
+            ],
+            'sort_order' => [
+                'input' => 'form_input',
+                'data' => ['class' => 'form-control', 'id' => 'sort_order', 'name' => 'sort_order', 'placeholder' => 'عدد بزرگتر = اولویت بیشتر', 'type' => 'number', 'min' => 0],
+                'type' => 'number'
+            ],
+            // ======== پایان اضافه شد ========
             'is_active' => [
                 'input' => 'form_dropdown',
                 'data' => ['class' => 'form-control', 'id' => 'is_active', 'name' => 'is_active'],
@@ -201,6 +213,8 @@ class Menu3 extends BaseController
             'menu_2_id' => 'منو سطح 2',
             'name' => 'نام منو',
             'slug' => 'slug',
+            'description' => 'توضیحات',
+            'sort_order' => 'ترتیب',
             'is_active' => 'وضعیت'
         ];
 
@@ -289,6 +303,18 @@ class Menu3 extends BaseController
                 'data' => ['class' => 'form-control', 'id' => 'slug', 'name' => 'slug', 'placeholder' => 'slug (لینک دستی) - خالی بگذارید خودکار می‌شود'],
                 'type' => 'text'
             ],
+            // ======== اضافه شد ========
+            'description' => [
+                'input' => 'form_textarea',
+                'data' => ['class' => 'form-control', 'id' => 'description', 'name' => 'description', 'placeholder' => 'توضیحات منو (اختیاری)', 'rows' => 4],
+                'type' => 'textarea'
+            ],
+            'sort_order' => [
+                'input' => 'form_input',
+                'data' => ['class' => 'form-control', 'id' => 'sort_order', 'name' => 'sort_order', 'placeholder' => 'عدد بزرگتر = اولویت بیشتر', 'type' => 'number', 'min' => 0],
+                'type' => 'number'
+            ],
+            // ======== پایان اضافه شد ========
             'is_active' => [
                 'input' => 'form_dropdown',
                 'data' => ['class' => 'form-control', 'id' => 'is_active', 'name' => 'is_active'],
@@ -304,6 +330,8 @@ class Menu3 extends BaseController
             'menu_2_id' => 'منو سطح 2',
             'name' => 'نام منو',
             'slug' => 'slug',
+            'description' => 'توضیحات',
+            'sort_order' => 'ترتیب',
             'is_active' => 'وضعیت'
         ];
 
@@ -337,7 +365,17 @@ class Menu3 extends BaseController
             'is_active' => [
                 'label' => 'وضعیت',
                 'rules' => 'required|in_list[0,1]'
+            ],
+            // ======== اضافه شد ========
+            'description' => [
+                'label' => 'توضیحات',
+                'rules' => 'permit_empty|max_length[65535]'
+            ],
+            'sort_order' => [
+                'label' => 'ترتیب',
+                'rules' => 'permit_empty|integer|greater_than_equal_to[0]'
             ]
+            // ======== پایان اضافه شد ========
         ];
 
         foreach ($imageTypes as $type) {
@@ -393,6 +431,8 @@ class Menu3 extends BaseController
             'menu_2_id' => (int) $this->request->getPost('menu_2_id', FILTER_VALIDATE_INT),
             'name' => $this->request->getPost('name', FILTER_SANITIZE_STRING),
             'slug' => $slug,
+            'description' => $this->request->getPost('description', FILTER_SANITIZE_STRING),
+            'sort_order' => (int) ($this->request->getPost('sort_order', FILTER_VALIDATE_INT) ?: 0),
             'is_active' => (int) $this->request->getPost('is_active', FILTER_VALIDATE_INT),
             'updated_at' => time()
         ];

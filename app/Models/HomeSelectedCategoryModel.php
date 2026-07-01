@@ -23,18 +23,32 @@ class HomeSelectedCategoryModel extends Model
     {
         $builder = $this->db->table($this->table);
 
+        // جوین با جداول منو برای دریافت نام‌ها
+        $builder->select('
+        home_selected_category.*,
+        menu_1.id as menu_1_id,
+        menu_1.name as menu_1_name,
+        menu_2.id as menu_2_id,
+        menu_2.name as menu_2_name,
+        menu_3.id as menu_3_id,
+        menu_3.name as menu_3_name
+    ');
+        $builder->join('menu_1', 'home_selected_category.menu_1_id = menu_1.id', 'left');
+        $builder->join('menu_2', 'home_selected_category.menu_2_id = menu_2.id', 'left');
+        $builder->join('menu_3', 'home_selected_category.menu_3_id = menu_3.id', 'left');
+
         if (isset($where['id']) && !empty($where['id'])) {
-            $builder->where('id', $where['id']);
+            $builder->where('home_selected_category.id', $where['id']);
             unset($where['id']);
         }
 
         if (isset($where['menu_1_id']) && !empty($where['menu_1_id'])) {
-            $builder->where('menu_1_id', $where['menu_1_id']);
+            $builder->where('home_selected_category.menu_1_id', $where['menu_1_id']);
             unset($where['menu_1_id']);
         }
 
         if (isset($where['is_active']) && $where['is_active'] !== '') {
-            $builder->where('is_active', $where['is_active']);
+            $builder->where('home_selected_category.is_active', $where['is_active']);
             unset($where['is_active']);
         }
 
@@ -50,7 +64,7 @@ class HomeSelectedCategoryModel extends Model
             $builder->limit($limit, $offset);
         }
 
-        $builder->orderBy('sort_order', 'ASC');
+        $builder->orderBy('home_selected_category.sort_order', 'ASC');
 
         return $builder->get()->getResultArray();
     }

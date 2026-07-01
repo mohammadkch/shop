@@ -31,7 +31,7 @@ class CartItemModel extends Model
             size_option.value as size_value
         ')
             ->join('product', 'product.id = cart_item.product_id')
-            ->join('product_image', 'product_image.product_id = product.id AND product_image.is_main = 1', 'left')
+            ->join('product_image', 'product_image.product_id = product.id AND product_image.is_active = 1', 'left')
             ->join('option as color_option', 'color_option.id = cart_item.color_option_id', 'left')
             ->join('option as size_option', 'size_option.id = cart_item.size_option_id', 'left')
             ->where('cart_id', $cartId)

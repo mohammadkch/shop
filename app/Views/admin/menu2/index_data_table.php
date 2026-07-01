@@ -9,6 +9,7 @@
                 <th class="px-5 py-4">نام منو سطح 1</th>
                 <th class="px-5 py-4">نام منو</th>
                 <th class="px-5 py-4">slug</th>
+                <th class="px-5 py-4">ترتیب</th>
                 <th class="px-5 py-4">وضعیت</th>
                 <th class="px-5 py-4">تاریخ ایجاد</th>
                 <th class="px-5 py-4">عملیات</th>
@@ -21,6 +22,7 @@
                     <td class="px-5 py-4"><?= esc($item['menu_1_name'] ?? '-') ?></td>
                     <td class="px-5 py-4"><?= esc($item['name']) ?></td>
                     <td class="px-5 py-4"><?= esc($item['slug']) ?></td>
+                    <td class="px-5 py-4"><?= $item['sort_order'] ?? 0 ?></td>
                     <td class="px-5 py-4">
                         <?php if ($item['is_active'] == 1): ?>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">فعال</span>

@@ -42,10 +42,13 @@
                                         </label>
                                         <?php
                                         $value = set_value($input_key, isset($edit_row[$input_key]) ? $edit_row[$input_key] : '');
+                                        $inputType = $input['input'] ?? 'form_input';
 
-                                        if ($input['input'] == 'form_input'):
+                                        if ($inputType == 'form_input'):
                                             echo form_input(array_merge($input['data'], ['value' => $value, 'class' => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white']));
-                                        elseif ($input['input'] == 'form_dropdown'):
+                                        elseif ($inputType == 'form_textarea'):
+                                            echo form_textarea(array_merge($input['data'], ['value' => $value, 'class' => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white']));
+                                        elseif ($inputType == 'form_dropdown'):
                                             echo form_dropdown($input_key, $input['options'], $value, array_merge($input['data'], ['class' => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white']));
                                         endif;
                                         ?>

@@ -8,11 +8,8 @@
 
 <!-- ====== فایل‌های داخل dependencies ====== -->
 <script src="<?= $assetsPath ?>js/dependencies/swiper-script.js"></script>
-<script src="<?= $assetsPath ?>js/dependencies/auth.js"></script>
+<!--<script src="--><?php //= $assetsPath ?><!--js/dependencies/auth.js"></script>-->
 <script src="<?= $assetsPath ?>js/dependencies/app.js"></script>
-
-<!-- ====== فایل‌های داخل custom ====== -->
-<script src="<?= $assetsPath ?>custom/shop.js"></script>
 
 <!-- ====== دیتای استوری‌ها برای صفحه خانه (داینامیک) ====== -->
 <?php if (!empty($stories)): ?>
@@ -34,3 +31,4 @@ if (!empty($controllerScripts)):
     endforeach;
 endif;
 ?>
+

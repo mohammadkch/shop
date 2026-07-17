@@ -3,8 +3,11 @@
 namespace Config;
 
 use App\Libraries\AdminAuthLib;
+use App\Libraries\CustomerAuthLib;
 use App\Libraries\UrlLib;
+use App\Services\AddressService;
 use App\Services\MenuService;
+use App\Services\ShippingService;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -98,4 +101,38 @@ class Services extends BaseService
         }
         return new \App\Services\HomeService();
     }
+
+    public static function otpService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('otpService');
+        }
+        return new \App\Services\OtpService();
+    }
+
+    public static function customerAuth($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('customerAuth');
+        }
+        return new CustomerAuthLib();
+    }
+
+    public static function addressService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('addressService');
+        }
+        return new AddressService();
+    }
+
+    public static function shippingService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('shippingService');
+        }
+        return new ShippingService();
+    }
+
+
 }

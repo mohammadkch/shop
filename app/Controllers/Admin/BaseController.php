@@ -20,7 +20,7 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-    protected $helpers = ['flash'];
+    protected $helpers = ['flash', 'html', 'rowset'];
     protected $viewPath = 'admin/';
     protected $viewData;
     protected $authLib;
@@ -32,11 +32,6 @@ abstract class BaseController extends Controller
         helper('html');
         helper('rowset');
         $this->authLib = service('adminAuth');
-
-//        if (!$request->isAJAX()) {
-//            $menuService = service('menuService');
-//            $this->viewData['shopMenus'] = $menuService->getShopMenus();
-//        }
 
         $this->viewData['assetsPath'] = base_url('assets/');
 
@@ -54,10 +49,4 @@ abstract class BaseController extends Controller
         setFlash($key, $customMessage);
     }
 
-    protected function print_mine($data)
-    {
-        echo '<pre>';
-        print_r($data);
-        exit();
-    }
 }

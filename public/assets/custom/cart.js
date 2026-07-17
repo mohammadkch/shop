@@ -64,11 +64,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 var item = this.closest('.cart-item');
                 if (!item) return;
                 var qtyEl = item.querySelector('.cart-qty-text');
-                var qty = parseInt(qtyEl.textContent) + 1;
+                var oldQty = parseInt(qtyEl.textContent);
+                var qty = oldQty + 1;
                 qtyEl.textContent = qty;
+
                 Cart.updateQuantity(item.dataset.itemId, qty).then(function(data) {
                     if (data && data.status === 'success') {
                         updateCartPageSummary(data);
+                    } else {
+                        qtyEl.textContent = oldQty;
                     }
                 });
             };
@@ -80,12 +84,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 var item = this.closest('.cart-item');
                 if (!item) return;
                 var qtyEl = item.querySelector('.cart-qty-text');
-                var qty = parseInt(qtyEl.textContent) - 1;
-                if (qty < 1) qty = 1;
+                var oldQty = parseInt(qtyEl.textContent);
+
+                // اگر تعداد 1 است، کاری نکن
+                if (oldQty <= 1) return;
+
+                var qty = oldQty - 1;
                 qtyEl.textContent = qty;
+
                 Cart.updateQuantity(item.dataset.itemId, qty).then(function(data) {
                     if (data && data.status === 'success') {
                         updateCartPageSummary(data);
+                    } else {
+                        qtyEl.textContent = oldQty;
                     }
                 });
             };
@@ -99,6 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (confirm('آیا از حذف این آیتم اطمینان دارید؟')) {
                     Cart.remove(item.dataset.itemId).then(function(data) {
                         if (data && data.status === 'success') {
+                            // اگر سبد خالی شد، مستقیم ریلود کن
+                            if (data.total_items === 0) {
+                                location.reload();
+                                return;
+                            }
                             item.remove();
                             updateCartPageSummary(data);
                         }
@@ -110,13 +126,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // آپدیت قیمت کل در صفحه cart/index بدون reload
     function updateCartPageSummary(data) {
+        // اگر سبد خالی شد، ریلود کن
+        if (data.total_items !== undefined && data.total_items === 0) {
+            location.reload();
+            return;
+        }
+
+        // آپدیت مبلغ قابل پرداخت
         if (data.total_price !== undefined) {
             var totalEl = document.getElementById('cart-page-total');
             if (totalEl) totalEl.textContent = Number(data.total_price).toLocaleString('fa-IR') + ' تومان';
         }
+
+        // آپدیت تعداد
         if (data.total_items !== undefined) {
             var countEl = document.getElementById('cart-page-count');
-            if (countEl) countEl.textContent = data.total_items + ' کالا در سبد خرید شما';
+            if (countEl) {
+                countEl.textContent = data.total_items + ' کالا در سبد خرید شما';
+            }
+        }
+
+        // آپدیت جمع کل با id مستقیم
+        if (data.subtotal !== undefined) {
+            var subtotalEl = document.getElementById('cart-subtotal');
+            if (subtotalEl) {
+                subtotalEl.textContent = Number(data.subtotal).toLocaleString('fa-IR') + ' تومان';
+            }
+        }
+
+        // آپدیت تخفیف با id مستقیم
+        if (data.total_discount !== undefined) {
+            var discountEl = document.getElementById('cart-discount');
+            var discountRow = document.getElementById('cart-discount-row');
+            if (discountEl && discountRow) {
+                if (data.total_discount > 0) {
+                    discountEl.textContent = '-' + Number(data.total_discount).toLocaleString('fa-IR') + ' تومان';
+                    discountRow.style.display = 'flex';
+                } else {
+                    discountRow.style.display = 'none';
+                }
+            }
         }
     }
 

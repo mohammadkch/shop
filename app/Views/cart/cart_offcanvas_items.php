@@ -16,10 +16,10 @@
 
                 <div class="w-2/3 space-y-2 px-2">
                     <h3 class="font-bold leading-7 text-gray-800 dark:text-gray-100 text-sm line-clamp-2">
-                        <a href="/product/<?= $item['slug'] ?>"><?= esc($item['product_name']) ?></a>
+                        <a href="<?= base_url('product/'.$item['slug']) ?>"><?= esc($item['product_name']) ?></a>
                     </h3>
 
-                    <!-- ====== اضافه کردن رنگ و سایز ====== -->
+                    <!-- ====== رنگ و سایز ====== -->
                     <div class="flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-400">
                         <?php if (!empty($item['color_value'])): ?>
                             <span class="inline-flex items-center gap-1">
@@ -34,7 +34,18 @@
 
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-500 dark:text-gray-400">تعداد: <?= $item['quantity'] ?></span>
-                        <span class="text-sm font-bold text-gray-800 dark:text-white"><?= number_format($item['total_price']) ?> تومان</span>
+
+                        <!-- ====== قیمت با تخفیف ====== -->
+                        <div class="text-end">
+                            <?php if (isset($item['has_discount']) && $item['has_discount']): ?>
+                                <del class="text-xs text-gray-400 dark:text-gray-500 block">
+                                    <?= number_format($item['original_price']) ?> تومان
+                                </del>
+                            <?php endif; ?>
+                            <span class="text-sm font-bold text-gray-800 dark:text-white">
+                                <?= number_format($item['final_price']) ?> تومان
+                            </span>
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between">
@@ -68,6 +79,6 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
         <p class="text-gray-500 dark:text-gray-400">سبد خرید شما خالی است</p>
-        <a href="/" class="text-primary hover:underline text-sm mt-2 inline-block">مشاهده محصولات</a>
+        <a href="<?= site_url('category') ?>" class="text-primary hover:underline text-sm mt-2 inline-block">مشاهده محصولات</a>
     </div>
 <?php endif; ?>

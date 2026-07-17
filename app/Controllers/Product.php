@@ -17,39 +17,32 @@ class Product extends BaseController
     {
         helper(['menu']);
 
-        $product = $this->productService->getProductBySlug($slug);
+        // دریافت تمام داده‌های مورد نیاز از سرویس
+        $data = $this->productService->prepareProductShowData($slug);
 
-        if (!$product) {
+        if (!$data) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('محصول مورد نظر یافت نشد');
         }
 
-        $images = $this->productService->getProductImages($product['id']);
-        $options = $this->productService->getProductOptions($product['id']);
-        $priceInfo = $this->productService->getFinalPrice($product);
-        $totalStock = $this->productService->getStock($product['id']);
+        // ساخت breadcrumb
+        $breadcrumb = $this->breadcrumbService->buildFromProduct($data['product']);
+        $data['breadcrumb'] = $breadcrumb;
 
-        $relatedProducts = [];
-        if (!empty($product['category']) && isset($product['category']['id'])) {
-            $relatedProducts = $this->productService->getRelatedProducts(
-                $product['id'],
-                $product['category']['id']
-            );
-        }
+        // متا تگ‌ها
+        $data['meta_title'] = $data['product']['meta_title'] ?? $data['product']['name'];
+        $data['meta_description'] = $data['product']['meta_description']
+            ?? substr(strip_tags($data['product']['description'] ?? ''), 0, 160);
 
-        // ====== ساخت breadcrumb ======
-        $breadcrumb = $this->breadcrumbService->buildFromProduct($product);
+        // ادغام با viewData موجود (که از BaseController می‌آید)
+        $this->viewData = array_merge($this->viewData, $data);
 
-        $this->viewData['product'] = $product;
-        $this->viewData['images'] = $images;
-        $this->viewData['options'] = $options;
-        $this->viewData['priceInfo'] = $priceInfo;
-        $this->viewData['totalStock'] = $totalStock;
-        $this->viewData['relatedProducts'] = $relatedProducts;
-        $this->viewData['breadcrumb'] = $breadcrumb;
-
-        // سئو
-        $this->viewData['meta_title'] = $product['meta_title'] ?? $product['name'];
-        $this->viewData['meta_description'] = $product['meta_description'] ?? substr(strip_tags($product['description'] ?? ''), 0, 160);
+//        echo '<pre>';
+//        print_r($this->viewData['options']);
+//        print_r($this->viewData['priceInfo']);
+//        print_r($this->viewData['totalStock']); echo '<hr>';
+//        print_r($this->viewData['selectedStock']);
+//        print_r($this->viewData['priceMap']);
+//        exit();
 
         return view('product/show', $this->viewData);
     }

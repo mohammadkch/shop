@@ -20,6 +20,31 @@ $routes->get('/dbtest', function () {
 
 $routes->group('', ['filter' => 'parse_url'], function ($routes) {
 
+    // ==============================================
+    // روت‌های پنل کاربری (نیازمند لاگین)
+    // ==============================================
+    $routes->group('customer', ['filter' => 'customer_auth'], function($routes) {
+        $routes->get('', 'Customer\Dashboard::index');
+        $routes->get('dashboard', 'Customer\Dashboard::index');
+        $routes->get('profile', 'Customer\Profile::index');
+        $routes->post('profile/update', 'Customer\Profile::update');
+        $routes->post('profile/change-password', 'Customer\Profile::changePassword');
+    });
+
+    // ==============================================
+    // روت‌های checkout (نیازمند لاگین)
+    // ==============================================
+    $routes->group('checkout', ['filter' => 'customer_auth'], function($routes) {
+        $routes->get('shipping', 'Checkout::shipping');
+        $routes->get('shipping/(:num)', 'Checkout::shipping/$1');
+        $routes->post('save-shipping', 'Checkout::saveShipping');
+        $routes->post('add-address', 'Checkout::addAddress');
+        $routes->post('delete-address', 'Checkout::deleteAddress');
+        $routes->post('get-shipping-prices', 'Checkout::getShippingPrices');
+        $routes->get('get-cities/(:num)', 'Checkout::getCities/$1');
+        $routes->get('payment/(:num)', 'Checkout::payment/$1');
+    });
+
     $routes->get('/', 'Home::index');
     $routes->get('home', 'Home::index');
     $routes->get('product/(:any)', 'Product::show/$1');
@@ -36,6 +61,20 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
     $routes->post('cart/update', 'Cart::update');
     $routes->get('cart/count', 'Cart::count');
     $routes->get('cart/offcanvas', 'Cart::offcanvas');
+    $routes->get('cart/proceed-to-checkout', 'Cart::proceedToCheckout');
+
+    // ==============================================
+    // روت‌های لاگین (عمومی)
+    // ==============================================
+    $routes->get('login', 'Auth\Login::index');
+    $routes->post('login/check-mobile', 'Auth\Login::checkMobile');
+    $routes->post('login/verify-otp', 'Auth\Login::verifyOtp');
+    $routes->post('login/password', 'Auth\Login::loginWithPassword');
+    $routes->get('customer/complete-profile', 'Auth\Login::completeProfile');
+    $routes->post('login/save-profile', 'Auth\Login::saveProfile');
+    $routes->get('logout', 'Auth\Login::logout');
+
+
 });
 
 // --------------------

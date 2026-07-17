@@ -3,21 +3,66 @@
 <?= $this->section('content') ?>
     <section class="py-5">
         <div class="container">
-            <!-- عنوان صفحه -->
-            <div class="mb-6">
-                <h1 class="text-2xl font-black text-gray-900 dark:text-gray-100">سبد خرید</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-1" id="cart-page-count">
-                    <?= isset($cart['total_items']) && $cart['total_items'] > 0
-                            ? number_format($cart['total_items']) . ' کالا در سبد خرید شما'
-                            : 'سبد خرید شما خالی است' ?>
-                </p>
-            </div>
 
+            <!-- ====== استپ‌های خرید (timeline) ====== -->
+            <div class="bg-white dark:bg-custom-dark rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-2 mb-2 sticky top-0">
+                <div class="timeline-horizontal mb-0 flex items-center justify-between">
+                    <!--Step 1 - Completed-->
+                    <div class="timeline-step active flex flex-col items-center text-center">
+                        <div class="timeline-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437m0 0L6.75 12.75m-1.644-7.478h13.052c.883 0 1.542.83 1.349 1.69l-1.2 5.25a1.35 1.35 0 01-1.312 1.06H6.75m0 0L5.25 6.75m1.5 6a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm10.5 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"></path>
+                            </svg>
+                        </div>
+                        <div class="timeline-title">سبد خرید</div>
+                    </div>
+
+                    <!--Step 2 - Active-->
+                    <div class="timeline-step flex flex-col items-center text-center">
+                        <div class="timeline-icon dark:bg-gray-700 dark:text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                        </div>
+                        <div class="timeline-title dark:text-white">انتخاب آدرس</div>
+                    </div>
+
+                    <!--Step 3-->
+                    <div class="timeline-step flex flex-col items-center text-center">
+                        <div class="timeline-icon dark:bg-gray-700 dark:text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5m-16.5 6h3m3 0h3m-9 5.25h12a2.25 2.25 0 002.25-2.25V7.5A2.25 2.25 0 0021.75 5.25H5.25A2.25 2.25 0 003 7.5v9.75A2.25 2.25 0 005.25 18.75z" />
+                            </svg>
+                        </div>
+                        <div class="timeline-title dark:text-white">پرداخت</div>
+                    </div>
+
+                    <!--Step 4-->
+                    <div class="timeline-step flex flex-col items-center text-center">
+                        <div class="timeline-icon dark:bg-gray-700 dark:text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                        </div>
+                        <div class="timeline-title dark:text-white">تکمیل</div>
+                    </div>
+                </div>
+            </div>
             <?php if (isset($cart['items']) && !empty($cart['items'])): ?>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- لیست محصولات -->
                     <div class="lg:col-span-2 cart-page-items">
                         <div class="bg-white dark:bg-custom-dark rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                            <h2 class="font-black text-lg mb-4 relative pb-4 text-gray-900 dark:text-gray-200
+                                       before:absolute before:start-0 before:bottom-0 before:size-2 before:rounded-full before:bg-primary
+                                       after:absolute after:w-40 after:h-2 after:bottom-0 after:start-4 after:bg-primary after:rounded-lg">
+                                سبد خرید
+                            </h2>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1 mb-2" id="cart-page-count">
+                                <?= isset($cart['total_items']) && $cart['total_items'] > 0
+                                        ? number_format($cart['total_items']) . ' کالا در سبد خرید شما'
+                                        : null ?>
+                            </p>
                             <div class="space-y-4">
                                 <?php foreach ($cart['items'] as $item): ?>
                                     <div class="cart-item flex flex-wrap sm:space-y-0 space-y-5 dark:bg-zinc-800 bg-custom-light items-start gap-4 border border-gray-200 dark:border-gray-700 rounded-xl p-4"
@@ -36,74 +81,81 @@
 
                                         <!-- اطلاعات -->
                                         <div class="flex-1 space-y-3">
-                                            <h3 class="font-bold text-gray-800 dark:text-white line-clamp-2">
-                                                <a href="<?= base_url('/product/'.$item['slug']) ?>"
-                                                   class="hover:text-primary transition-colors">
-                                                    <?= esc($item['product_name']) ?>
-                                                </a>
-                                            </h3>
+                                            <div class="flex items-start justify-between">
+                                                <div class="flex-1">
+                                                    <h3 class="font-bold text-gray-800 dark:text-white line-clamp-2">
+                                                        <a href="<?= base_url('/product/'.$item['slug']) ?>"
+                                                           class="hover:text-primary transition-colors">
+                                                            <?= esc($item['product_name']) ?>
+                                                        </a>
+                                                    </h3>
 
-                                            <!-- گزینه‌ها (رنگ و سایز) -->
-                                            <div class="flex flex-wrap gap-2 text-sm text-gray-600 dark:text-gray-400">
-                                                <?php if (!empty($item['color_value'])): ?>
-                                                    <span class="inline-flex items-center gap-1">
-                                                    <span class="inline-block w-3 h-3 rounded-full"
-                                                          style="background-color: <?= $item['color_code'] ?? '#ccc' ?>"></span>
-                                                    <?= esc($item['color_value']) ?>
-                                                </span>
-                                                <?php endif; ?>
-                                                <?php if (!empty($item['size_value'])): ?>
-                                                    <span class="inline-flex items-center gap-1">
-                                                    سایز: <?= esc($item['size_value']) ?>
-                                                </span>
-                                                <?php endif; ?>
+                                                    <!-- گزینه‌ها (رنگ و سایز) -->
+                                                    <div class="flex flex-wrap gap-2 text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                                        <?php if (!empty($item['color_value'])): ?>
+                                                            <span class="inline-flex items-center gap-1">
+                            <span class="inline-block w-3 h-3 rounded-full"
+                                  style="background-color: <?= $item['color_code'] ?? '#ccc' ?>"></span>
+                            <?= esc($item['color_value']) ?>
+                        </span>
+                                                        <?php endif; ?>
+                                                        <?php if (!empty($item['size_value'])): ?>
+                                                            <span class="inline-flex items-center gap-1">
+                            سایز: <?= esc($item['size_value']) ?>
+                        </span>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+
+                                                <!-- قیمت و تخفیف (بالا - سمت راست) -->
+                                                <div class="flex flex-col items-end gap-1">
+                                                    <?php if (isset($item['has_discount']) && $item['has_discount']): ?>
+                                                        <div class="flex items-center gap-2">
+                                                            <del class="text-sm text-gray-400 dark:text-gray-500">
+                                                                <?= number_format($item['original_price']) ?>
+                                                            </del>
+                                                            <span class="bg-secondary-500 text-white text-xs font-bold px-2 py-0.5 rounded-xl rounded-bl-md shadow shadow-red-500/50">
+                            <?= round((($item['original_price'] - $item['final_price']) / $item['original_price']) * 100) ?>%
+                        </span>
+                                                        </div>
+                                                        <span class="text-lg font-bold text-gray-900 dark:text-white">
+                        <?= number_format($item['final_price']) ?>
+                        <span class="text-xs font-normal text-gray-600 dark:text-gray-400">تومان</span>
+                    </span>
+                                                    <?php else: ?>
+                                                        <span class="text-lg font-bold text-gray-900 dark:text-white">
+                        <?= number_format($item['final_price']) ?>
+                        <span class="text-xs font-normal text-gray-600 dark:text-gray-400">تومان</span>
+                    </span>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
 
-                                            <!-- کنترل‌های تعداد و حذف -->
+                                            <!-- کنترل‌های تعداد و حذف (پایین) -->
                                             <div class="flex items-center justify-between flex-wrap gap-2">
                                                 <div class="flex items-center gap-3">
                                                     <!-- کنترل تعداد -->
                                                     <div class="flex bg-white dark:bg-zinc-700 items-center border border-gray-300 dark:border-gray-600 rounded-lg">
                                                         <button class="cart-qty-minus w-8 h-8 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-600 rounded-r-lg transition-colors">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
-                                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                      stroke-width="2" d="M20 12H4"/>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
                                                             </svg>
                                                         </button>
                                                         <span class="cart-qty-text px-3 py-1 text-gray-800 dark:text-white min-w-[2rem] text-center"><?= $item['quantity'] ?></span>
                                                         <button class="cart-qty-plus w-8 h-8 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-600 rounded-l-lg transition-colors">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
-                                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                      stroke-width="2" d="M12 4v16m8-8H4"/>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                                             </svg>
                                                         </button>
                                                     </div>
 
                                                     <!-- دکمه حذف -->
                                                     <button class="cart-remove-btn text-red-500 hover:text-red-700 transition-colors flex items-center gap-1 text-sm">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
-                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                  stroke-width="2"
-                                                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                                         </svg>
                                                         حذف
                                                     </button>
-                                                </div>
-
-                                                <!-- قیمت -->
-                                                <div class="text-end">
-                                                    <?php if (isset($item['has_discount']) && $item['has_discount']): ?>
-                                                        <del class="text-sm text-gray-400 dark:text-gray-500 block">
-                                                            <?= number_format($item['original_price']) ?>
-                                                        </del>
-                                                    <?php endif; ?>
-                                                    <span class="text-lg font-bold text-gray-900 dark:text-white">
-                                                    <?= number_format($item['final_price']) ?>
-                                                    <span class="text-xs font-normal text-gray-600 dark:text-gray-400">تومان</span>
-                                                </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,17 +179,17 @@
                                 <div class="space-y-3 mb-4">
                                     <div class="flex justify-between">
                                         <span class="text-gray-600 dark:text-gray-400">جمع کل:</span>
-                                        <span class="text-gray-800 dark:text-white font-medium">
+                                        <span class="text-gray-800 dark:text-white font-medium" id="cart-subtotal">
                                             <?= number_format($cart['subtotal']) ?> تومان
                                         </span>
                                     </div>
 
                                     <?php if (isset($cart['total_discount']) && $cart['total_discount'] > 0): ?>
-                                        <div class="flex justify-between">
+                                        <div class="flex justify-between" id="cart-discount-row">
                                             <span class="text-gray-600 dark:text-gray-400">تخفیف:</span>
-                                            <span class="text-green-600 dark:text-green-400 font-medium">
-                                        -<?= number_format($cart['total_discount']) ?> تومان
-                                    </span>
+                                            <span class="text-green-600 dark:text-green-400 font-medium" id="cart-discount">
+                                                -<?= number_format($cart['total_discount']) ?> تومان
+                                            </span>
                                         </div>
                                     <?php endif; ?>
 
@@ -156,14 +208,15 @@
                                     </div>
                                 </div>
 
-                                <button class="w-full bg-primary hover:bg-primary-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                                <a href="<?= base_url('cart/proceed-to-checkout') ?>"
+                                   class="w-full bg-primary hover:bg-primary-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                          viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                                     </svg>
                                     ادامه فرآیند پرداخت
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>

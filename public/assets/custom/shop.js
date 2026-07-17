@@ -128,7 +128,15 @@ const Cart = {
 // مدیریت کانواس و بج (مشترک بین همه صفحه‌ها)
 // ==============================================
 const ShopCart = {
+    // تشخیص اینکه در صفحه سبد خرید هستیم یا نه
+    isCartPage: function() {
+        return document.querySelector('.cart-page-items') !== null;
+    },
+
     updateBadge: function() {
+        // اگر در صفحه سبد خرید هستیم، کاری نکن
+        if (this.isCartPage()) return;
+
         fetch(BASE_URL + 'cart/count')
             .then(r => r.json())
             .then(function(data) {
@@ -146,13 +154,42 @@ const ShopCart = {
     },
 
     loadOffcanvas: function() {
+        // اگر در صفحه سبد خرید هستیم، کاری نکن
+        if (this.isCartPage()) return;
+
         fetch(BASE_URL + 'cart/offcanvas')
-            .then(r => r.text())
-            .then(function(html) {
+            .then(r => r.json())
+            .then(function(data) {
                 var container = document.querySelector('#offcanvas-left main');
                 if (container) {
-                    container.innerHTML = html;
+                    container.innerHTML = data.html;
                     ShopCart.bindOffcanvasEvents();
+                }
+
+                // آپدیت جمع کل
+                var totalEl = document.getElementById('offcanvas-total');
+                var subtotalContainer = document.getElementById('offcanvas-subtotal-container');
+                var subtotalValueEl = document.getElementById('offcanvas-subtotal-value');
+                var discountBadge = document.getElementById('offcanvas-discount-badge');
+                var discountPercentEl = document.getElementById('offcanvas-discount-percent');
+
+                if (totalEl && data.total_price !== undefined) {
+                    totalEl.textContent = data.total_price.toLocaleString('fa-IR') + ' تومان';
+                }
+
+                if (data.total_discount > 0) {
+                    if (subtotalContainer && subtotalValueEl) {
+                        subtotalValueEl.textContent = data.subtotal.toLocaleString('fa-IR');
+                        subtotalContainer.style.display = 'flex';
+                    }
+
+                    if (discountBadge && discountPercentEl && data.discount_percent > 0) {
+                        discountPercentEl.textContent = data.discount_percent;
+                        discountBadge.style.display = 'inline-block';
+                    }
+                } else {
+                    if (subtotalContainer) subtotalContainer.style.display = 'none';
+                    if (discountBadge) discountBadge.style.display = 'none';
                 }
             })
             .catch(function(error) {
@@ -180,8 +217,14 @@ const ShopCart = {
                 e.preventDefault();
                 var item = this.closest('.cart-item');
                 if (!item) return;
-                var qty = parseInt(item.querySelector('.cart-qty-text').textContent) - 1;
-                if (qty < 1) qty = 1;
+                var qtyEl = item.querySelector('.cart-qty-text');
+                var oldQty = parseInt(qtyEl.textContent);
+
+                // اگر تعداد 1 است، کاری نکن
+                if (oldQty <= 1) return;
+
+                var qty = oldQty - 1;
+                qtyEl.textContent = qty;
                 Cart.updateQuantity(item.dataset.itemId, qty);
             };
         });

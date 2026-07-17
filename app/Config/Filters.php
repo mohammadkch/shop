@@ -37,7 +37,8 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'parse_url'     => UrlFilter::class,
-        'admin_auth'    => AdminAuthFilter::class
+        'admin_auth'    => AdminAuthFilter::class,
+        'customer_auth' => \App\Filters\CustomerAuthFilter::class,
     ];
 
     /**

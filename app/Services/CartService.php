@@ -4,23 +4,23 @@ namespace App\Services;
 
 use App\Models\CartModel;
 use App\Models\CartItemModel;
-use App\Models\ProductOptionModel;
 use App\Models\ProductModel;
+use App\Models\ProductPriceModel;
 
 class CartService
 {
     protected $cartModel;
     protected $cartItemModel;
-    protected $productOptionModel;
     protected $productModel;
+    protected $productPriceModel;
     protected $session;
 
     public function __construct()
     {
         $this->cartModel = new CartModel();
         $this->cartItemModel = new CartItemModel();
-        $this->productOptionModel = new ProductOptionModel();
         $this->productModel = new ProductModel();
+        $this->productPriceModel = new ProductPriceModel();
         $this->session = \Config\Services::session();
     }
 
@@ -72,76 +72,91 @@ class CartService
         $this->cartModel->delete($guestCartId);
     }
 
-    /**
-     * محاسبه قیمت نهایی محصول با تخفیف
-     */
-    public function calculatePrice($productId, $colorOptionId = null, $sizeOptionId = null)
-    {
-        $option = $this->productOptionModel
-            ->where('product_id', $productId)
-            ->whereIn('option_id', [$colorOptionId, $sizeOptionId])
-            ->first();
-
-        // ۲. دریافت محصول
-        $product = $this->productModel->find($productId);
-
-        // ۳. قیمت پایه
-        if ($option && $option['price'] > 0) {
-            $basePrice = $option['price'];
-        } else {
-            $basePrice = $product['price'] ?? 0;
-        }
-
-        // ۴. تخفیف روی محصول
-        $now = time();
-        if ($product['sale_price'] && $product['sale_price'] > 0 &&
-            $product['sale_start_date'] <= $now &&
-            $product['sale_end_date'] >= $now) {
-            return $product['sale_price'];
-        }
-
-        return $basePrice;
-    }
-
-    /**
-     * محاسبه موجودی برای ترکیب رنگ و سایز
-     */
     public function getStock($productId, $colorOptionId = null, $sizeOptionId = null)
     {
-        if (!$colorOptionId && !$sizeOptionId) {
-            // اگر هیچ آپشنی انتخاب نشده، مجموع موجودی همه آپشن‌ها
-            $options = $this->productOptionModel
-                ->where('product_id', $productId)
-                ->findAll();
-            $total = 0;
-            foreach ($options as $opt) {
-                $total += $opt['stock'];
+        // ۱. اگه رنگ یا سایز مشخص شده، اول رکورد خاص رو چک کن
+        if ($colorOptionId || $sizeOptionId) {
+            $specificRecord = $this->productPriceModel->getPriceForCombination($productId, $colorOptionId, $sizeOptionId);
+            if ($specificRecord) {
+                return (int) $specificRecord['stock'];
             }
-            return $total;
+            // اگه رکورد خاص پیدا نشد → موجودی ۰
+            return 0;
         }
 
-        $option = $this->productOptionModel
+        // ۲. اگه رنگ و سایز مشخص نشده، موجودی کل رو جمع کن
+        $records = $this->productPriceModel
             ->where('product_id', $productId)
-            ->whereIn('option_id', [$colorOptionId, $sizeOptionId])
+            ->findAll();
+        $total = 0;
+        foreach ($records as $record) {
+            $total += (int) $record['stock'];
+        }
+        return $total;
+    }
+
+    public function calculatePrice($productId, $colorOptionId = null, $sizeOptionId = null)
+    {
+        $price = 0;
+        $salePrice = null;
+
+        // ۱. اگه رنگ یا سایز مشخص شده، رکورد خاص رو پیدا کن
+        if ($colorOptionId || $sizeOptionId) {
+            $specificRecord = $this->productPriceModel->getPriceForCombination($productId, $colorOptionId, $sizeOptionId);
+            if ($specificRecord) {
+                $price = (float) $specificRecord['price'];
+                $salePrice = isset($specificRecord['sale_price']) && $specificRecord['sale_price'] > 0
+                    ? (float) $specificRecord['sale_price']
+                    : null;
+
+                // اگه sale_price وجود داره و از price کمتره، اون رو برگردون (بدون چک تاریخ)
+                if ($salePrice !== null && $salePrice < $price) {
+                    return $salePrice;
+                }
+                return $price;
+            }
+        }
+
+        // ۲. اگه رکورد خاص نبود یا رنگ/سایز مشخص نشده، از رکورد پیش‌فرض استفاده کن
+        $defaultRecord = $this->productPriceModel
+            ->where('product_id', $productId)
+            ->where('is_default', 1)
             ->first();
 
-        return $option ? $option['stock'] : 0;
+        if ($defaultRecord) {
+            $price = (float) $defaultRecord['price'];
+            $salePrice = isset($defaultRecord['sale_price']) && $defaultRecord['sale_price'] > 0
+                ? (float) $defaultRecord['sale_price']
+                : null;
+
+            if ($salePrice !== null && $salePrice < $price) {
+                return $salePrice;
+            }
+            return $price;
+        }
+
+        return 0;
     }
 
     public function addItem($productId, $colorOptionId = null, $sizeOptionId = null, $quantity = 1)
     {
         $cart = $this->getCart();
 
-        // ۱. اعتبارسنجی موجودی
+        // ۱. موجودی
         $stock = $this->getStock($productId, $colorOptionId, $sizeOptionId);
         if ($stock < $quantity) {
             return ['status' => 'error', 'message' => 'موجودی کافی نیست'];
         }
 
-        // ۲. محاسبه قیمت
-        $price = $this->calculatePrice($productId, $colorOptionId, $sizeOptionId);
+        // ۲. دریافت قیمت‌ها
+        $originalPrice = $this->getOriginalPrice($productId, $colorOptionId, $sizeOptionId);
+        $finalPrice = $this->calculatePrice($productId, $colorOptionId, $sizeOptionId);
 
-        // ۳. بررسی آیا این ترکیب قبلاً در سبد هست
+        // ۳. sale_price: اگه قیمت نهایی از قیمت اصلی کمتره، sale_price رو ست کن
+//        $salePrice = ($finalPrice < $originalPrice) ? $finalPrice : null;
+        $salePrice = $finalPrice;
+
+        // ۴. بررسی آیتم موجود
         $existing = $this->cartItemModel->getItemByProductAndOptions(
             $cart['id'],
             $productId,
@@ -156,7 +171,8 @@ class CartService
             }
             $this->cartItemModel->update($existing['id'], [
                 'quantity' => $newQuantity,
-                'price' => $price
+                'price' => $originalPrice,
+                'sale_price' => $salePrice
             ]);
         } else {
             $this->cartItemModel->insert([
@@ -165,11 +181,34 @@ class CartService
                 'color_option_id' => $colorOptionId,
                 'size_option_id' => $sizeOptionId,
                 'quantity' => $quantity,
-                'price' => $price
+                'price' => $originalPrice,
+                'sale_price' => $salePrice
             ]);
         }
 
         return ['status' => 'success', 'message' => 'به سبد خرید اضافه شد'];
+    }
+
+    /**
+     * دریافت قیمت اصلی (بدون تخفیف)
+     */
+    private function getOriginalPrice($productId, $colorOptionId = null, $sizeOptionId = null)
+    {
+        // اگه رنگ یا سایز مشخص شده، رکورد خاص رو پیدا کن
+        if ($colorOptionId || $sizeOptionId) {
+            $specificRecord = $this->productPriceModel->getPriceForCombination($productId, $colorOptionId, $sizeOptionId);
+            if ($specificRecord) {
+                return (float) $specificRecord['price'];
+            }
+        }
+
+        // اگه رکورد خاص نبود یا رنگ/سایز مشخص نشده، از رکورد پیش‌فرض استفاده کن
+        $defaultRecord = $this->productPriceModel
+            ->where('product_id', $productId)
+            ->where('is_default', 1)
+            ->first();
+
+        return $defaultRecord ? (float) $defaultRecord['price'] : 0;
     }
 
     public function removeItem($itemId)
@@ -239,8 +278,6 @@ class CartService
         return $this->cartItemModel->getTotalPrice($cart['id']);
     }
 
-    // app/Services/CartService.php
-
     public function getCartSummary()
     {
         $cart = $this->getCart();
@@ -260,51 +297,25 @@ class CartService
         $totalItems = 0;
 
         foreach ($items as &$item) {
-            // محاسبه قیمت اصلی (قیمت پایه محصول)
-            $originalPrice = $item['price'];
+            // قیمت اصلی (price) و قیمت تخفیفی (sale_price)
+            $originalPrice = (float) $item['price'];
+            $salePrice = isset($item['sale_price']) && $item['sale_price'] > 0 ? (float) $item['sale_price'] : null;
 
-            // دریافت اطلاعات محصول برای بررسی تخفیف
-            $productModel = model('App\Models\ProductModel');
-            $product = $productModel->find($item['product_id']);
+            // قیمت نهایی: اگه sale_price وجود داره و از price کمتره، از sale_price استفاده کن
+            $finalPrice = ($salePrice !== null && $salePrice < $originalPrice) ? $salePrice : $originalPrice;
+            $hasDiscount = ($finalPrice < $originalPrice);
 
-            // محاسبه قیمت نهایی با تخفیف
-            $finalPrice = $originalPrice;
-            $hasDiscount = false;
-
-            if ($product && !empty($product['sale_price']) && $product['sale_price'] > 0) {
-                // بررسی تاریخ تخفیف
-                $now = time();
-                $saleStart = $product['sale_start_date'] ?? null;
-                $saleEnd = $product['sale_end_date'] ?? null;
-
-                $isSaleActive = true;
-                if ($saleStart && $saleStart > $now) {
-                    $isSaleActive = false;
-                }
-                if ($saleEnd && $saleEnd < $now) {
-                    $isSaleActive = false;
-                }
-
-                if ($isSaleActive && $product['sale_price'] < $originalPrice) {
-                    $finalPrice = $product['sale_price'];
-                    $hasDiscount = true;
-                }
-            }
-
-            // محاسبه قیمت کل آیتم
             $itemTotal = $finalPrice * $item['quantity'];
             $itemOriginalTotal = $originalPrice * $item['quantity'];
 
-            // اضافه کردن اطلاعات به آیتم
             $item['original_price'] = $originalPrice;
             $item['final_price'] = $finalPrice;
+            $item['sale_price'] = $salePrice;
             $item['has_discount'] = $hasDiscount;
             $item['total_price'] = $itemTotal;
             $item['original_total'] = $itemOriginalTotal;
 
-            // اضافه کردن اطلاعات رنگ و سایز
             if (!empty($item['color_value'])) {
-                // دریافت کد رنگ از جدول option
                 $optionModel = model('App\Models\OptionModel');
                 $colorOption = $optionModel->find($item['color_option_id']);
                 $item['color_code'] = $colorOption['color_code'] ?? null;

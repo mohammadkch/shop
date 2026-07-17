@@ -169,6 +169,10 @@ class FlashMessages
             'message' => 'هیچ داده‌ای برای نمایش وجود ندارد.',
             'type' => 'info'
         ],
+        'empty_cart' => [
+            'message' => 'سبد خرید شما خالی است',
+            'type' => 'info'
+        ],
     ];
 
     public static function get($key, $customMessage = null)

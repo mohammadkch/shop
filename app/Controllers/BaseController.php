@@ -26,7 +26,7 @@ abstract class BaseController extends Controller
      */
 
     // protected $session;
-    protected $helpers = [];
+    protected $helpers = ['html', 'flash'];
 
 
     protected $viewPath = '' ;
@@ -38,7 +38,6 @@ abstract class BaseController extends Controller
     {
 
         parent::initController($request, $response, $logger);
-        helper('html');
         $this->urlLib = service('Url');
         $menuService = service('menuService');
 
@@ -47,6 +46,7 @@ abstract class BaseController extends Controller
             'product'  => ['product', 'cart'],
             'cart'     => ['cart'],
             'home'     => ['home'],
+            'checkout' => ['checkout'],
         ];
 
         if (!$request->isAJAX()) {
@@ -57,12 +57,35 @@ abstract class BaseController extends Controller
         $this->viewData['mediaPath'] = base_url('images/');
 
         $className = $this->urlLib->getClassName();
-        $this->viewData['controllerScripts'] = $scriptMap[$className] ?? [];
+        $defaultScripts = $scriptMap[$className] ?? [];
+        // اگر قبلاً چیزی در controllerScripts وجود داره، با هم merge کن
+        if (!empty($this->viewData['controllerScripts'])) {
+            $this->viewData['controllerScripts'] = array_unique(array_merge($this->viewData['controllerScripts'], $defaultScripts));
+        } else {
+            $this->viewData['controllerScripts'] = $defaultScripts;
+        }
 
         $this->viewData['className'] = $this->urlLib->getClassName();
         $this->viewData['controllerName'] = $this->urlLib->getControllerName();
         $this->viewData['methodName'] = $this->urlLib->getMethodName();
         $this->viewData['title'] = $this->urlLib->getTitle();
+
+        // ===================================================
+        // اضافه کردن دیتای لاگین کاربر به همه صفحات
+        // ===================================================
+        $auth = service('customerAuth');
+        $isLoggedIn = $auth->isLoggedIn();
+        $customer = null;
+        $customerName = '';
+
+        if ($isLoggedIn) {
+            $customer = $auth->getCustomer();
+            $customerName = $auth->getName();
+        }
+
+        $this->viewData['isLoggedIn'] = $isLoggedIn;
+        $this->viewData['customer'] = $customer;
+        $this->viewData['customerName'] = $customerName;
     }
     protected function flash($key, $customMessage = null)
     {

@@ -20,9 +20,13 @@
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/story-player/styles.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>css/app.css">
+
+    <!-- ====== فایل‌های داخل custom ====== -->
+    <script src="<?= $assetsPath ?>custom/shop.js"></script>
 </head>
 
 <body class="relative bg-custom-light dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 transition-colors duration-300" >
+<?= showFlash() ?>
 <?= $this->include('_layout_/layout_header') ?>
 
 <?= $this->renderSection('content') ?>
@@ -33,7 +37,7 @@
 
 <?= $this->include('_layout_/partials/menu_offcanvas') ?>
 
-<?= $this->include('_layout_/partials/login_modal') ?>
+<?php //= $this->include('_layout_/partials/login_modal') ?>
 
 <?= $this->include('_layout_/partials/nav_mobile') ?>
 

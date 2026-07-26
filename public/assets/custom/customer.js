@@ -60,7 +60,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // ریفرش صفحه بعد از 1.5 ثانیه برای آپدیت سشن
                     setTimeout(() => {
-                        window.location.reload();
+                        if (data.redirect_url) {
+                            window.location.replace(data.redirect_url);
+                        } else {
+                            window.location.reload();
+                        }
                     }, 1500);
                 })
                 .catch(error => {

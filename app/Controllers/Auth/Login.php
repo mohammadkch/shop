@@ -25,7 +25,7 @@ class Login extends BaseController
     public function index()
     {
         // اگه کاربر لاگین کرده، بره پیشخوان
-        if (session()->get('customer_id')) {
+        if ( $this->auth->isLoggedIn()) {
             return redirect()->to('/customer/dashboard');
         }
 
@@ -142,6 +142,7 @@ class Login extends BaseController
             $this->auth->login($customer['id'], [
                 'firstname' => $customer['firstname'],
                 'lastname' => $customer['lastname'],
+                'gender' => $customer['gender'],
                 'mobile' => $customer['mobile'],
                 'email' => $customer['email'] ?? '',
                 'avatar' => $customer['avatar'] ?? '',
@@ -156,6 +157,7 @@ class Login extends BaseController
                 'mobile' => $mobile,
                 'firstname' => '',
                 'lastname' => '',
+                'gender' => null,
                 'is_active' => 1,
                 'created_at' => time(),
                 'updated_at' => time()
@@ -171,14 +173,14 @@ class Login extends BaseController
 
         session()->remove(['otp_mobile', 'otp_expires', 'has_password']);
 
-        $isComplete = (
-            !empty($customer['firstname']) &&
-            !empty($customer['lastname']) &&
-            !empty($customer['gender'])
-        );
-        $redirectUrl = $isComplete ? $this->getRedirectUrl() : site_url('customer/profile');
 
-        $this->flash('login_success');
+        if ($this->auth->hasMinimunProfile()) {
+            $this->flash('login_success');
+            $redirectUrl = $this->getRedirectUrl();
+        } else {
+            $this->flash('complete_minumum_profile');
+            $redirectUrl = site_url('customer/profile');
+        }
 
         return $this->response->setJSON([
             'status' => 'success',
@@ -206,15 +208,14 @@ class Login extends BaseController
             return $this->response->setJSON(['status' => 'error', 'message' => 'کاربر یافت نشد']);
         }
 
-        // ====== مقایسه مستقیم ======
         if ($customer['password'] !== $password) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'رمز عبور اشتباه است']);
         }
 
-        // لاگین
         $this->auth->login($customer['id'], [
             'firstname' => $customer['firstname'],
             'lastname' => $customer['lastname'],
+            'gender' => $customer['gender'],
             'mobile' => $customer['mobile'],
             'email' => $customer['email'] ?? '',
             'avatar' => $customer['avatar'] ?? '',
@@ -226,14 +227,14 @@ class Login extends BaseController
         $this->customerModel->updateLastLogin($customer['id']);
         session()->remove(['otp_mobile', 'otp_expires', 'has_password']);
 
-        $isComplete = (
-            !empty($customer['firstname']) &&
-            !empty($customer['lastname']) &&
-            !empty($customer['gender'])
-        );
-        $redirectUrl = $isComplete ? $this->getRedirectUrl() : site_url('customer/profile');
+        if ($this->auth->hasMinimunProfile()) {
+            $this->flash('login_success');
+            $redirectUrl = $this->getRedirectUrl();
+        } else {
+            $this->flash('complete_minumum_profile');
+            $redirectUrl = site_url('customer/profile');
+        }
 
-        $this->flash('login_success');
 
         return $this->response->setJSON([
             'status' => 'success',
@@ -241,135 +242,22 @@ class Login extends BaseController
         ]);
     }
 
-    public function completeProfile()
-    {
-        // چک کن که آیا کاربر از مرحله OTP عبور کرده
-        $mobile = session()->get('otp_mobile');
-        if (!$mobile) {
-            return redirect()->to('/login');
-        }
-
-        // اگه قبلاً لاگین کرده، بره داشبورد
-        if (session()->get('customer_id')) {
-            return redirect()->to('/customer/dashboard');
-        }
-
-        $this->viewData['mobile'] = $mobile;
-        $this->viewData['title'] = 'تکمیل اطلاعات';
-
-        return view('auth/complete_profile', $this->viewData);
-    }
-
-    /**
-     * ذخیره اطلاعات کاربر جدید
-     */
-    public function saveProfile()
-    {
-        if (!$this->request->isAJAX()) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
-        }
-
-        $mobile = session()->get('otp_mobile');
-        if (!$mobile) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'جلسه نامعتبر']);
-        }
-
-        $firstname = trim($this->request->getPost('firstname'));
-        $lastname = trim($this->request->getPost('lastname'));
-        $password = $this->request->getPost('password');
-        $email = trim($this->request->getPost('email'));
-        $nationalCode = trim($this->request->getPost('national_code'));
-
-        // اعتبارسنجی
-        if (empty($firstname) || empty($lastname)) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'نام و نام خانوادگی الزامی است']);
-        }
-
-        if (empty($password) || mb_strlen($password) < 8) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'رمز عبور باید حداقل ۸ کاراکتر باشد']);
-        }
-
-        // پیدا کردن کاربر موجود
-        $customer = $this->customerModel->findByMobile($mobile);
-
-        if ($customer) {
-            // بروزرسانی کاربر موجود
-            $data = [
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'password' => $password, // ذخیره مستقیم (همونطور که گفتی)
-                'updated_at' => time()
-            ];
-
-            if ($email) $data['email'] = $email;
-            if ($nationalCode) $data['national_code'] = $nationalCode;
-
-            $this->customerModel->update($customer['id'], $data);
-            $customerId = $customer['id'];
-        } else {
-            // ایجاد کاربر جدید (امنیت)
-            $data = [
-                'mobile' => $mobile,
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'password' => $password,
-                'is_active' => 1,
-                'created_at' => time(),
-                'updated_at' => time()
-            ];
-
-            if ($email) $data['email'] = $email;
-            if ($nationalCode) $data['national_code'] = $nationalCode;
-
-            $customerId = $this->customerModel->insert($data);
-        }
-
-        if (!$customerId) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'خطا در ثبت نام']);
-        }
-
-        // لاگین کردن کاربر
-        session()->set('customer_id', $customerId);
-        $this->customerModel->updateLastLogin($customerId);
-
-        // پاک کردن سشن موقت
-        session()->remove(['otp_mobile', 'otp_expires', 'has_password']);
-
-        return $this->response->setJSON([
-            'status' => 'success',
-            'message' => 'ثبت نام با موفقیت انجام شد',
-            'redirect' => $this->getRedirectUrl()
-        ]);
-    }
-
-    /**
-     * خروج از حساب کاربری
-     */
     public function logout()
     {
-        session()->remove('customer_id');
-        session()->destroy();
 
+        $this->auth->logout();
         return redirect()->to('/');
     }
 
-    protected function getRedirectUrl()
+    protected function getRedirectUrl()  // after login
     {
-        $returnUrl = session()->get('return_url');
+        $returnUrl = session()->get('redirect_login_url');
         if ($returnUrl) {
-            session()->remove('return_url');
+            session()->remove('redirect_login_url');
             return $returnUrl;
         }
 
         return site_url('customer/dashboard');
     }
 
-    public function setReturnUrl()
-    {
-        $url = $this->request->getGet('return') ?? $this->request->getServer('HTTP_REFERER');
-        if ($url) {
-            session()->set('return_url', $url);
-        }
-        return redirect()->to('/login');
-    }
 }

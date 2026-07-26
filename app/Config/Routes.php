@@ -53,6 +53,7 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
     $routes->get('category/(:any)/(:any)/(:any)', 'Category::index/$1/$2/$3');
     $routes->get('category/(:any)/(:any)', 'Category::index/$1/$2');
     $routes->get('category/(:any)', 'Category::index/$1');
+    $routes->get('category', 'Category::index');
 
     // Cart routes
     $routes->get('cart', 'Cart::index');
@@ -73,6 +74,10 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
     $routes->get('customer/complete-profile', 'Auth\Login::completeProfile');
     $routes->post('login/save-profile', 'Auth\Login::saveProfile');
     $routes->get('logout', 'Auth\Login::logout');
+
+    $routes->get('faq', 'Faq::index');
+    $routes->get('contact', 'Contact::index');
+    $routes->get('about', 'About::index');
 
 
 });

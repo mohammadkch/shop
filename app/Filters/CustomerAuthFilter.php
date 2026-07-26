@@ -13,17 +13,6 @@ class CustomerAuthFilter implements FilterInterface
         $auth = service('customerAuth');
 
         if (!$auth->isLoggedIn()) {
-            $session = session();
-
-            $currentUrl = current_url(true);
-            $returnUrl = $currentUrl->getPath();
-
-            if ($currentUrl->getQuery()) {
-                $returnUrl .= '?' . $currentUrl->getQuery();
-            }
-
-            $session->set('return_url', $returnUrl);
-
             return redirect()->to('/login');
         }
 
@@ -31,7 +20,8 @@ class CustomerAuthFilter implements FilterInterface
         $customer = $auth->getCustomer();
         if (!$customer || $customer['is_active'] != 1) {
             $auth->logout();
-            return redirect()->to('/login')->with('error', 'حساب کاربری شما غیرفعال است');
+
+            return redirect()->to('/login');
         }
 
         return $request;

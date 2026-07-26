@@ -29,8 +29,7 @@ abstract class BaseController extends Controller
     {
 
         parent::initController($request, $response, $logger);
-        helper('html');
-        helper('rowset');
+
         $this->authLib = service('adminAuth');
 
         $this->viewData['assetsPath'] = base_url('assets/');

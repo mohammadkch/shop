@@ -46,9 +46,6 @@ class AddressService
         return $address;
     }
 
-    /**
-     * افزودن آدرس جدید
-     */
     public function addAddress($customerId, $data)
     {
         if (!$customerId) {
@@ -82,6 +79,10 @@ class AddressService
             return ['status' => 'error', 'message' => 'شهر انتخاب شده معتبر نیست'];
         }
 
+        // دریافت نام استان
+        $stateModel = model('App\Models\StateModel');
+        $state = $stateModel->find($city['state_id']);
+
         // ذخیره آدرس
         $insertData = [
             'customer_id' => $customerId,
@@ -96,19 +97,24 @@ class AddressService
         $this->addressModel->insert($insertData);
         $addressId = $this->addressModel->getInsertID();
 
-        // دریافت آدرس ایجاد شده با جزئیات کامل
-        $address = $this->getAddressDetails($addressId);
-
+        // برگردوندن اطلاعات کامل آدرس
         return [
             'status' => 'success',
             'message' => 'آدرس با موفقیت افزوده شد',
-            'address' => $address
+            'address' => [
+                'id' => $addressId,
+                'city_id' => $data['city_id'],
+                'title' => $data['title'] ?? 'خانه',
+                'recipient_name' => $data['recipient_name'],
+                'recipient_mobile' => $data['recipient_mobile'],
+                'address' => $data['address'],
+                'postal_code' => $data['postal_code'],
+                'state_name' => $state ? $state['name'] : '',
+                'city_name' => $city['name'],
+            ]
         ];
     }
 
-    /**
-     * حذف آدرس
-     */
     public function deleteAddress($addressId, $customerId)
     {
         if (!$addressId || !$customerId) {
@@ -132,9 +138,6 @@ class AddressService
         ];
     }
 
-    /**
-     * دریافت استان‌ها با شهرهایشان
-     */
     public function getStatesWithCities()
     {
         $stateModel = model('App\Models\StateModel');
@@ -150,9 +153,6 @@ class AddressService
         return $states;
     }
 
-    /**
-     * دریافت شهرهای یک استان
-     */
     public function getCitiesByState($stateId)
     {
         if (!$stateId) {

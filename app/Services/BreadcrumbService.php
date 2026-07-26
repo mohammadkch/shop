@@ -10,6 +10,16 @@ class BreadcrumbService
     public function buildFromMenu($menu)
     {
         $breadcrumb = [];
+
+        if ($menu['level'] == 0) {
+            // همه محصولات
+            $breadcrumb[] = [
+                'name' => 'همه محصولات',
+                'url' => '/category',
+                'is_active' => true
+            ];
+            return $breadcrumb;
+        }
         $menu1 = null;
         $menu2 = null;
 

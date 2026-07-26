@@ -13,30 +13,46 @@ class UrlFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $titles = [
-            'home/index' => 'صفحه اصلی | فروشگاه لباس',
-            'product/index' => 'محصولات | فروشگاه لباس',
-            'product/show' => 'جزئیات محصول | فروشگاه لباس',
-            'category/index' => 'دسته‌بندی | فروشگاه لباس',
-            'cart/index' => 'سبد خرید | فروشگاه لباس',
-            'checkout/index' => 'تسویه حساب | فروشگاه لباس',
-            'blog/index' => 'وبلاگ | فروشگاه لباس',
-            'contact/index' => 'تماس با ما | فروشگاه لباس',
-            'about/index' => 'درباره ما | فروشگاه لباس',
-            'auth/login' => 'ورود | فروشگاه لباس',
-            'auth/register' => 'ثبت نام | فروشگاه لباس',
+            '/' => 'صفحه اصلی | فروشگاه momo',
+            'home' => 'صفحه اصلی | فروشگاه momo',
+            'product/show' => 'جزئیات محصول | فروشگاه momo',
+            'category/index' => 'محصولات | فروشگاه momo',
+            'contact/index' => 'تماس با ما | فروشگاه momo',
+            'about/index' => 'درباره ما | فروشگاه momo',
+            'faq/index' => 'سوالات پرتکرار | فروشگاه momo',
+            'auth/login' => 'ورود | فروشگاه momo',
+            'customer/dashboard/index' => 'پیشخوان کاربری | فروشگاه momo',
+            'customer/profile/index' => 'پروفایل کاربر | فروشگاه momo',
+            'cart/index' => 'سبد خرید | فروشگاه momo',
+            'cart/proceed-to-checkout' => '',
+            'checkout/shipping' => '',
         ];
 
         $url = service('url');
         $router = service('router');
 
-        $controllerName = $router->controllerName();
-        $className = str_replace('_', '-', strtolower(basename(str_replace('\\', '/', $controllerName))));
-        $methodName = $router->methodName();
-        $fullRoute = $className . '/' . $methodName;
-        $title = $titles[$fullRoute] ?? 'فروشگاه لباس';
+        $controllerName = $router->controllerName(); // \App\Controllers\Customer\Dashboard
+        $methodName = $router->methodName();          // index  <-- این خط جا افتاده بود
+
+        $normalized = str_replace('\\', '/', ltrim($controllerName, '\\'));
+        $relativePath = preg_replace('#^App/Controllers/#i', '', $normalized);
+        $relativePath = strtolower($relativePath); // customer/dashboard
+
+        $fullRoute = $relativePath . '/' . $methodName; // customer/dashboard/index
+
+        $title = $titles[$fullRoute] ?? 'فروشگاه momo';
+
+//        echo '<pre>';
+//        print_r($controllerName); echo '<br>';
+//        print_r($relativePath); echo '<br>';
+//        print_r($methodName); echo '<br>';
+//        print_r($fullRoute); echo '<br>';
+//        print_r($title); echo '<br>';
+//        exit();
+
 
         $url->setControllerName($controllerName);
-        $url->setClassName($className);
+        $url->setClassName($relativePath);
         $url->setMethodName($methodName);
         $url->setTitle($title);
 

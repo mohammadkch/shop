@@ -417,7 +417,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
-        htmlElement.classList.add("dark");
+        htmlElement.classList.add("light"); //TODO
     } else {
         htmlElement.classList.remove("dark");
     }

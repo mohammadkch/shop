@@ -18,16 +18,21 @@ class Checkout extends BaseController
 
     public function shipping($factorId = null)
     {
+
+        $customerId = service('customerAuth')->getCustomerId();
+
         // ====== ۱. دریافت سبد خرید ======
         $cart = $this->cartService->getCart();
         if (!$cart) {
-            return redirect()->to('cart')->with('error', 'سبد خرید یافت نشد');
+            $this->flash('cart_not_found');
+            return redirect()->to('cart');
         }
 
         // ====== ۲. چک کردن خالی نبودن سبد خرید ======
         $items = $this->cartService->getItems();
         if (empty($items)) {
-            return redirect()->to('cart')->with('error', 'سبد خرید شما خالی است');
+            $this->flash('empty_cart');
+            return redirect()->to('cart');
         }
 
         // ====== ۳. اگر factorId داده شده، چک کن که معتبر باشه ======
@@ -37,7 +42,7 @@ class Checkout extends BaseController
             $factor = $factorModel->find($factorId);
 
             // چک کن فاکتور متعلق به این کاربره و awaiting_payment هست
-            if ($factor && $factor['customer_id'] == session()->get('customer_id') && $factor['status'] == 'awaiting_payment') {
+            if ($factor && $factor['customer_id'] == $customerId && $factor['status'] == 'awaiting_payment') {
                 $selectedAddressId = $factor['address_id'];
                 $selectedShippingTypeId = $factor['shipping_type_id'];
             } else {
@@ -51,7 +56,6 @@ class Checkout extends BaseController
         }
 
         // ====== ۴. دریافت اطلاعات مورد نیاز ======
-        $customerId = session()->get('customer_id');
         $addresses = $this->addressService->getCustomerAddresses($customerId);
         $shippingTypes = $this->shippingService->getShippingTypes();
         $cartSummary = $this->cartService->getCartSummary();
@@ -100,7 +104,7 @@ class Checkout extends BaseController
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
 
-        $customerId = session()->get('customer_id');
+        $customerId = service('customerAuth')->getCustomerId();
         if (!$customerId) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'لطفاً وارد حساب کاربری خود شوید']);
         }
@@ -117,14 +121,12 @@ class Checkout extends BaseController
 
         $result = $this->addressService->addAddress($customerId, $data);
 
-        // اگر موفقیت آمیز بود، آدرس جدید رو به همراه city_id برگردون
         if ($result['status'] === 'success') {
             $address = $result['address'];
             return $this->response->setJSON([
                 'status' => 'success',
                 'message' => 'آدرس با موفقیت افزوده شد',
-                'address_id' => $address['id'],
-                'city_id' => $address['city_id']
+                'address' => $address, // کل اطلاعات آدرس رو برگردون
             ]);
         }
 
@@ -139,34 +141,40 @@ class Checkout extends BaseController
 
         // ====== ۲. اعتبارسنجی ======
         if (!$addressId) {
-            return redirect()->back()->with('error', 'لطفاً یک آدرس انتخاب کنید');
+            $this->flash('select_an_address');
+            return redirect()->back()->with('error', '');
         }
 
         if (!$shippingTypeId) {
-            return redirect()->back()->with('error', 'لطفاً روش ارسال را انتخاب کنید');
+            $this->flash('select_shipping_address');
+            return redirect()->back();
         }
 
         // ====== ۳. بررسی آدرس ======
         $address = $this->addressService->getAddressDetails($addressId);
         if (!$address) {
-            return redirect()->back()->with('error', 'آدرس انتخاب شده معتبر نیست');
+            $this->flash('invalid_address');
+            return redirect()->back();
         }
 
         // ====== ۴. بررسی قیمت ارسال ======
         $shippingPrice = $this->shippingService->getShippingPrice($address['city_id'], $shippingTypeId);
         if (!$shippingPrice) {
-            return redirect()->back()->with('error', 'روش ارسال برای این شهر موجود نیست');
+            $this->flash('not_available_shipping_type');
+            return redirect()->back();
         }
 
         // ====== ۵. دریافت سبد خرید ======
         $cart = $this->cartService->getCart();
         if (!$cart) {
-            return redirect()->back()->with('error', 'سبد خرید یافت نشد');
+            $this->flash('cart_not_found');
+            return redirect()->back();
         }
 
         $cartItems = $this->cartService->getItems();
         if (empty($cartItems)) {
-            return redirect()->back()->with('error', 'سبد خرید شما خالی است');
+            $this->flash('empty_cart');
+            return redirect()->back();
         }
 
         // ====== ۶. محاسبه مبالغ از آیتم‌های سبد ======
@@ -181,6 +189,7 @@ class Checkout extends BaseController
         $total = $subtotal + (float) $shippingPrice['price'];
 
         // ====== ۷. ساخت یا آپدیت فاکتور ======
+        $customer_id = service('customerAuth')->getCustomerId();
         $factorModel = model('App\Models\FactorModel');
         $factorItemModel = model('App\Models\FactorItemModel');
 
@@ -202,7 +211,7 @@ class Checkout extends BaseController
             $factorItemModel->where('factor_id', $factorId)->delete();
         } else {
             $factorId = $factorModel->insert([
-                'customer_id' => session()->get('customer_id'),
+                'customer_id' => $customer_id,
                 'cart_id' => $cart['id'],
                 'address_id' => $addressId,
                 'shipping_type_id' => $shippingTypeId,
@@ -232,7 +241,7 @@ class Checkout extends BaseController
         } else {
             $paymentModel->insert([
                 'factor_id' => $factorId,
-                'customer_id' => session()->get('customer_id'),
+                'customer_id' => $customer_id,
                 'payment_method_id' => 1,
                 'final_amount' => $total,
                 'status' => 'awaiting_payment',

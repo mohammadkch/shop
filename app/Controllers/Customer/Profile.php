@@ -2,40 +2,34 @@
 
 namespace App\Controllers\Customer;
 
-use App\Controllers\Customer\CustomerController;
+use App\Controllers\BaseController;
 use App\Models\CustomerModel;
 
-class Profile extends CustomerController
+class Profile extends BaseController
 {
     protected $customerModel;
 
     public function __construct()
     {
-        parent::__construct();
+        helper(['menu']);
         $this->customerModel = new CustomerModel();
     }
 
     public function index()
     {
 
-        $customerId = session()->get('customer_id');
+        $customerId = $this->auth->getCustomerId();
         $customer = $this->customerModel->find($customerId);
 
         if (!$customer) {
+            $this->flash('customer_not_found');
             return redirect()->to('/logout');
         }
-
-        // چک کردن کامل بودن پروفایل
-        $isProfileComplete = (
-            !empty($customer['firstname']) &&
-            !empty($customer['lastname']) &&
-            !empty($customer['gender'])
-        );
 
         $hasPassword = !empty($customer['password']);
 
         $this->viewData['customer'] = $customer;
-        $this->viewData['isProfileComplete'] = $isProfileComplete;
+        $this->viewData['isProfileComplete'] = $this->auth->hasMinimunProfile();
         $this->viewData['hasPassword'] = $hasPassword;
         $this->viewData['title'] = 'اطلاعات کاربری';
 
@@ -48,7 +42,7 @@ class Profile extends CustomerController
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
 
-        $customerId = session()->get('customer_id');
+        $customerId = $this->auth->getCustomerId();
         if (!$customerId) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'لطفاً وارد شوید']);
         }
@@ -141,19 +135,23 @@ class Profile extends CustomerController
 
         $this->customerModel->update($customerId, $data);
 
-        // آپدیت سشن
-        session()->set('customer_firstname', $firstname);
-        session()->set('customer_lastname', $lastname);
+        $this->auth->setData('firstname', $firstname);
+        $this->auth->setData('lastname', $lastname);
+        $this->auth->setData('gender', $gender);
         if (isset($data['avatar'])) {
-            session()->set('customer_avatar', $data['avatar']);
+            $this->auth->setData('avatar', $data['avatar']);
         }
 
-        $this->flash('user_update_success');
+        $redirectUrl = session()->get('redirect_login_url');
+        if ($redirectUrl) {
+            session()->remove('redirect_login_url');
+        }
 
         return $this->response->setJSON([
             'status' => 'success',
             'message' => 'اطلاعات با موفقیت بروزرسانی شد',
-            'avatar' => $data['avatar'] ?? null
+            'avatar' => $data['avatar'] ?? null,
+            'redirect_url' => $redirectUrl ?? null
         ]);
     }
 
@@ -163,7 +161,7 @@ class Profile extends CustomerController
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
 
-        $customerId = session()->get('customer_id');
+        $customerId = $this->auth->getCustomerId();
         if (!$customerId) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'لطفاً وارد شوید']);
         }
@@ -174,13 +172,8 @@ class Profile extends CustomerController
         }
 
         // چک کردن کامل بودن پروفایل
-        $isProfileComplete = (
-            !empty($customer['firstname']) &&
-            !empty($customer['lastname']) &&
-            !empty($customer['gender'])
-        );
 
-        if (!$isProfileComplete) {
+        if (!$this->auth->hasMinimumProfile()) {
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => 'لطفاً ابتدا اطلاعات پروفایل خود را تکمیل کنید'

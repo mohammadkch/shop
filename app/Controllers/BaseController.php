@@ -20,25 +20,19 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-    /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
-     */
 
-    // protected $session;
     protected $helpers = ['html', 'flash'];
-
-
-    protected $viewPath = '' ;
-    protected $viewData ;
-    protected $authLib ;
-    protected $urlLib ;
+    protected $viewPath = '';
+    protected $viewData;
+    protected $auth;
+    protected $urlLib;
 
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
 
         parent::initController($request, $response, $logger);
         $this->urlLib = service('Url');
+        $this->auth = service('customerAuth');
         $menuService = service('menuService');
 
         $scriptMap = [
@@ -47,7 +41,12 @@ abstract class BaseController extends Controller
             'cart'     => ['cart'],
             'home'     => ['home'],
             'checkout' => ['checkout'],
+            'customer/dashboard' => ['customer'],
+            'customer/profile' => ['customer'],
         ];
+
+        $className = $this->urlLib->getClassName();
+        $this->viewData['controllerScripts'] = $scriptMap[$className] ?? [];
 
         if (!$request->isAJAX()) {
             $this->viewData['shopMenus'] = $menuService->getShopMenus();
@@ -56,14 +55,6 @@ abstract class BaseController extends Controller
         $this->viewData['assetsPath'] = base_url('assets/');
         $this->viewData['mediaPath'] = base_url('images/');
 
-        $className = $this->urlLib->getClassName();
-        $defaultScripts = $scriptMap[$className] ?? [];
-        // اگر قبلاً چیزی در controllerScripts وجود داره، با هم merge کن
-        if (!empty($this->viewData['controllerScripts'])) {
-            $this->viewData['controllerScripts'] = array_unique(array_merge($this->viewData['controllerScripts'], $defaultScripts));
-        } else {
-            $this->viewData['controllerScripts'] = $defaultScripts;
-        }
 
         $this->viewData['className'] = $this->urlLib->getClassName();
         $this->viewData['controllerName'] = $this->urlLib->getControllerName();
@@ -73,14 +64,14 @@ abstract class BaseController extends Controller
         // ===================================================
         // اضافه کردن دیتای لاگین کاربر به همه صفحات
         // ===================================================
-        $auth = service('customerAuth');
-        $isLoggedIn = $auth->isLoggedIn();
+
+        $isLoggedIn = $this->auth->isLoggedIn();
         $customer = null;
         $customerName = '';
 
-        if ($isLoggedIn) {
-            $customer = $auth->getCustomer();
-            $customerName = $auth->getName();
+        if ($this->auth->isLoggedIn()) {
+            $customer = $this->auth->getCustomer();
+            $customerName = $this->auth->getName();
         }
 
         $this->viewData['isLoggedIn'] = $isLoggedIn;
@@ -89,7 +80,6 @@ abstract class BaseController extends Controller
     }
     protected function flash($key, $customMessage = null)
     {
-        helper('flash');
         setFlash($key, $customMessage);
     }
 

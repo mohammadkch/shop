@@ -13,7 +13,6 @@
 </head>
 
 <body class="relative bg-gray-100 dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
-
 <!--Main content-->
 <main class="flex-grow container mx-auto px-4 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     <div class="max-w-md mx-auto min-h-screen justify-center flex items-center">
@@ -200,6 +199,6 @@
 <script src="<?= base_url('assets/custom/auth.js') ?>"></script>
 <script src="<?= base_url('assets/js/dependencies/app.js') ?>"></script>
 
-
+<?= showFlash() ?>
 </body>
 </html>

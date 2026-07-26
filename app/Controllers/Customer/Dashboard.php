@@ -2,24 +2,23 @@
 
 namespace App\Controllers\Customer;
 
-use App\Controllers\Customer\CustomerController;
+use App\Controllers\BaseController;
 use App\Models\CustomerModel;
 
-class Dashboard extends CustomerController
+class Dashboard extends BaseController
 {
     protected $customerModel;
 
     public function __construct()
     {
-        parent::__construct();
+        helper(['menu']);
         $this->customerModel = new CustomerModel();
     }
 
     public function index()
     {
 
-        $customerId = session()->get('customer_id');
-        $customer = $this->customerModel->find($customerId);
+        $customer = $this->customerModel->find($this->auth->getCustomerId());
 
         if (!$customer) {
             return redirect()->to('/logout');

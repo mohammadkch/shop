@@ -153,7 +153,9 @@ class Cart extends BaseController
         // ====== ۱. چک کردن لاگین بودن ======
         $auth = service('customerAuth');
         if (!$auth->isLoggedIn()) {
-            return redirect()->to('login')->with('redirect', 'cart/proceed-to-checkout');
+            session()->set('redirect_login_url', site_url('cart/proceed-to-checkout'));
+            $this->flash('first_do_login');
+            return redirect()->to('login');
         }
 
         // ====== ۲. دریافت سبد خرید ======

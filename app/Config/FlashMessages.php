@@ -158,6 +158,30 @@ class FlashMessages
             'message' => 'حجم فایل تصویر بیشتر از حد مجاز است.',
             'type' => 'error'
         ],
+        'cart_not_found' => [
+            'message' => 'سبد خرید یافت نشد.',
+            'type' => 'error'
+        ],
+        'deactivated_customer' => [
+            'message' => 'حساب کاربری شما غیرفعال است.',
+            'type' => 'error'
+        ],
+        'select_an_address' => [
+            'message' => 'لطفاً یک آدرس انتخاب کنید.',
+            'type' => 'error'
+        ],
+        'select_shipping_address' => [
+            'message' => 'لطفاً روش ارسال را انتخاب کنید.',
+            'type' => 'error'
+        ],
+        'invalid_address' => [
+            'message' => 'آدرس انتخاب شده معتبر نیست.',
+            'type' => 'error'
+        ],
+        'not_available_shipping_type' => [
+            'message' => 'روش ارسال برای این شهر موجود نیست.',
+            'type' => 'error'
+        ],
     ];
 
     public static $info = [
@@ -170,7 +194,15 @@ class FlashMessages
             'type' => 'info'
         ],
         'empty_cart' => [
-            'message' => 'سبد خرید شما خالی است',
+            'message' => 'سبد خرید شما خالی است.',
+            'type' => 'info'
+        ],
+        'first_do_login' => [
+            'message' => 'برای ادامه لطفا وارد شوید.',
+            'type' => 'info'
+        ],
+        'complete_minumum_profile' => [
+            'message' => 'برای ادامه خرید لطفا پروفایل خود را کامل کنید.',
             'type' => 'info'
         ],
     ];

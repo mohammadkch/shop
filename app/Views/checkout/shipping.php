@@ -113,6 +113,7 @@
                                                 <!-- دکمه انتخاب -->
                                                 <button class="select-address-btn text-primary-500 hover:text-primary-700 text-sm dark:text-gray-400 font-medium"
                                                         data-address-id="<?= $address['id'] ?>"
+                                                        type="button"
                                                         onclick="event.stopPropagation(); selectAddress(<?= $address['id'] ?>, <?= $address['city_id'] ?>)">
                                                     انتخاب
                                                 </button>

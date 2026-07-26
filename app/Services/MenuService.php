@@ -137,7 +137,29 @@ class MenuService
         $db = \Config\Database::connect();
         $result = [];
 
-        if ($level == 1) {
+        if ($level == 0) {
+            // سطح ۰ → همه menu_1 ها
+            $subMenus = $db->table('menu_1')
+                ->where('is_active', 1)
+                ->orderBy('sort_order', 'ASC')
+                ->get()
+                ->getResultArray();
+
+            foreach ($subMenus as &$sub) {
+                // تصویر از menu_1_image (نوع ۲ یا ۱، بستگی به داری)
+                $image = $db->table('menu_1_image')
+                    ->where('menu_1_id', $sub['id'])
+                    ->where('menu_1_image_type_id', 2)
+                    ->where('is_active', 1)
+                    ->orderBy('sort_order', 'ASC')
+                    ->get()
+                    ->getResultArray();
+                $sub['image'] = !empty($image) ? $image[0] : null;
+                $sub['path'] = $sub['slug']; // فقط اسلاگ خودش
+            }
+            $result = $subMenus;
+
+        } elseif ($level == 1) {
             $subMenus = $db->table('menu_2')
                 ->where('menu_1_id', $menu['id'])
                 ->where('is_active', 1)

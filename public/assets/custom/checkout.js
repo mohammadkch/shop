@@ -23,6 +23,7 @@ function selectAddress(addressId, cityId) {
 
     // دریافت قیمت ارسال
     fetchShippingPrices(addressId);
+
 }
 
 // ==============================================
@@ -43,10 +44,19 @@ function fetchShippingPrices(addressId) {
         .then(data => {
             if (data.status === 'success') {
                 updateShippingPrices(data.shipping_prices);
+
+                // بررسی اینکه آیا قیمتی برای این شهر وجود داره یا نه
+                const hasPrice = Object.keys(data.shipping_prices).length > 0;
+                if (hasPrice) {
+                    showNotification('برای این آدرس روش ارسال را انتخاب کنید.', 'success');
+                } else {
+                    showNotification('متأسفانه ارسال به این شهر امکان‌پذیر نیست.', 'warning');
+                }
             }
         })
         .catch(error => {
             console.error('Error fetching shipping prices:', error);
+            showNotification('خطا در دریافت هزینه ارسال', 'error');
         });
 }
 
@@ -205,9 +215,8 @@ function closeAddressModal() {
 }
 
 // ==============================================
-// فرم افزودن آدرس جدید - سابمیت
+// فرم افزودن آدرس جدید - سابمیت (بدون ریلود)
 // ==============================================
-// فرم افزودن آدرس جدید - سابمیت
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('addAddressForm');
     if (form) {
@@ -241,27 +250,103 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                     if (data.status === 'success') {
-                        // بستن مدال
+                        // ۱. بستن مدال
                         closeAddressModal();
 
-                        // آدرس جدید رو سلکت کن
-                        if (data.address_id) {
-                            // ریلود نکن! با AJAX آدرس رو به لیست اضافه کن
-                            // فعلاً ریلود میکنیم چون ساده‌تره
-                            window.location.reload();
-                        } else {
-                            window.location.reload();
+                        // ۲. اضافه کردن آدرس جدید به لیست
+                        const address = data.address;
+                        const addressList = document.getElementById('addressList');
+
+                        // حذف پیام "هیچ آدرسی ثبت نشده" اگر وجود داشت
+                        const emptyMessage = addressList.querySelector('.col-span-1.md\\:col-span-2');
+                        if (emptyMessage) {
+                            emptyMessage.remove();
                         }
+
+                        // ساخت کارت آدرس جدید
+                        const card = document.createElement('div');
+                        card.className = 'address-item border rounded-lg p-4 cursor-pointer transition-all border-primary-500 bg-blue-50 dark:bg-zinc-800';
+                        card.dataset.addressId = address.id;
+                        card.dataset.cityId = address.city_id;
+                        card.onclick = function() {
+                            selectAddress(address.id, address.city_id);
+                        };
+
+                        card.innerHTML = `
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-start gap-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-0.5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                    </svg>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800 dark:text-white">${escapeHtml(address.title || 'آدرس')}</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">${escapeHtml(address.recipient_name)} - ${escapeHtml(address.recipient_mobile)}</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${escapeHtml(address.address)}</p>
+                                        <div class="flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-500 mt-1">
+                                            <span>${escapeHtml(address.state_name)}</span>
+                                            <span>|</span>
+                                            <span>${escapeHtml(address.city_name)}</span>
+                                            <span>|</span>
+                                            <span>${escapeHtml(address.postal_code)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="select-address-btn text-primary-500 hover:text-primary-700 text-sm dark:text-gray-400 font-medium"
+                                        data-address-id="${address.id}"
+                                        type="button"
+                                        onclick="event.stopPropagation(); selectAddress(${address.id}, ${address.city_id})">
+                                    انتخاب
+                                </button>
+                            </div>
+                        `;
+
+                        // اضافه کردن کارت به لیست
+                        addressList.appendChild(card);
+
+                        // ۳. ست کردن آدرس جدید به عنوان آدرس انتخاب شده
+                        document.querySelectorAll('.address-item').forEach(c => {
+                            c.classList.remove('border-primary-500', 'bg-blue-50', 'dark:bg-zinc-800');
+                            c.classList.add('border-gray-200', 'dark:border-gray-600');
+                        });
+
+                        card.classList.remove('border-gray-200', 'dark:border-gray-600');
+                        card.classList.add('border-primary-500', 'bg-blue-50', 'dark:bg-zinc-800');
+
+                        // ۴. آپدیت hidden input
+                        document.getElementById('selected_address_id_input').value = address.id;
+
+                        // ۵. فعال کردن بخش ارسال
+                        const shippingSection = document.getElementById('shippingSection');
+                        if (shippingSection) {
+                            shippingSection.classList.remove('opacity-50', 'pointer-events-none');
+                            document.getElementById('submitShippingBtn').disabled = false;
+                            document.getElementById('submitShippingBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+                        }
+
+                        // ۶. گرفتن قیمت ارسال برای آدرس جدید
+                        fetchShippingPrices(address.id);
+
                     }
                 })
                 .catch(error => {
                     btn.disabled = false;
                     btn.textContent = originalText;
                     console.error('Error adding address:', error);
+                    showNotification('خطا در ارتباط با سرور', 'error');
                 });
         });
     }
 });
+
+// ==============================================
+// تابع کمکی برای escape کردن HTML
+// ==============================================
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
 
 // ==============================================
 // تغییر استان - بارگذاری شهرها

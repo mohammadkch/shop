@@ -15,9 +15,6 @@ class CustomerAuthLib
         $this->customerModel = new CustomerModel();
     }
 
-    /**
-     * لاگین کردن کاربر
-     */
     public function login($customerId, $data = [])
     {
         $this->session->set('customer_id', $customerId);
@@ -31,9 +28,6 @@ class CustomerAuthLib
         return true;
     }
 
-    /**
-     * خروج از حساب
-     */
     public function logout()
     {
         $this->session->remove('customer_id');
@@ -48,25 +42,22 @@ class CustomerAuthLib
         return true;
     }
 
-    /**
-     * چک کردن لاگین بودن
-     */
     public function isLoggedIn()
     {
         return $this->session->get('customer_id') !== null;
     }
 
-    /**
-     * گرفتن ID کاربر
-     */
+    public function hasMinimunProfile()
+    {
+        $customer = $this->getCustomer();
+        return ( !empty($customer['firstname']) && !empty($customer['lastname']) && !empty($customer['gender']) );
+    }
+
     public function getCustomerId()
     {
         return $this->session->get('customer_id');
     }
 
-    /**
-     * گرفتن اطلاعات کامل کاربر از دیتابیس
-     */
     public function getCustomer()
     {
         $customerId = $this->getCustomerId();
@@ -78,6 +69,7 @@ class CustomerAuthLib
             'id' => $customerId,
             'firstname' => $this->getData('firstname'),
             'lastname' => $this->getData('lastname'),
+            'gender' => $this->getData('gender'),
             'mobile' => $this->getData('mobile'),
             'email' => $this->getData('email'),
             'avatar' => $this->getData('avatar'),
@@ -86,9 +78,6 @@ class CustomerAuthLib
         ];
     }
 
-    /**
-     * گرفتن نام کامل کاربر
-     */
     public function getName()
     {
         $customer = $this->getCustomer();
@@ -99,17 +88,11 @@ class CustomerAuthLib
         return trim($customer['firstname'] . ' ' . $customer['lastname']);
     }
 
-    /**
-     * گرفتن یک مقدار خاص از سشن
-     */
     public function getData($key)
     {
         return $this->session->get('customer_' . $key);
     }
 
-    /**
-     * ذخیره یک مقدار در سشن
-     */
     public function setData($key, $value)
     {
         $this->session->set('customer_' . $key, $value);

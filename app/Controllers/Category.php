@@ -28,27 +28,42 @@ class Category extends BaseController
         $sortField = $this->request->getGet('sort_field') ?? 'published_at';
         $sortType = $this->request->getGet('sort_type') ?? 'desc';
 
-        // اعتبارسنجی
         $allowedFields = ['published_at', 'price', 'visit_count', 'created_at'];
         $allowedTypes = ['asc', 'desc'];
         $sortField = in_array($sortField, $allowedFields) ? $sortField : 'published_at';
         $sortType = in_array($sortType, $allowedTypes) ? $sortType : 'desc';
 
-        $menu = $this->findMenuBySlugs($slugs);
-
-        if (!$menu) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('دسته‌بندی یافت نشد');
+        // ====== پیدا کردن منو بر اساس اسلاگ‌ها ======
+        if (empty($slugs) || (count($slugs) === 1 && empty($slugs[0]))) {
+            // حالت level 0: همه محصولات
+            $menu = [
+                'id' => 0,
+                'name' => 'همه محصولات',
+                'slug' => 'all',
+                'level' => 0,
+                'description' => 'همه محصولات فروشگاه'
+            ];
+        } else {
+            $menu = $this->findMenuBySlugs($slugs);
+            if (!$menu) {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('دسته‌بندی یافت نشد');
+            }
         }
 
+        // ====== زیرمنوها (فقط برای level 1 و 2) ======
         $subMenus = [];
-        if ($menu['level'] == 1 || $menu['level'] == 2) {
+        if ($menu['level'] == 0) {
+            // سطح ۰ → همه منوهای سطح ۱ به عنوان ساب‌منو
+            $subMenus = $this->menuService->getSubMenusWithImages($menu, 0);
+        } elseif ($menu['level'] == 1 || $menu['level'] == 2) {
             $menu1Slug = $slugs[0] ?? null;
             $subMenus = $this->menuService->getSubMenusWithImages($menu, $menu['level'], $menu1Slug);
         }
 
+        // ====== دریافت menu3Ids ======
         $menu3Ids = $this->getMenu3Ids($menu);
 
-        // ====== دریافت فیلترها از GET ======
+        // ====== دریافت فیلترها ======
         $filters = [];
         $allFilterParams = $this->request->getGet();
         foreach ($allFilterParams as $key => $value) {
@@ -62,7 +77,7 @@ class Category extends BaseController
         // ====== دریافت داده‌های فیلتر ======
         $filterData = $this->categoryService->getFilterData($menu3Ids);
 
-        // ====== دریافت محصولات با فیلترها و سورت ======
+        // ====== دریافت محصولات ======
         $totalProducts = $this->categoryService->countProductsWithFilters($menu3Ids, $filters);
         $products = $this->categoryService->getProductsWithFilters(
             $menu3Ids,
@@ -74,7 +89,6 @@ class Category extends BaseController
         );
 
         $pagination = $pager->makeLinks($page, $per_page, $totalProducts, 'shop_pagination');
-
         $breadcrumb = $this->breadcrumbService->buildFromMenu($menu);
 
         $this->viewData['menu'] = $menu;
@@ -85,8 +99,8 @@ class Category extends BaseController
         $this->viewData['breadcrumb'] = $breadcrumb;
         $this->viewData['title'] = $menu['name'];
         $this->viewData['pagination'] = $pagination;
-        $this->viewData['sortField'] = $sortField;   // ← اضافه کن
-        $this->viewData['sortType'] = $sortType;     // ← اضافه کن
+        $this->viewData['sortField'] = $sortField;
+        $this->viewData['sortType'] = $sortType;
 
         if ($this->request->isAJAX()) {
             return view('category/index_content', $this->viewData);
@@ -97,6 +111,12 @@ class Category extends BaseController
 
     private function findMenuBySlugs(array $slugs)
     {
+
+        // اگر هیچ اسلاگی وجود نداشت → سطح صفر
+        if (empty($slugs)) {
+            return ['level' => 0, 'id' => 0, 'name' => 'همه محصولات', 'slug' => ''];
+        }
+
         $count = count($slugs);
 
         // سطح ۳: آخرین اسلاگ
@@ -145,12 +165,16 @@ class Category extends BaseController
     {
         $menu3Ids = [];
 
-        if ($menu['level'] == 3) {
-            // مستقیم منوی سطح ۳
+        if ($menu['level'] == 0) {
+            // سطح ۰ → همه menu_3 های فعال
+            $menu3Model = model('App\Models\Menu3Model');
+            $allMenu3 = $menu3Model->where('is_active', 1)->findAll();
+            $menu3Ids = array_column($allMenu3, 'id');
+            return array_unique($menu3Ids);
+        } elseif ($menu['level'] == 3) {
             $menu3Ids[] = $menu['id'];
 
         } elseif ($menu['level'] == 2) {
-            // تمام منوهای سطح ۳ زیرمجموعه این منوی سطح ۲
             $menu3Model = model('App\Models\Menu3Model');
             $children = $menu3Model
                 ->where('menu_2_id', $menu['id'])
@@ -160,7 +184,6 @@ class Category extends BaseController
             if (!empty($children)) {
                 $menu3Ids = array_column($children, 'id');
             } else {
-                // اگه زیرمجموعه نداشت، منوی هیدن رو پیدا کن یا بساز
                 $hiddenMenu = $this->menuService->getOrCreateHiddenMenu3($menu['id']);
                 if ($hiddenMenu) {
                     $menu3Ids[] = $hiddenMenu['id'];
@@ -168,7 +191,6 @@ class Category extends BaseController
             }
 
         } elseif ($menu['level'] == 1) {
-            // تمام منوهای سطح ۳ زیرمجموعه این منوی سطح ۱
             $menu2Model = model('App\Models\Menu2Model');
             $menu2Ids = $menu2Model
                 ->where('menu_1_id', $menu['id'])
@@ -183,7 +205,6 @@ class Category extends BaseController
                     ->findAll();
                 $menu3Ids = array_column($menu3List, 'id');
 
-                // برای منوهای سطح ۲ که زیرمجموعه ندارن، منوی هیدن رو پیدا کن
                 foreach ($menu2Ids as $menu2Id) {
                     $hasMenu3 = false;
                     foreach ($menu3List as $m3) {
@@ -192,7 +213,6 @@ class Category extends BaseController
                             break;
                         }
                     }
-
                     if (!$hasMenu3) {
                         $hiddenMenu = $this->menuService->getOrCreateHiddenMenu3($menu2Id);
                         if ($hiddenMenu) {

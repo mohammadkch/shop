@@ -19,7 +19,8 @@
             <div class="lg:col-span-2 lg:order-1 order-2 col-span-4 w-full">
                 <a href="<?= site_url('/') ?>">
                     <div class="xl:text-start text-center flex items-center xl:justify-start justify-center">
-                        <img class="h-12 dark:invert" src="<?= $assetsPath ?>images/logo.png" loading="lazy" alt="">
+                        <img class="h-12 dark:hidden" src="<?= $mediaPath ?>logo/logo-header.png" loading="lazy" alt="">
+                        <img class="h-12 hidden dark:block" src="<?= $mediaPath ?>logo/logo-header-white.png" loading="lazy" alt="">
                     </div>
                 </a>
             </div>
@@ -107,34 +108,6 @@
                                 <span class="lg:inline-block hidden"><?= esc($customerName ?? 'کاربر') ?></span>
                             </a>
 
-                            <!-- Dropdown -->
-                            <div class="absolute left-0 top-full mt-1 w-48 bg-white dark:bg-custom-dark border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                                <a href="<?= site_url('customer/dashboard') ?>" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1f242c] transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-                                    </svg>
-                                    پیشخوان
-                                </a>
-                                <a href="<?= site_url('customer/profile') ?>" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1f242c] transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
-                                    </svg>
-                                    اطلاعات کاربری
-                                </a>
-                                <a href="<?= site_url('customer/orders') ?>" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1f242c] transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
-                                    </svg>
-                                    سفارش‌های من
-                                </a>
-                                <div class="border-t border-gray-200 dark:border-gray-700 my-1"></div>
-                                <a href="<?= site_url('logout') ?>" class="flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"/>
-                                    </svg>
-                                    خروج
-                                </a>
-                            </div>
                         </div>
 
                     <?php else: ?>
@@ -161,7 +134,7 @@
                         <?= renderShopMegaMenu($shopMenus ?? [], $assetsPath) ?>
 
                         <li class="">
-                            <a href="" class="flex space-x-3 hover:text-primary transition">
+                            <a href="<?= site_url('/') ?>" class="flex space-x-3 hover:text-primary transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="size-6 dark:text-white">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -171,7 +144,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a href="" class="flex space-x-3 hover:text-primary transition">
+                            <a href="<?= site_url('/category') ?>" class="flex space-x-3 hover:text-primary transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="size-6 dark:text-white">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -190,7 +163,7 @@
                                 <span>سوالی دارید</span>
                             </a>
                         </li>
-                        <li class="">
+                        <li class="<?= site_url('customer/orders') ?>">
                             <a href="" class="flex space-x-3 hover:text-primary transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="size-6 dark:text-white">
@@ -200,7 +173,7 @@
                                 <span>پیگیری سفارش</span>
                             </a>
                         </li>
-                        <li class="">
+                        <li class="<?= site_url('/blog') ?>">
                             <a href="" class="flex space-x-3 hover:text-primary transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="size-6 dark:text-white">
@@ -211,7 +184,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a href="" class="flex space-x-3 hover:text-primary transition">
+                            <a href="<?= site_url('/contact') ?>" class="flex space-x-3 hover:text-primary transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="size-6 dark:text-white">
                                     <path stroke-linecap="round" stroke-linejoin="round"

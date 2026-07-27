@@ -394,8 +394,8 @@
                                     <div class="absolute -start-3 end-0 top-0 h-24 w-64 dark:hidden footer-logo-shadow dark:opacity-70"></div>
                                     <a href="#"  class="absolute start-0 end-0 text-center dark:mt-0 mt-7 block" onclick="scrollToTop(event)">
 
-                                        <img src="<?= $mediaPath ?>logo/logo-footer.png" class="size-15 mt-1 inline-block mx-auto dark:hidden" alt="لوگو">
-                                        <img src="<?= $mediaPath ?>logo/logo-footer-white.png" class="size-15 mt-1 hidden mx-auto dark:inline-block" alt="لوگو">
+                                        <img src="<?= $mediaPath ?>logo/logo-footer-transparent.png" class="size-15 mt-1 inline-block mx-auto dark:hidden" alt="لوگو">
+                                        <img src="<?= $mediaPath ?>logo/logo-footer-white-transparent.png" class="size-15 mt-1 hidden mx-auto dark:block" alt="لوگو">
                                     </a>
                                 </div>
                             </div>

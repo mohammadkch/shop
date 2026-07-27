@@ -403,35 +403,14 @@ document.addEventListener("DOMContentLoaded", function () {
  * DARK MODE TOGGLE MODULE
  * Designed by Amir Rezaie
  * Features:
- * - Reads system dark mode preference if no saved preference exists
- * - Checks and applies saved dark mode preference
+ * - Uses light mode by default if no saved preference exists
+ * - The saved preference is applied in the document head before rendering
  * - Toggles dark mode on button click
  */
 
 document.addEventListener("DOMContentLoaded", function () {
     const toggleButton = document.getElementById("dark-mode-toggle");
     const htmlElement = document.documentElement;
-
-    // Read saved preference OR fallback to system preference
-    const savedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
-        htmlElement.classList.add("light"); //TODO
-    } else {
-        htmlElement.classList.remove("dark");
-    }
-
-    // Watch for system changes in real time
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-        if (!localStorage.getItem("theme")) {
-            if (e.matches) {
-                htmlElement.classList.add("dark");
-            } else {
-                htmlElement.classList.remove("dark");
-            }
-        }
-    });
 
     // Toggle theme on click
     if (toggleButton) {

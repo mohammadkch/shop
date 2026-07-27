@@ -13,9 +13,11 @@
     <meta name="robots" content="index, follow">
     <meta name="author" content="امیر رضایی">
     <meta name="copyright" content="All rights belong to diara.">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= $assetsPath ?>images/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= $assetsPath ?>images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= $assetsPath ?>images/favicon_io/favicon-16x16.png">
+    <link rel="icon" href="<?= base_url('images/favicon/favicon.ico') ?>" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="<?= base_url('images/favicon/favicon.svg') ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('images/favicon/apple-touch-icon.png') ?>">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('images/favicon/icon-192.png') ?>">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?= base_url('images/favicon/icon-512.png') ?>">
     <link rel="canonical" href="https://example.com/your-page-url">
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/story-player/styles.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/swiper/swiper-bundle.min.css">

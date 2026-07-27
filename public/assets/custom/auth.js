@@ -74,6 +74,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return last + '******' + first;
     }
 
+    function showOtpCode(data, mobile) {
+        if (!data.otp_code) return;
+
+        console.info('کد یکبار مصرف برای ' + mobile + ': ' + data.otp_code);
+        window.alert('به دلیل فعال نبودن سرویس پیامک، کد یکبار مصرف را در Console مرورگر مشاهده کنید.');
+    }
+
     // ==============================================
     // مرحله ۱: بررسی شماره موبایل
     // ==============================================
@@ -113,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     mobileNumber = mobile;
                     hasPassword = data.has_password;
+                    showOtpCode(data, mobileNumber);
 
                     // ====== اگر کد قبلی هنوز معتبر است ======
                     if (data.is_new_code === false) {
@@ -216,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     stepTitle.textContent = 'ورود با کد یکبار مصرف';
                     stepDescription.textContent = 'کد تایید به شماره شما ارسال شد';
                     showStep(3);
+                    showOtpCode(data, mobileNumber);
                     setTimeout(() => { if (otpCodeInput) otpCodeInput.focus(); }, 300);
                 })
                 .catch(error => {
@@ -335,6 +344,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         showNotification(data.message, 'error');
                         return;
                     }
+
+                    showOtpCode(data, mobileNumber);
 
                     // ====== اگر کد قبلی هنوز معتبر است ======
                     if (data.status === 'info' || (data.is_new_code === false)) {

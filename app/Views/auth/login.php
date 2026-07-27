@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ورود / ثبت نام</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('assets/images/favicon_io/apple-touch-icon.png') ?>">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('assets/images/favicon_io/favicon-32x32.png') ?>">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('assets/images/favicon_io/favicon-16x16.png') ?>">
+    <link rel="icon" href="<?= base_url('images/favicon/favicon.ico') ?>" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="<?= base_url('images/favicon/favicon.svg') ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('images/favicon/apple-touch-icon.png') ?>">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('images/favicon/icon-192.png') ?>">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?= base_url('images/favicon/icon-512.png') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/js/plugin/swiper/swiper-bundle.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
 </head>
@@ -20,7 +22,7 @@
 
             <!-- logo -->
             <div class="flex items-center mb-5 justify-center">
-                <img class="h-12 dark:invert" src="<?= base_url('assets/images/logo.png') ?>" loading="lazy" alt="">
+                <img class="h-12" src="<?= base_url('images/logo/logo-header-transparent.png') ?>" loading="lazy" alt="لوگو">
             </div>
 
             <!-- Step Indicators -->
@@ -75,26 +77,6 @@
                     </div>
                 </form>
 
-                <!-- Social login -->
-                <div class="mt-6">
-                    <div class="relative">
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
-                        </div>
-                        <div class="relative flex justify-center text-sm">
-                            <span class="px-2 bg-white dark:bg-custom-dark text-gray-500 dark:text-gray-400">یا ورود با</span>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 grid grid-cols-3 gap-3">
-                        <div class="col-span-3">
-                            <a href="#" class="w-full inline-flex justify-center items-center py-4 px-4 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm bg-white dark:bg-custom-dark text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#1f242c] transition-colors">
-                                <span class="me-3">حساب کاربری گوگل</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><g fill="none" fill-rule="evenodd" clip-rule="evenodd"><path fill="#F44336" d="M7.209 1.061c.725-.081 1.154-.081 1.933 0a6.57 6.57 0 0 1 3.65 1.82a100 100 0 0 0-1.986 1.93q-1.876-1.59-4.188-.734q-1.696.78-2.362 2.528a78 78 0 0 1-2.148-1.658a.26.26 0 0 0-.16-.027q1.683-3.245 5.26-3.86" opacity=".987"/><path fill="#FFC107" d="M1.946 4.92q.085-.013.161.027a78 78 0 0 0 2.148 1.658A7.6 7.6 0 0 0 4.04 7.99q.037.678.215 1.331L2 11.116Q.527 8.038 1.946 4.92" opacity=".997"/><path fill="#448AFF" d="M12.685 13.29a26 26 0 0 0-2.202-1.74q1.15-.812 1.396-2.228H8.122V6.713q3.25-.027 6.497.055q.616 3.345-1.423 6.032a7 7 0 0 1-.51.49" opacity=".999"/><path fill="#43A047" d="M4.255 9.322q1.23 3.057 4.51 2.854a3.94 3.94 0 0 0 1.718-.626q1.148.812 2.202 1.74a6.62 6.62 0 0 1-4.027 1.684a6.4 6.4 0 0 1-1.02 0Q3.82 14.524 2 11.116z" opacity=".993"/></g></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- ======== STEP 2: Choose Method ======== -->

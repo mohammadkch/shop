@@ -19,8 +19,8 @@
             <div class="lg:col-span-2 lg:order-1 order-2 col-span-4 w-full">
                 <a href="<?= site_url('/') ?>">
                     <div class="xl:text-start text-center flex items-center xl:justify-start justify-center">
-                        <img class="h-12 dark:hidden" src="<?= $mediaPath ?>logo/logo-header.png" loading="lazy" alt="">
-                        <img class="h-12 hidden dark:block" src="<?= $mediaPath ?>logo/logo-header-white.png" loading="lazy" alt="">
+                        <img class="h-12 dark:hidden" src="<?= $mediaPath ?>logo/logo-header-transparent.png" loading="lazy" alt="">
+                        <img class="h-12 hidden dark:block" src="<?= $mediaPath ?>logo/logo-header-white-transparent.png" loading="lazy" alt="">
                     </div>
                 </a>
             </div>

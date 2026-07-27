@@ -64,7 +64,8 @@ class Login extends BaseController
                     'status' => 'info',
                     'message' => $otpResult['message'],
                     'is_new_code' => false,
-                    'expires_at' => $otpResult['expires_at']
+                    'expires_at' => $otpResult['expires_at'],
+                    'otp_code' => $otpResult['otp_code']
                 ]);
             }
 
@@ -73,7 +74,8 @@ class Login extends BaseController
                 'status' => 'success',
                 'message' => 'کد جدید ارسال شد',
                 'is_new_code' => true,
-                'expires_at' => $otpResult['expires_at']
+                'expires_at' => $otpResult['expires_at'],
+                'otp_code' => $otpResult['otp_code']
             ]);
         }
 
@@ -114,6 +116,7 @@ class Login extends BaseController
             'has_password' => $hasPassword,
             'expires_at' => $otpResult ? $otpResult['expires_at'] : null,
             'is_new_code' => $otpResult ? $otpResult['is_new_code'] : null,
+            'otp_code' => $otpResult ? $otpResult['otp_code'] : null,
         ]);
     }
 

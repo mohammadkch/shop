@@ -6,6 +6,8 @@ use App\Models\HomeStoryModel;
 use App\Models\HomeSliderModel;
 use App\Models\HomeSelectedCategoryModel;
 use App\Models\Menu1ImageModel;
+use App\Models\Menu3Model;
+use App\Models\ProductImageModel;
 
 class HomeService
 {
@@ -13,6 +15,9 @@ class HomeService
     protected $homeSliderModel;
     protected $homeSelectedCategoryModel;
     protected $menu1ImageModel;
+    protected $menu3Model;
+    protected $productImageModel;
+    protected $categoryService;
 
     public function __construct()
     {
@@ -20,6 +25,9 @@ class HomeService
         $this->homeSliderModel = new HomeSliderModel();
         $this->homeSelectedCategoryModel = new HomeSelectedCategoryModel();
         $this->menu1ImageModel = new Menu1ImageModel();
+        $this->menu3Model = new Menu3Model();
+        $this->productImageModel = new ProductImageModel();
+        $this->categoryService = service('categoryService');
     }
 
     /**
@@ -101,6 +109,57 @@ class HomeService
         return $result;
     }
 
+    public function getLatestProducts(int $limit = 8): array
+    {
+        $menu3Ids = $this->menu3Model
+            ->where('is_active', 1)
+            ->findColumn('id');
+
+        if (empty($menu3Ids)) {
+            return [];
+        }
+
+        // Reuse the category pricing path so product prices stay consistent.
+        $products = $this->categoryService->getProductsWithFilters(
+            $menu3Ids,
+            [],
+            $limit,
+            0,
+            'published_at',
+            'desc'
+        );
+
+        $products = array_values(array_filter(
+            $products,
+            static fn(array $product): bool => !empty($product['published_at'])
+        ));
+
+        if (empty($products)) {
+            return [];
+        }
+
+        $images = $this->productImageModel
+            ->whereIn('product_id', array_column($products, 'id'))
+            ->where('product_image_type_id', 1)
+            ->where('is_active', 1)
+            ->orderBy('product_id', 'ASC')
+            ->orderBy('sort_order', 'ASC')
+            ->orderBy('id', 'ASC')
+            ->findAll();
+
+        $thumbnails = [];
+        foreach ($images as $image) {
+            $thumbnails[$image['product_id']] ??= $image['image_name'];
+        }
+
+        foreach ($products as &$product) {
+            $product['thumbnail'] = $thumbnails[$product['id']] ?? null;
+        }
+        unset($product);
+
+        return $products;
+    }
+
     /**
      * دریافت تمام دیتاهای صفحه اصلی
      */
@@ -110,6 +169,7 @@ class HomeService
             'stories'    => $this->getStories($mediaPath),
             'sliders'    => $this->getSliders($mediaPath),
             'categories' => $this->getSelectedCategories($mediaPath),
+            'latestProducts' => $this->getLatestProducts(),
         ];
     }
 }

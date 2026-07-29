@@ -624,6 +624,7 @@
 </section>
 <!-- END BANNER SECTION -->
 
+<?php /*
 <!-- START PRODUCT SLIDER SECTION -->
 <section class="py-5">
     <h2 class="sr-only">جدیدترین محصولات</h2>
@@ -1102,6 +1103,9 @@
     </div>
 </section>
 <!-- END PRODUCT SLIDER SECTION -->
+*/ ?>
+
+<?= $this->include('home/_latest_products') ?>
 
 <!-- START LATEST VIEW SECTION -->
 <section class="py-5">

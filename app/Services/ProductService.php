@@ -42,7 +42,7 @@ class ProductService
 
         if ($productMenu) {
             $menu3 = $this->menu3Model
-                ->select('menu_3.*, menu_2.name as menu_2_name, menu_2.slug as menu_2_slug, menu_1.name as menu_1_name, menu_1.slug as menu_1_slug')
+                ->select('menu_3.*, menu_2.name as menu_2_name, menu_2.slug as menu_2_slug, menu_2.is_visible as menu_2_is_visible, menu_1.name as menu_1_name, menu_1.slug as menu_1_slug')
                 ->join('menu_2', 'menu_2.id = menu_3.menu_2_id')
                 ->join('menu_1', 'menu_1.id = menu_2.menu_1_id')
                 ->where('menu_3.id', $productMenu['menu_3_id'])
@@ -460,8 +460,21 @@ class ProductService
         $images = $this->getProductImages($product['id']);
         $options = $this->getProductOptions($product['id']);
 
-        // ۱. پیدا کردن اولین ترکیب موجود
-        $selected = $this->getFirstAvailableCombination($options);
+        // ۱. انتخاب ارزان‌ترین ترکیب موجود بر اساس sale_price
+        $cheapestRecord = $this->productPriceModel
+            ->where('product_id', $product['id'])
+            ->where('stock >', 0)
+            ->where('sale_price >', 0)
+            ->orderBy('sale_price', 'ASC')
+            ->orderBy('id', 'ASC')
+            ->first();
+
+        $selected = $cheapestRecord
+            ? [
+                'color_id' => $cheapestRecord['color_option_id'],
+                'size_id' => $cheapestRecord['size_option_id'],
+            ]
+            : $this->getFirstAvailableCombination($options);
         $selectedColorId = $selected['color_id'];
         $selectedSizeId = $selected['size_id'];
 

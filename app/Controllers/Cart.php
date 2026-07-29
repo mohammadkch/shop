@@ -151,11 +151,16 @@ class Cart extends BaseController
     public function proceedToCheckout()
     {
         // ====== ۱. چک کردن لاگین بودن ======
-        $auth = service('customerAuth');
-        if (!$auth->isLoggedIn()) {
+        if (!$this->auth->isLoggedIn()) {
             session()->set('redirect_login_url', site_url('cart/proceed-to-checkout'));
             $this->flash('first_do_login');
             return redirect()->to('login');
+        }
+
+        if (!$this->auth->hasMinimunProfile()) {
+            session()->set('redirect_login_url', site_url('cart/proceed-to-checkout'));
+            $this->flash('complete_minumum_profile');
+            return redirect()->to('customer/profile');
         }
 
         // ====== ۲. دریافت سبد خرید ======

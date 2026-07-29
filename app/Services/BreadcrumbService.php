@@ -42,8 +42,8 @@ class BreadcrumbService
                 ];
             }
 
-            // منوی سطح ۲ (اگه وجود داشت)
-            if ($menu2) {
+            // منوی سطح ۲ (اگه قابل نمایش بود)
+            if ($menu2 && (int) ($menu2['is_visible'] ?? 1) === 1) {
                 $slug2 = $menu1 ? $menu1['slug'] . '/' . $menu2['slug'] : $menu2['slug'];
                 $breadcrumb[] = [
                     'name' => $menu2['name'],
@@ -62,11 +62,13 @@ class BreadcrumbService
                 $slug3 = $menu['slug'];
             }
 
-            $breadcrumb[] = [
-                'name' => $menu['name'],
-                'full_slug' => $slug3,
-                'is_last' => true
-            ];
+            if ((int) ($menu['is_visible'] ?? 1) === 1) {
+                $breadcrumb[] = [
+                    'name' => $menu['name'],
+                    'full_slug' => $slug3,
+                    'is_last' => true
+                ];
+            }
 
         } elseif ($menu['level'] == 2) {
             // ====== سطح ۲ ======
@@ -81,12 +83,14 @@ class BreadcrumbService
                 ];
             }
 
-            $slug2 = $menu1 ? $menu1['slug'] . '/' . $menu['slug'] : $menu['slug'];
-            $breadcrumb[] = [
-                'name' => $menu['name'],
-                'full_slug' => $slug2,
-                'is_last' => true
-            ];
+            if ((int) ($menu['is_visible'] ?? 1) === 1) {
+                $slug2 = $menu1 ? $menu1['slug'] . '/' . $menu['slug'] : $menu['slug'];
+                $breadcrumb[] = [
+                    'name' => $menu['name'],
+                    'full_slug' => $slug2,
+                    'is_last' => true
+                ];
+            }
 
         } elseif ($menu['level'] == 1) {
             // ====== سطح ۱ ======
@@ -95,6 +99,14 @@ class BreadcrumbService
                 'full_slug' => $menu['slug'],
                 'is_last' => true
             ];
+        }
+
+        if (!empty($breadcrumb)) {
+            foreach ($breadcrumb as &$item) {
+                $item['is_last'] = false;
+            }
+            unset($item);
+            $breadcrumb[array_key_last($breadcrumb)]['is_last'] = true;
         }
 
         return $breadcrumb;
@@ -120,7 +132,9 @@ class BreadcrumbService
             }
 
             // منوی سطح ۲
-            if (!empty($category['menu_2_name']) && !empty($category['menu_2_slug'])) {
+            if (!empty($category['menu_2_name']) &&
+                !empty($category['menu_2_slug']) &&
+                (int) ($category['menu_2_is_visible'] ?? 1) === 1) {
                 $slug2 = $category['menu_1_slug'] . '/' . $category['menu_2_slug'];
                 $breadcrumb[] = [
                     'name' => $category['menu_2_name'],
@@ -134,7 +148,7 @@ class BreadcrumbService
                 $menu3Model = model('App\Models\Menu3Model');
                 $menu3 = $menu3Model->find($category['id']);
 
-                if ($menu3 && $menu3['is_active'] == 1) {
+                if ($menu3 && $menu3['is_active'] == 1 && (int) ($menu3['is_visible'] ?? 1) === 1) {
                     $slug3 = $category['menu_1_slug'] . '/' . $category['menu_2_slug'] . '/' . $category['slug'];
                     $breadcrumb[] = [
                         'name' => $category['name'],

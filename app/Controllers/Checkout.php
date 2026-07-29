@@ -16,8 +16,26 @@ class Checkout extends BaseController
         $this->shippingService = service('shippingService');
     }
 
+    private function redirectForIncompleteProfile(string $returnUrl)
+    {
+        if ($this->auth->hasMinimunProfile()) {
+            return null;
+        }
+
+        session()->set('redirect_login_url', $returnUrl);
+        $this->flash('complete_minumum_profile');
+
+        return redirect()->to('customer/profile');
+    }
+
     public function shipping($factorId = null)
     {
+        $returnUrl = $factorId
+            ? site_url('checkout/shipping/' . $factorId)
+            : site_url('checkout/shipping');
+        if ($redirect = $this->redirectForIncompleteProfile($returnUrl)) {
+            return $redirect;
+        }
 
         $customerId = service('customerAuth')->getCustomerId();
 
@@ -90,6 +108,10 @@ class Checkout extends BaseController
 
     public function getCities($stateId)
     {
+        if ($redirect = $this->redirectForIncompleteProfile(site_url('checkout/shipping'))) {
+            return $redirect;
+        }
+
         if (!$this->request->isAJAX()) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
@@ -100,6 +122,10 @@ class Checkout extends BaseController
 
     public function addAddress()
     {
+        if ($redirect = $this->redirectForIncompleteProfile(site_url('checkout/shipping'))) {
+            return $redirect;
+        }
+
         if (!$this->request->isAJAX()) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
@@ -135,6 +161,10 @@ class Checkout extends BaseController
 
     public function saveShipping()
     {
+        if ($redirect = $this->redirectForIncompleteProfile(site_url('checkout/shipping'))) {
+            return $redirect;
+        }
+
         // ====== ۱. دریافت داده‌ها از فرم ======
         $addressId = (int) $this->request->getPost('address_id');
         $shippingTypeId = (int) $this->request->getPost('shipping_type_id');
@@ -258,6 +288,10 @@ class Checkout extends BaseController
      */
     public function getShippingPrices()
     {
+        if ($redirect = $this->redirectForIncompleteProfile(site_url('checkout/shipping'))) {
+            return $redirect;
+        }
+
         if (!$this->request->isAJAX()) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
@@ -297,6 +331,10 @@ class Checkout extends BaseController
      */
     public function deleteAddress()
     {
+        if ($redirect = $this->redirectForIncompleteProfile(site_url('checkout/shipping'))) {
+            return $redirect;
+        }
+
         if (!$this->request->isAJAX()) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
@@ -314,6 +352,10 @@ class Checkout extends BaseController
 
     public function payment($factorId)
     {
+        if ($redirect = $this->redirectForIncompleteProfile(site_url('checkout/payment/' . $factorId))) {
+            return $redirect;
+        }
+
         // ====== ۱. دریافت فاکتور ======
         $factorModel = model('App\Models\FactorModel');
         $factor = $factorModel->getData([

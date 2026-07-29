@@ -1,6 +1,6 @@
 <?php
 
-function renderShopMegaMenu($shopMenus, $assetsPath)
+function renderShopMegaMenu($shopMenus, $mediaPath)
 {
     if (empty($shopMenus)) {
         return '';
@@ -60,6 +60,10 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
         $currentColumnItemCount = 0;
 
         foreach ($menu['children'] as $menu2) {
+            if ((int) ($menu2['is_visible'] ?? 1) !== 1) {
+                continue;
+            }
+
             $itemCount = 1 + count($menu2['children']);
 
             if ($itemCount > $maxItemsPerColumn) {
@@ -101,6 +105,10 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
                 // منوهای سطح 3 با لینک کامل
                 if (!empty($menu2['children'])) {
                     foreach ($menu2['children'] as $menu3) {
+                        if ((int) ($menu3['is_visible'] ?? 1) !== 1) {
+                            continue;
+                        }
+
                         $fullSlug = $menu3['menu_1_slug'] . '/' . $menu3['menu_2_slug'] . '/' . $menu3['slug'];
                         $html .= '<a href="' . site_url('category/' . $fullSlug) . '" class="text-xs text-gray-600 block hover:text-primary dark:text-gray-300">' . htmlspecialchars($menu3['name']) . '</a>';
                     }
@@ -116,13 +124,13 @@ function renderShopMegaMenu($shopMenus, $assetsPath)
         $html .= '<div class="col-span-2">
                     <div class="me-4">';
         if (!empty($menu['image']) && !empty($menu['image']['image_name'])) {
-            $imagePath = base_url() . 'images/banners/' . $menu['image']['image_name'];
+            $imagePath = $mediaPath . 'menus/' . $menu['image']['image_name'];
             $html .= '<a href="' . site_url('category/' . $menu['slug']) . '">
                         <img src="' . $imagePath . '" loading="lazy" alt="' . htmlspecialchars($menu['image']['alt'] ?? $menu['name']) . '" class="w-full rounded-lg">
                       </a>';
         } else {
             $html .= '<a href="' . site_url('category/' . $menu['slug']) . '">
-                        <img src="' . $assetsPath . 'images/banner/banner-placeholder.jpg" loading="lazy" alt="' . htmlspecialchars($menu['name']) . '" class="w-full rounded-lg">
+                        <img src="' . $mediaPath . 'menus/banner-placeholder.jpg" loading="lazy" alt="' . htmlspecialchars($menu['name']) . '" class="w-full rounded-lg">
                       </a>';
         }
         $html .= '</div>

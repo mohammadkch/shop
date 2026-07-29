@@ -14,7 +14,7 @@ class Menu3Model extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['menu_2_id', 'name', 'slug', 'is_active', 'description'];
+    protected $allowedFields = ['menu_2_id', 'name', 'slug', 'is_active', 'is_visible', 'description'];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'int';
@@ -48,6 +48,11 @@ class Menu3Model extends Model
         if (isset($where['is_active']) && $where['is_active'] !== '') {
             $builder->where('menu_3.is_active', $where['is_active']);
             unset($where['is_active']);
+        }
+
+        if (isset($where['is_visible']) && $where['is_visible'] !== '') {
+            $builder->where('menu_3.is_visible', $where['is_visible']);
+            unset($where['is_visible']);
         }
 
         if (isset($where['menu_3.id IN'])) {

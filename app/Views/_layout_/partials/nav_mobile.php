@@ -33,8 +33,10 @@
         </div>
 
         <!--Shopping Cart-->
-        <a href="<?=site_url('cart')?>" class="flex flex-col items-center px-2 py-3 rounded-[15px] transition-all duration-300 relative">
-            <div class="w-[50px] h-[50px] flex items-center justify-center rounded-full mb-1 bg-primary dark:bg-[rgba(255,255,255,0.05)] relative">
+        <a href="<?= site_url('cart') ?>"
+           <?= ($className ?? '') === 'cart' ? 'aria-current="page"' : 'onclick="toggleOffcanvas(\'offcanvas-left\'); return false;"' ?>
+           class="flex flex-col items-center px-2 py-3 rounded-[15px] transition-all duration-300 relative">
+            <div class="w-[50px] h-[50px] flex items-center justify-center rounded-full mb-1 bg-primary dark:bg-[rgba(255,255,255,0.05)] relative <?= ($className ?? '') === 'cart' ? 'border-4 border-secondary-600' : '' ?>">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M22 9h-4.79l-4.39-6.57a1 1 0 0 0-1.66 0L6.77 9H2c-.55 0-1 .45-1 1c0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1M11.99 4.79L14.8 9H9.18zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2s2 .9 2 2s-.9 2-2 2"/>
                 </svg>
@@ -43,7 +45,7 @@
         </a>
 
         <!-- Profile -->
-        <a href="#" class="flex flex-col items-center px-2 py-3 rounded-[15px] transition-all duration-300 relative">
+        <a href="<?= site_url('customer') ?>" class="flex flex-col items-center px-2 py-3 rounded-[15px] transition-all duration-300 relative">
             <div class="w-[50px] h-[50px] flex items-center justify-center rounded-full mb-1 bg-primary dark:bg-[rgba(255,255,255,0.05)] transition-all duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                     <path fill="currentColor"

@@ -68,15 +68,18 @@ abstract class BaseController extends Controller
         $isLoggedIn = $this->auth->isLoggedIn();
         $customer = null;
         $customerName = '';
+        $isProfileComplete = false;
 
-        if ($this->auth->isLoggedIn()) {
+        if ($isLoggedIn) {
             $customer = $this->auth->getCustomer();
             $customerName = $this->auth->getName();
+            $isProfileComplete = $this->auth->hasMinimunProfile();
         }
 
         $this->viewData['isLoggedIn'] = $isLoggedIn;
         $this->viewData['customer'] = $customer;
         $this->viewData['customerName'] = $customerName;
+        $this->viewData['isProfileComplete'] = $isProfileComplete;
     }
     protected function flash($key, $customMessage = null)
     {

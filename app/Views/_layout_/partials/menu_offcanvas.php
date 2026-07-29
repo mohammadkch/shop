@@ -61,6 +61,7 @@
                                     <!-- لایه 2 -->
                                     <ul id="mobile-m1-<?= $menu1['id'] ?>" class="hidden bg-gray-50 dark:bg-[#0d1117]">
                                         <?php foreach ($menu1['children'] as $menu2): ?>
+                                            <?php if ((int) ($menu2['is_visible'] ?? 1) !== 1) continue; ?>
                                             <li class="border-b border-gray-100 dark:border-gray-800 last:border-0">
 
                                                 <?php if (!empty($menu2['children'])): ?>
@@ -82,6 +83,7 @@
                                                     <!-- لایه 3 -->
                                                     <ul id="mobile-m2-<?= $menu2['id'] ?>" class="hidden bg-white dark:bg-zinc-900">
                                                         <?php foreach ($menu2['children'] as $menu3): ?>
+                                                            <?php if ((int) ($menu3['is_visible'] ?? 1) !== 1) continue; ?>
                                                             <li class="border-b border-gray-100 dark:border-gray-800 last:border-0">
                                                                 <a href="<?= site_url('category/' . $menu1['slug'] . '/' . $menu2['slug'] . '/' . $menu3['slug']) ?>"
                                                                    class="block px-8 py-2 text-xs text-gray-600 dark:text-gray-400 hover:text-primary hover:bg-gray-50 dark:hover:bg-[#1f242c] transition-colors">

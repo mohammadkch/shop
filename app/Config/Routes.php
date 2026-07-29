@@ -78,6 +78,7 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
     $routes->get('faq', 'Faq::index');
     $routes->get('contact', 'Contact::index');
     $routes->get('about', 'About::index');
+    $routes->get('customer-support', 'CustomerSupport::index');
 
 
 });
@@ -212,5 +213,4 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('home-selected-category/getMenu2/(:num)', 'HomeSelectedCategory::getMenu2/$1');
     $routes->get('home-selected-category/getMenu3/(:num)', 'HomeSelectedCategory::getMenu3/$1');
 });
-
 

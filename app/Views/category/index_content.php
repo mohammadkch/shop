@@ -1,9 +1,7 @@
 <!-- GRID محصولات -->
 <div class="grid mt-6 grid-cols-12 gap-[2px] place-items-center">
     <?php if (empty($products)): ?>
-        <div class="col-span-12 text-center py-10">
-            <p class="text-gray-500 dark:text-gray-400">محصولی در این دسته‌بندی یافت نشد</p>
-        </div>
+        <?= $this->include('category/_empty_state') ?>
     <?php else: ?>
         <?php foreach ($products as $product): ?>
             <div class="lg:col-span-3 sm:col-span-6 col-span-12 w-full">

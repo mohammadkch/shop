@@ -13,7 +13,7 @@ class Menu2Model extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['menu_1_id', 'name', 'slug', 'is_active', 'description'];
+    protected $allowedFields = ['menu_1_id', 'name', 'slug', 'is_active', 'is_visible', 'description'];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'int';
@@ -51,6 +51,11 @@ class Menu2Model extends Model
         if (isset($where['is_active']) && $where['is_active'] !== '') {
             $builder->where('menu_2.is_active', $where['is_active']);
             unset($where['is_active']);
+        }
+
+        if (isset($where['is_visible']) && $where['is_visible'] !== '') {
+            $builder->where('menu_2.is_visible', $where['is_visible']);
+            unset($where['is_visible']);
         }
 
         // شرط‌های معمولی

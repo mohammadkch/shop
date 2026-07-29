@@ -22,7 +22,9 @@
 
             <!-- logo -->
             <div class="flex items-center mb-5 justify-center">
-                <img class="h-12" src="<?= base_url('images/logo/logo-header-transparent.png') ?>" loading="lazy" alt="لوگو">
+                <a href="<?= site_url('/') ?>" aria-label="صفحه اصلی">
+                    <img class="h-12" src="<?= base_url('images/logo/logo-header-transparent.png') ?>" loading="lazy" alt="لوگو">
+                </a>
             </div>
 
             <!-- Step Indicators -->

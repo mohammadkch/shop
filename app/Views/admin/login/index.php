@@ -6,9 +6,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>ورود به پنل مدیریت</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= $assetsPath ?>images/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= $assetsPath ?>images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= $assetsPath ?>images/favicon_io/favicon-16x16.png">
+    <link rel="icon" href="<?= base_url('images/favicon/favicon.ico') ?>" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="<?= base_url('images/favicon/favicon.svg') ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('images/favicon/apple-touch-icon.png') ?>">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('images/favicon/icon-192.png') ?>">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?= base_url('images/favicon/icon-512.png') ?>">
     <link rel="stylesheet" href="<?= $assetsPath ?>css/app.css">
 </head>
 <script>
@@ -55,7 +57,9 @@
 
         <!-- Logo -->
         <div class="text-center mb-8">
-            <img src="<?= $assetsPath ?>images/logo.png" class="h-12 mx-auto dark:invert" alt="Logo">
+            <a href="<?= site_url('/') ?>" aria-label="صفحه اصلی" class="inline-block">
+                <img src="<?= base_url('images/logo/logo-header-transparent.png') ?>" class="h-12 mx-auto" alt="لوگو">
+            </a>
             <h2 class="mt-4 text-2xl font-bold text-gray-800 dark:text-gray-200">پنل مدیریت</h2>
             <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">لطفاً اطلاعات خود را وارد کنید</p>
         </div>

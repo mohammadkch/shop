@@ -28,7 +28,7 @@
                             <div class="swiper-slide" role="group" aria-roledescription="slide">
                                 <a href="<?= !empty($slider['link']) ? esc($slider['link']) : '#' ?>"
                                    aria-label="<?= esc($slider['alt'] ?? 'اسلاید فروشگاه') ?>">
-                                    <div class="lg:h-90 h-50 flex justify-center items-center">
+                                    <div class="flex justify-center items-center" style="height: clamp(240px, 38vw, 440px);">
                                         <img src="<?= $slider['image'] ?>"
                                              class="h-full object-cover w-full rounded-lg" loading="lazy"
                                              alt="<?= esc($slider['alt'] ?? 'تصویر اسلایدر') ?>">
@@ -39,7 +39,7 @@
                     <?php else: ?>
                         <!-- اسلاید پیش‌فرض در صورت نبود دیتا -->
                         <div class="swiper-slide">
-                            <div class="lg:h-90 h-50 flex justify-center items-center bg-gray-200 dark:bg-gray-700 rounded-lg">
+                            <div class="flex justify-center items-center bg-gray-200 dark:bg-gray-700 rounded-lg" style="height: clamp(240px, 38vw, 440px);">
                                 <span class="text-gray-500 dark:text-gray-400">اسلایدری موجود نیست</span>
                             </div>
                         </div>
@@ -67,6 +67,7 @@
     </div>
 </section>
 
+<?php /*
 <!-- START AMAZING SECTION -->
 <section class="py-5">
     <h2 class="sr-only">محصولات شگفت انگیز فروشگاه</h2>
@@ -554,6 +555,7 @@
 
 </section>
 <!-- END AMAZING SECTION -->
+*/ ?>
 
 <!-- START CATEGORY SECTION -->
 <?php if (!empty($categories)): ?>
@@ -608,14 +610,14 @@
     <div class="container">
         <!-- section one -->
         <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
-            <a href="">
-                <img src="<?= $assetsPath ?>images/advert/bnr1.png" class="rounded-xl transition hover:-translate-y-2" alt="">
+            <a href="<?= site_url('category/blouse') ?>">
+                <img src="<?= $mediaPath ?>banners/blouse-banner.webp" class="rounded-xl transition hover:-translate-y-2" alt="بنر بلوز و شومیز">
             </a>
-            <a href="">
-                <img src="<?= $assetsPath ?>images/advert/bnr2.png" class="rounded-xl transition hover:-translate-y-2" alt="">
+            <a href="<?= site_url('category/coat') ?>">
+                <img src="<?= $mediaPath ?>banners/coat-banner.webp" class="rounded-xl transition hover:-translate-y-2" alt="بنر کت زنانه">
             </a>
-            <a href="">
-                <img src="<?= $assetsPath ?>images/advert/bnr3.png" class="rounded-xl transition hover:-translate-y-2" alt="">
+            <a href="<?= site_url('category/west') ?>">
+                <img src="<?= $mediaPath ?>banners/west-banner.webp" class="rounded-xl transition hover:-translate-y-2" alt="بنر وست زنانه">
             </a>
         </div>
     </div>

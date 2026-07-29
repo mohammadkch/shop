@@ -34,13 +34,13 @@ class MenuService
             $imageMap[$img['menu_1_id']] = $img;
         }
 
-        $menu2List = $this->menu2Model->getData(['is_active' => 1]);
+        $menu2List = $this->menu2Model->getData(['is_active' => 1, 'is_visible' => 1]);
         $menu2ByMenu1 = [];
         foreach ($menu2List as $menu2) {
             $menu2ByMenu1[$menu2['menu_1_id']][] = $menu2;
         }
 
-        $menu3List = $this->menu3Model->getData(['is_active' => 1]);
+        $menu3List = $this->menu3Model->getData(['is_active' => 1, 'is_visible' => 1]);
         $menu3ByMenu2 = [];
         foreach ($menu3List as $menu3) {
             $menu3ByMenu2[$menu3['menu_2_id']][] = $menu3;
@@ -68,6 +68,7 @@ class MenuService
                         'id' => $menu2Id,
                         'name' => $menu2['name'],
                         'slug' => $menu2['slug'],
+                        'is_visible' => $menu2['is_visible'],
                         'menu_1_id' => $menu1Id,
                         'menu_1_slug' => $menu1Slug,  // ← اضافه کن
                         'children' => []
@@ -79,6 +80,7 @@ class MenuService
                                 'id' => $menu3['id'],
                                 'name' => $menu3['name'],
                                 'slug' => $menu3['slug'],
+                                'is_visible' => $menu3['is_visible'],
                                 'menu_2_id' => $menu2Id,
                                 'menu_2_slug' => $menu2Slug,  // ← اضافه کن
                                 'menu_1_slug' => $menu1Slug   // ← اضافه کن
@@ -125,6 +127,7 @@ class MenuService
             'name' => 'همه محصولات ' . $menu2['name'],
             'slug' => $slug,
             'is_active' => 0,
+            'is_visible' => 0,
             'created_at' => time(),
             'updated_at' => time()
         ]);
@@ -163,6 +166,7 @@ class MenuService
             $subMenus = $db->table('menu_2')
                 ->where('menu_1_id', $menu['id'])
                 ->where('is_active', 1)
+                ->where('is_visible', 1)
                 ->orderBy('sort_order', 'ASC')
                 ->get()
                 ->getResultArray();
@@ -185,6 +189,7 @@ class MenuService
             $subMenus = $db->table('menu_3')
                 ->where('menu_2_id', $menu['id'])
                 ->where('is_active', 1)
+                ->where('is_visible', 1)
                 ->orderBy('sort_order', 'ASC')
                 ->get()
                 ->getResultArray();

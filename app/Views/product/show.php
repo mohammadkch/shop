@@ -29,7 +29,11 @@
                                     <?php endif; ?>
 
                                     <!-- Large gallery -->
+                                    <p class="mb-2 text-center text-xs text-gray-500 dark:text-gray-400">
+                                        برای بزرگ‌نمایی، روی تصویر دو بار بزنید یا با دو انگشت زوم کنید.
+                                    </p>
                                     <div class="bg-primary relative mb-12 rounded-[15px] h-[350px] pt-5 px-[15px] pb-[33px] dark:bg-custom-dark dark:border dark:border-gray-700">
+                                        <?php /*
                                         <div class="flex rounded-2xl px-2 bg-gray-100 dark:bg-custom-dark gap-2 absolute top-3 end-1/2 -translate-x-1/2 z-10 mt-4">
                                             <button data-modal-target="shareModal" class="modal-trigger flex z-10 group relative items-center justify-center w-full p-2 transition dark:border-gray-700 drop-shadow rounded">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -68,23 +72,24 @@
                                         </span>
                                             </button>
                                         </div>
+                                        */ ?>
 
                                         <div class="swiper" id="productGalleryTwo">
                                             <div class="swiper-wrapper" style="padding-bottom: 20px !important;">
                                                 <?php if ($images['main']): ?>
                                                     <div class="swiper-slide">
-                                                        <div class="border h-90 border-gray-300 rounded-lg bg-white dark:bg-zinc-800 dark:border-gray-700">
+                                                        <div class="border h-90 border-gray-300 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 dark:border-gray-700">
                                                             <div class="swiper-zoom-container">
-                                                                <img src="<?= base_url('images/products/' . $images['main']['image_name']) ?>" alt="<?= esc($images['main']['alt'] ?? $product['name']) ?>" class="rounded-lg sm:h-70 h-50 mx-auto">
+                                                                <img src="<?= base_url('images/products/' . $images['main']['image_name']) ?>" alt="<?= esc($images['main']['alt'] ?? $product['name']) ?>" class="relative -top-2 rounded-2xl w-full h-80 object-contain mx-auto">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 <?php endif; ?>
                                                 <?php foreach ($images['gallery'] as $image): ?>
                                                     <div class="swiper-slide">
-                                                        <div class="border h-90 border-gray-300 rounded-lg bg-white dark:bg-zinc-800 dark:border-gray-700">
+                                                        <div class="border h-90 border-gray-300 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 dark:border-gray-700">
                                                             <div class="swiper-zoom-container">
-                                                                <img src="<?= base_url('images/products/' . $image['image_name']) ?>" alt="<?= esc($image['alt'] ?? $product['name']) ?>" class="rounded-lg sm:h-70 h-50 mx-auto">
+                                                                <img src="<?= base_url('images/products/' . $image['image_name']) ?>" alt="<?= esc($image['alt'] ?? $product['name']) ?>" class="relative -top-2 rounded-2xl w-full h-80 object-contain mx-auto">
                                                             </div>
                                                         </div>
                                                     </div>

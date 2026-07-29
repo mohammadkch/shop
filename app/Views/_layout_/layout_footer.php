@@ -59,10 +59,10 @@
                                 </div>
                                 <div class="ms-3 space-y-2">
                                     <p class="text-sm text-gray-900 dark:text-gray-100">
-                                        پشتیبانی <strong class="text-primary dark:text-primary-400">24 ساعته</strong>
+                                        <strong class="text-primary dark:text-primary-400">پشتیبانی</strong> مشتریان
                                     </p>
                                     <small class="text-gray-500 dark:text-gray-400 text-xs">
-                                        تماس با 021123456
+                                        تماس با ۰۹۱۰۲۰۴۶۱۴۴
                                     </small>
                                 </div>
                             </div>
@@ -253,64 +253,31 @@
                         <div class="flex flex-wrap gap-y-3">
 
                             <!--Shopping Guide Menu-->
-                            <div class="w-6/12 sm:w-6/12 md:w-3/12">
+                            <div class="w-6/12">
                                 <div class="mb-4">
                                     <div class="mb-2 text-gray-900 dark:text-gray-200">
                                         <strong> راهنمای </strong>خرید
                                     </div>
                                     <nav class="flex flex-col space-y-2">
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">نحوه ثبت سفارش</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">چگونگی ارسال کالا</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">چگونگی پرداخت</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">چگونگی ثبت</a>
+                                        <a href="<?= site_url('faq') ?>" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">نحوه ثبت سفارش</a>
+                                        <a href="<?= site_url('faq') ?>" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">چگونگی ارسال کالا</a>
+                                        <a href="<?= site_url('faq') ?>" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">چگونگی پرداخت</a>
+                                        <a href="<?= site_url('faq') ?>" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">چگونگی ثبت</a>
                                     </nav>
                                 </div>
                             </div>
 
                             <!--Customer Service Menu-->
-                            <div class="w-6/12 sm:w-6/12 md:w-3/12">
+                            <div class="w-6/12">
                                 <div class="mb-4">
                                     <div class="mb-2 text-gray-900 dark:text-gray-200">
-                                        <strong> خدمت </strong>مشتریان
+                                        <strong> ارتباط با </strong>مومو
                                     </div>
                                     <nav class="flex flex-col space-y-2">
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">معرفی تخفیف ها</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">پرسش های متداول</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">چگونگی بازگشت کالا</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">حریم خصوصی</a>
-                                    </nav>
-                                </div>
-                            </div>
-
-                            <!--Gaj Collection Menu-->
-                            <div class="w-6/12 sm:w-6/12 md:w-3/12">
-                                <div class="mb-4">
-                                    <div class="mb-2 text-gray-900 dark:text-gray-200">
-                                        <strong> مجموعه </strong>گاج
-                                    </div>
-                                    <nav class="flex flex-col space-y-2">
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">گاجینو</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">دکتر آی کیو</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">مای گاج</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">گاج مگ</a>
-                                    </nav>
-                                </div>
-                            </div>
-
-                            <!--Stadino Map Menu-->
-                            <div class="w-6/12 sm:w-6/12 md:w-3/12">
-                                <div class="mb-4">
-                                    <div class="mb-2 text-gray-900 dark:text-gray-200">
-                                        <strong> نقشه </strong>استادینو
-                                    </div>
-                                    <nav class="flex flex-col space-y-2">
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">درباره ما</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">تماس با ما</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">همکاری و فرصت شغلی</a>
-                                        <a href="" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm flex items-center">
-                                            شعب گاج
-                                            <span class="bg-secondary-500 text-white text-xs rounded-full px-2 py-1 ms-2">جدید</span>
-                                        </a>
+                                        <a href="<?= site_url('contact') ?>" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">تماس با ما</a>
+                                        <a href="<?= site_url('about') ?>" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">درباره ما</a>
+                                        <a href="<?= site_url('customer-support') ?>" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">پشتیبانی مشتریان</a>
+                                        <a href="<?= site_url('faq') ?>" class="py-1 text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 text-sm">سوالات پرتکرار</a>
                                     </nav>
                                 </div>
                             </div>
@@ -321,22 +288,17 @@
                     <!--Second column: Contact and symbols-->
                     <div class="w-full lg:w-6/12">
                         <div class="flex flex-wrap">
-                            <!--Contact section-->
+                            <!--Store address-->
                             <div class="w-full sm:w-5/12">
-                                <div class="bg-primary-500 text-sm hover:bg-primary-600 p-2 rounded-lg text-center font-semibold text-white transition-colors">
-                                    کارشناسان ما میزبان صدایتان هستند
-                                </div>
-                                <div class="flex items-center justify-end mt-2 py-2">
-                                    <a href="" class="ms-2 text-gray-800 hover:text-primary-600 dark:text-gray-200 dark:hover:text-primary-400 transition-colors">
-                                        021123456
+                                <div class="pe-4 mb-6 sm:mb-0">
+                                    <div class="mb-3 text-gray-900 dark:text-gray-200 font-bold">فروشگاه رونیکا مال</div>
+                                    <p class="text-sm leading-7 text-gray-600 dark:text-gray-400">
+                                        تهران، هروی، مجتمع رونیکا مال، طبقه همکف، پلاک ۶۹
+                                    </p>
+                                    <a href="tel:09102046144"
+                                       class="inline-block mt-3 text-sm text-primary hover:text-primary-600 dark:text-primary-400">
+                                        ۰۹۱۰۲۰۴۶۱۴۴
                                     </a>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                         viewBox="0 0 24 24" stroke-width="1.5"
-                                         stroke="currentColor"
-                                         class="size-5 ms-1 text-gray-800 dark:text-gray-300">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                                    </svg>
                                 </div>
                             </div>
 
@@ -344,21 +306,21 @@
                             <div class="w-full sm:w-7/12">
                                 <nav class="flex justify-center pt-0 mt-0">
                                     <div class="flex">
-                                        <a href="" class="p-1">
+                                        <span class="p-1">
                                             <img src="<?= $assetsPath ?>images/namad/enamad.png"
-                                                 class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
-                                                 alt="نماد 1" width="80" height="80">
-                                        </a>
-                                        <a href="" class="p-1">
+                                                  class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
+                                                  alt="نماد اعتماد الکترونیکی" width="80" height="80">
+                                        </span>
+                                        <span class="p-1">
                                             <img src="<?= $assetsPath ?>images/namad/namad-01.png"
-                                                 class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
-                                                 alt="نماد 2" width="80" height="80">
-                                        </a>
-                                        <a href="" class="p-1">
+                                                  class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
+                                                  alt="نماد ساماندهی" width="80" height="80">
+                                        </span>
+                                        <span class="p-1">
                                             <img src="<?= $assetsPath ?>images/namad/rezi.png"
-                                                 class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
-                                                 alt="نماد 3" width="80" height="80">
-                                        </a>
+                                                  class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
+                                                  alt="نماد رسانه دیجیتال" width="80" height="80">
+                                        </span>
                                     </div>
                                 </nav>
 
@@ -366,18 +328,18 @@
                                 <div class="mt-4">
                                     <nav class="flex justify-center">
                                         <div class="flex">
-                                            <a href="" class="bg-primary-500 w-12 h-12 rounded-full flex items-center justify-center me-3 transition-transform hover:-translate-y-2 dark:bg-primary-600 dark:hover:bg-primary-500">
-                                                <img src="<?= $assetsPath ?>images/social/aparat-white.svg" alt="">
-                                            </a>
-                                            <a href="" class="bg-primary-500 w-12 h-12 rounded-full flex items-center justify-center me-3 transition-transform hover:-translate-y-2 dark:bg-primary-600 dark:hover:bg-primary-500">
-                                                <img src="<?= $assetsPath ?>images/social/instagram-white.svg" alt="">
-                                            </a>
-                                            <a href="" class="bg-primary-500 w-12 h-12 rounded-full flex items-center justify-center me-3 transition-transform hover:-translate-y-2 dark:bg-primary-600 dark:hover:bg-primary-500">
-                                                <img src="<?= $assetsPath ?>images/social/telegram-white.svg" alt="">
-                                            </a>
-                                            <a href="" class="bg-primary-500 w-12 h-12 rounded-full flex items-center justify-center transition-transform hover:-translate-y-2 dark:bg-primary-600 dark:hover:bg-primary-500">
-                                                <img src="<?= $assetsPath ?>images/social/youtube-white.svg" alt="">
-                                            </a>
+                                            <span class="bg-primary-500 w-12 h-12 rounded-full flex items-center justify-center me-3 dark:bg-primary-600">
+                                                <img src="<?= $assetsPath ?>images/social/aparat-white.svg" alt="آپارات">
+                                            </span>
+                                            <span class="bg-primary-500 w-12 h-12 rounded-full flex items-center justify-center me-3 dark:bg-primary-600">
+                                                <img src="<?= $assetsPath ?>images/social/instagram-white.svg" alt="اینستاگرام">
+                                            </span>
+                                            <span class="bg-primary-500 w-12 h-12 rounded-full flex items-center justify-center me-3 dark:bg-primary-600">
+                                                <img src="<?= $assetsPath ?>images/social/telegram-white.svg" alt="تلگرام">
+                                            </span>
+                                            <span class="bg-primary-500 w-12 h-12 rounded-full flex items-center justify-center dark:bg-primary-600">
+                                                <img src="<?= $assetsPath ?>images/social/youtube-white.svg" alt="یوتیوب">
+                                            </span>
                                         </div>
                                     </nav>
                                 </div>
@@ -403,7 +365,7 @@
                             <div class="w-full lg:w-10/12">
                                 <div class="pt-3 border-t border-gray-300 dark:border-gray-700">
                                     <small class="text-gray-500 text-xs dark:text-gray-400">
-                                        گاج‌مارکت؛ مرکز خرید و فروش انواع کتاب‌های کمک درسی، آموزشی، دانشگاهی، زبان‌های خارجی، عمومی، کودک و نوجوان می‌باشد و مرجعی برای تهیه انواع لوازم‌التحریر مورد نیاز برای دانش‌آموزان و دانشجویان، لوازم اداری برای شرکت‌ها و سازمان‌ها و بازی‌های آموزشی برای تمامی سنین است.
+                                        مومو از سال ۱۳۹۷ فعالیت خود را با تولید پوشاک زنانه در بندر انزلی آغاز کرده است. محصولات مومو با تمرکز بر کیفیت، طراحی کاربردی و قیمت منصفانه، بدون واسطه به سراسر ایران ارسال می‌شوند.
                                     </small>
                                 </div>
                             </div>
@@ -419,11 +381,9 @@
         <div class="container">
             <div class="flex sm:space-y-0 space-y-3 items-center justify-between flex-wrap">
                 <p class="text-xs text-gray-700  dark:text-gray-400">
-                    2025 © - تمامی حقوق مادی و معنوی برای فروشگاه اینترنتی ساکورا محفوظ می‌باشد.
+                    2026 © تمامی حقوق مادی و معنوی برای فروشگاه اینترنتی مومو محفوظ است.
                 </p>
-                <a href="#" class="text-xs text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary/80 transition-colors duration-200">
-                    طراحی و توسعه : ممد کوچ
-                </a>
+                <span class="text-xs text-gray-700 dark:text-gray-300">طراحی و توسعه : کوچ سیستم</span>
             </div>
         </div>
     </div>

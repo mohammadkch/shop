@@ -20,6 +20,7 @@ class UrlFilter implements FilterInterface
             'contact/index' => 'تماس با ما | فروشگاه momo',
             'about/index' => 'درباره ما | فروشگاه momo',
             'faq/index' => 'سوالات پرتکرار | فروشگاه momo',
+            'customer-support/index' => 'پشتیبانی مشتریان | فروشگاه momo',
             'auth/login' => 'ورود | فروشگاه momo',
             'customer/dashboard/index' => 'پیشخوان کاربری | فروشگاه momo',
             'customer/profile/index' => 'پروفایل کاربر | فروشگاه momo',

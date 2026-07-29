@@ -18,6 +18,14 @@
                 <?= count($products) ?> محصول
             </p>
         </div>
+    </div>
+
+    <?php if (empty($products)): ?>
+        <div class="container">
+            <?= $this->include('category/_empty_state') ?>
+        </div>
+    <?php else: ?>
+        <div class="container">
 
         <!-- Categories Swiper -->
         <?php if (!empty($subMenus)): ?>
@@ -53,40 +61,9 @@
             <aside class="lg:col-span-1 lg:block hidden relative space-y-4 col-span-4 w-full">
                 <!-- Filter applied -->
                 <section>
-                    <div class="dark:bg-custom-dark bg-white rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
-
-                        <!-- Title -->
-                        <h2 class="font-bold text-lg mb-4 relative pb-4
-                                before:absolute before:start-0 before:bottom-0 before:w-2 before:h-2 before:bg-primary before:rounded-full
-                                after:absolute after:start-4 after:bottom-0 after:w-32 after:h-1.5 after:bg-primary/70 after:rounded-lg">
-                            فیلترهای فعال
-                        </h2>
-
-                        <!--Selected filters-->
-                        <div class="flex flex-wrap items-center gap-2">
-
-                            <!--Any filter-->
-                            <a href="#"
-                               class="flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 border border-gray-300
-                                       dark:border-gray-600 rounded-xl text-xs text-gray-700 dark:text-gray-200
-                                       hover:bg-primary hover:text-white hover:border-primary transition-all duration-200">
-                                <span>موجودی</span>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     stroke-width="1.8" stroke="currentColor"
-                                     class="w-3.5 h-3.5 opacity-70">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M6 18 18 6M6 6l12 12" />
-                                </svg>
-                            </a>
-
-                            <a href="#" class="filter-tag">تخفیف‌خورده</a>
-                            <a href="#" class="filter-tag">قرمز</a>
-                            <a href="#" class="filter-tag">سبز</a>
-                            <a href="#" class="filter-tag">آبی</a>
-
-                        </div>
-                    </div>
+                    <h2 class="font-bold text-lg relative pb-4">
+                        فیلترهای فعال
+                    </h2>
                 </section>
                 <section class="space-y-5 sticky top-0">
 
@@ -135,7 +112,8 @@
             <section class="lg:col-span-3 col-span-4 w-full">
 
                 <!-- Quick Filter (بیرون از کانتینر) -->
-                <div class="flex flex-wrap items-center sm:space-y-0 space-y-3 space-x-3">
+                <?php if (!empty($products)): ?>
+                    <div class="flex flex-wrap items-center sm:space-y-0 space-y-3 space-x-3">
                     <div class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 dark:text-white text-gray-700">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
@@ -160,16 +138,15 @@
                             محبوب‌ترین
                         </button>
                     </div>
-                </div>
+                    </div>
+                <?php endif; ?>
 
                 <!-- ====== کانتینر محصولات + پجینیشن ====== -->
                 <div id="product-container">
                     <!-- GRID محصولات -->
                     <div class="grid mt-6 grid-cols-12 gap-[2px] place-items-center">
                         <?php if (empty($products)): ?>
-                            <div class="col-span-12 text-center py-10">
-                                <p class="text-gray-500 dark:text-gray-400">محصولی در این دسته‌بندی یافت نشد</p>
-                            </div>
+                            <?= $this->include('category/_empty_state') ?>
                         <?php else: ?>
                             <?php foreach ($products as $product): ?>
                                 <div class="lg:col-span-3 sm:col-span-6 col-span-12 w-full">
@@ -333,6 +310,8 @@
             </div>
         </div>
     <?php endif; ?>
+
+        <?php endif; ?>
 
 </section>
 

@@ -134,9 +134,6 @@ const ShopCart = {
     },
 
     updateBadge: function() {
-        // اگر در صفحه سبد خرید هستیم، کاری نکن
-        if (this.isCartPage()) return;
-
         fetch(BASE_URL + 'cart/count')
             .then(r => r.json())
             .then(function(data) {

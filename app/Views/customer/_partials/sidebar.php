@@ -79,6 +79,10 @@ $avatar = !empty($customer['avatar'])
                             <circle cx="12" cy="7" r="4"/>
                         </svg>
                         اطلاعات کاربری
+                        <?php if (!($isProfileComplete ?? false)): ?>
+                            <span class="ms-auto size-5 flex items-center justify-center rounded-full bg-secondary text-white text-xs font-bold"
+                                  title="اطلاعات پروفایل شما ناقص است">!</span>
+                        <?php endif; ?>
                     </a>
                 </li>
 
@@ -187,6 +191,10 @@ $avatar = !empty($customer['avatar'])
                 <a href="<?= site_url('customer/profile') ?>"
                    class="flex items-center py-1 px-4 rounded-lg <?= isActive('Profile', null, $simpleController, $methodName) ? 'bg-primary/10 text-primary font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1f242c]' ?> transition-colors">
                     اطلاعات کاربری
+                    <?php if (!($isProfileComplete ?? false)): ?>
+                        <span class="ms-auto size-5 flex items-center justify-center rounded-full bg-secondary text-white text-xs font-bold"
+                              title="اطلاعات پروفایل شما ناقص است">!</span>
+                    <?php endif; ?>
                 </a>
             </li>
             <li class="py-2 px-1">

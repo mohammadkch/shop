@@ -18,6 +18,14 @@
                             </h1>
                             <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
                                 <?php if (isset($edit_row)): ?>
+                                    <!-- ======== دکمه مدیریت قیمت‌ها ======== -->
+                                    <a href="<?= site_url('admin/product-price/manage/' . $edit_row['id']) ?>"
+                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
+                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 10v2m8-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
+                                        </svg>
+                                        مدیریت قیمت‌ها
+                                    </a>
                                     <!-- ======== دکمه مدیریت تصاویر ======== -->
                                     <a href="<?= site_url('admin/product-image/manage/' . $edit_row['id']) ?>"
                                        class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">

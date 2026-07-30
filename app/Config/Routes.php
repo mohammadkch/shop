@@ -183,6 +183,12 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('product-option/form/(:num)', 'ProductOption::form/$1');
     $routes->post('product-option/form/(:num)', 'ProductOption::form/$1');
 
+    // ======== Product Price ========
+    $routes->get('product-price/manage/(:num)', 'ProductPrice::manage/$1');
+    $routes->post('product-price/save/(:num)', 'ProductPrice::save/$1');
+    $routes->post('product-price/cleanup/(:num)', 'ProductPrice::cleanup/$1');
+    $routes->post('product-price/delete/(:num)/(:num)', 'ProductPrice::delete/$1/$2');
+
     // ======== Home Story ========
     $routes->get('home-story', 'HomeStory::index');
     $routes->post('home-story', 'HomeStory::index');
@@ -213,4 +219,3 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('home-selected-category/getMenu2/(:num)', 'HomeSelectedCategory::getMenu2/$1');
     $routes->get('home-selected-category/getMenu3/(:num)', 'HomeSelectedCategory::getMenu3/$1');
 });
-

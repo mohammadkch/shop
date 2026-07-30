@@ -9,7 +9,7 @@
             <div class="lg:col-span-2 lg:order-1 col-span-6 w-full">
                 <a href="<?= site_url('admin/dashboard') ?>">
                     <div class="xl:text-start text-start flex items-center xl:justify-start justify-start">
-                        <img class="h-12 dark:invert" src="<?= $assetsPath ?>images/logo.png" loading="lazy" alt="">
+                        <img class="h-12 dark:invert" src="<?= base_url('images/logo/logo-header-transparent.png') ?>" loading="lazy" alt="">
                     </div>
                 </a>
             </div>

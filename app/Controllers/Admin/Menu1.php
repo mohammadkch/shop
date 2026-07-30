@@ -11,7 +11,7 @@ class Menu1 extends BaseController
         $menu1Model = model('App\Models\Menu1Model');
 
         // گرفتن page از POST (برای AJAX) یا GET (برای لود عادی)
-        $page = (int) $this->request->getGet('page');
+        $page = (int) ($this->request->getPost('page') ?? $this->request->getGet('page'));
         $page = $page > 0 ? $page : 1;
 
         $name = $this->request->getPost('name', FILTER_CALLBACK, ['options' => 'sanitizeStripTags']);

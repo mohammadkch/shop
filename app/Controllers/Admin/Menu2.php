@@ -139,6 +139,14 @@ class Menu2 extends BaseController
                     '1' => 'فعال',
                     '0' => 'غیرفعال'
                 ]
+            ],
+            'is_visible' => [
+                'input' => 'form_dropdown',
+                'data' => ['class' => 'form-control', 'id' => 'is_visible', 'name' => 'is_visible'],
+                'options' => [
+                    '1' => 'قابل نمایش',
+                    '0' => 'مخفی'
+                ]
             ]
         ];
 
@@ -231,6 +239,14 @@ class Menu2 extends BaseController
                     '1' => 'فعال',
                     '0' => 'غیرفعال'
                 ]
+            ],
+            'is_visible' => [
+                'input' => 'form_dropdown',
+                'data' => ['class' => 'form-control', 'id' => 'is_visible', 'name' => 'is_visible'],
+                'options' => [
+                    '1' => 'قابل نمایش',
+                    '0' => 'مخفی'
+                ]
             ]
         ];
 
@@ -240,7 +256,8 @@ class Menu2 extends BaseController
             'slug' => 'slug',
             'description' => 'توضیحات',
             'sort_order' => 'ترتیب',
-            'is_active' => 'وضعیت'
+            'is_active' => 'وضعیت',
+            'is_visible' => 'نمایش در سایت'
         ];
 
         return view($this->viewPath . 'menu2/create', $this->viewData);
@@ -272,6 +289,10 @@ class Menu2 extends BaseController
             ],
             'is_active' => [
                 'label' => 'وضعیت',
+                'rules' => 'required|in_list[0,1]'
+            ],
+            'is_visible' => [
+                'label' => 'نمایش در سایت',
                 'rules' => 'required|in_list[0,1]'
             ],
             'description' => [
@@ -331,6 +352,7 @@ class Menu2 extends BaseController
             'description' => $this->request->getPost('description', FILTER_SANITIZE_STRING),
             'sort_order' => (int) ($this->request->getPost('sort_order', FILTER_VALIDATE_INT) ?: 0),
             'is_active' => (int)$this->request->getPost('is_active', FILTER_VALIDATE_INT),
+            'is_visible' => (int)$this->request->getPost('is_visible', FILTER_VALIDATE_INT),
             'updated_at' => time()
         ];
         // ======== پایان اضافه شد ========

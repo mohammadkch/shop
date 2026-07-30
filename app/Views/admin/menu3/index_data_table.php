@@ -11,6 +11,7 @@
                 <th class="px-5 py-4">نام منو</th>
                 <th class="px-5 py-4">slug</th>
                 <th class="px-5 py-4">وضعیت</th>
+                <th class="px-5 py-4">نمایش در سایت</th>
                 <th class="px-5 py-4">تاریخ ایجاد</th>
                 <th class="px-5 py-4">عملیات</th>
             </tr>
@@ -28,6 +29,13 @@
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">فعال</span>
                         <?php else: ?>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300">غیرفعال</span>
+                        <?php endif; ?>
+                    </td>
+                    <td class="px-5 py-4">
+                        <?php if ($item['is_visible'] == 1): ?>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">قابل نمایش</span>
+                        <?php else: ?>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">مخفی</span>
                         <?php endif; ?>
                     </td>
                     <td class="px-5 py-4"><?= jdate('Y/m/d', $item['created_at']) ?></td>

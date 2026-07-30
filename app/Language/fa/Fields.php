@@ -25,6 +25,7 @@ return [
     'category_id'       => 'دسته‌بندی',
     'barcode'           => 'بارکد',
     'is_active'         => 'وضعیت',
+    'is_visible'        => 'نمایش در سایت',
 
     'product_id'        => 'محصول',
 

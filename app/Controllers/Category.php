@@ -117,6 +117,10 @@ class Category extends BaseController
             return ['level' => 0, 'id' => 0, 'name' => 'همه محصولات', 'slug' => ''];
         }
 
+        if (count($slugs) > 3) {
+            return null;
+        }
+
         $menu1 = model('App\Models\Menu1Model')
             ->where('slug', $slugs[0])
             ->where('is_active', 1)
@@ -134,6 +138,7 @@ class Category extends BaseController
             ->where('menu_1_id', $menu1['id'])
             ->where('slug', $slugs[1])
             ->where('is_active', 1)
+            ->where('is_visible', 1)
             ->first();
         if (!$menu2) {
             return null;
@@ -148,6 +153,7 @@ class Category extends BaseController
             ->where('menu_2_id', $menu2['id'])
             ->where('slug', $slugs[2])
             ->where('is_active', 1)
+            ->where('is_visible', 1)
             ->first();
         if ($menu3) {
             $menu3['level'] = 3;
@@ -177,14 +183,7 @@ class Category extends BaseController
                 ->where('is_active', 1)
                 ->findAll();
 
-            if (!empty($children)) {
-                $menu3Ids = array_column($children, 'id');
-            } else {
-                $hiddenMenu = $this->menuService->getOrCreateHiddenMenu3($menu['id']);
-                if ($hiddenMenu) {
-                    $menu3Ids[] = $hiddenMenu['id'];
-                }
-            }
+            $menu3Ids = array_column($children, 'id');
 
         } elseif ($menu['level'] == 1) {
             $menu2Model = model('App\Models\Menu2Model');
@@ -201,21 +200,6 @@ class Category extends BaseController
                     ->findAll();
                 $menu3Ids = array_column($menu3List, 'id');
 
-                foreach ($menu2Ids as $menu2Id) {
-                    $hasMenu3 = false;
-                    foreach ($menu3List as $m3) {
-                        if ($m3['menu_2_id'] == $menu2Id) {
-                            $hasMenu3 = true;
-                            break;
-                        }
-                    }
-                    if (!$hasMenu3) {
-                        $hiddenMenu = $this->menuService->getOrCreateHiddenMenu3($menu2Id);
-                        if ($hiddenMenu) {
-                            $menu3Ids[] = $hiddenMenu['id'];
-                        }
-                    }
-                }
             }
         }
 

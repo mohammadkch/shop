@@ -14,7 +14,7 @@ class Menu3Model extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['menu_2_id', 'name', 'slug', 'is_active', 'is_visible', 'description'];
+    protected $allowedFields = ['menu_2_id', 'name', 'slug', 'is_active', 'is_visible', 'description', 'sort_order'];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'int';

@@ -311,9 +311,21 @@ class Menu2 extends BaseController
             $slug = $this->slugify($this->request->getPost('name', FILTER_SANITIZE_STRING));
         }
 
+        $menu1Id = (int) $this->request->getPost('menu_1_id', FILTER_VALIDATE_INT);
+        $slugCheck = $menu2Model
+            ->where('menu_1_id', $menu1Id)
+            ->where('slug', $slug);
+        if ($task == 'edit') {
+            $slugCheck->where('id !=', $id);
+        }
+        if ($slugCheck->first()) {
+            $this->flash('validation_error', 'این slug قبلاً در منوی سطح 1 انتخاب‌شده استفاده شده است.');
+            return $task == 'edit' ? $this->edit($id) : $this->create();
+        }
+
         // ======== اضافه کردن فیلدهای جدید به دیتا ========
         $model_data = [
-            'menu_1_id' => (int)$this->request->getPost('menu_1_id', FILTER_VALIDATE_INT),
+            'menu_1_id' => $menu1Id,
             'name' => $this->request->getPost('name', FILTER_SANITIZE_STRING),
             'slug' => $slug,
             'description' => $this->request->getPost('description', FILTER_SANITIZE_STRING),

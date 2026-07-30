@@ -117,45 +117,41 @@ class Category extends BaseController
             return ['level' => 0, 'id' => 0, 'name' => 'همه محصولات', 'slug' => ''];
         }
 
-        $count = count($slugs);
-
-        // سطح ۳: آخرین اسلاگ
-        if ($count >= 3) {
-            $menu3Model = model('App\Models\Menu3Model');
-            $menu3 = $menu3Model
-                ->where('slug', end($slugs))
-                ->where('is_active', 1)
-                ->first();
-            if ($menu3) {
-                $menu3['level'] = 3;
-                return $menu3;
-            }
+        $menu1 = model('App\Models\Menu1Model')
+            ->where('slug', $slugs[0])
+            ->where('is_active', 1)
+            ->first();
+        if (!$menu1) {
+            return null;
         }
 
-        // سطح ۲: آخرین اسلاگ (نه دومین از آخر!)
-        if ($count >= 2) {
-            $menu2Model = model('App\Models\Menu2Model');
-            $menu2 = $menu2Model
-                ->where('slug', end($slugs))  // ← اینجا رو اصلاح کن
-                ->where('is_active', 1)
-                ->first();
-            if ($menu2) {
-                $menu2['level'] = 2;
-                return $menu2;
-            }
+        $menu1['level'] = 1;
+        if (count($slugs) === 1) {
+            return $menu1;
         }
 
-        // سطح ۱: اولین اسلاگ
-        if ($count >= 1) {
-            $menu1Model = model('App\Models\Menu1Model');
-            $menu1 = $menu1Model
-                ->where('slug', $slugs[0])
-                ->where('is_active', 1)
-                ->first();
-            if ($menu1) {
-                $menu1['level'] = 1;
-                return $menu1;
-            }
+        $menu2 = model('App\Models\Menu2Model')
+            ->where('menu_1_id', $menu1['id'])
+            ->where('slug', $slugs[1])
+            ->where('is_active', 1)
+            ->first();
+        if (!$menu2) {
+            return null;
+        }
+
+        $menu2['level'] = 2;
+        if (count($slugs) === 2) {
+            return $menu2;
+        }
+
+        $menu3 = model('App\Models\Menu3Model')
+            ->where('menu_2_id', $menu2['id'])
+            ->where('slug', $slugs[2])
+            ->where('is_active', 1)
+            ->first();
+        if ($menu3) {
+            $menu3['level'] = 3;
+            return $menu3;
         }
 
         return null;

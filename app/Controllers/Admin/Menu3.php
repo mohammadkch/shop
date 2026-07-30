@@ -404,20 +404,8 @@ class Menu3 extends BaseController
             $slug = $this->slugify($this->request->getPost('name', FILTER_SANITIZE_STRING));
         }
 
-        $slugCheck = $menu3Model->where('slug', $slug);
-        if ($task == 'edit') {
-            $slugCheck->where('id !=', $id);
-        }
-        if ($slugCheck->first()) {
-            $this->flash('validation_error', 'این slug قبلاً استفاده شده است.');
-            if ($task == 'edit') {
-                return $this->edit($id);
-            } else {
-                return $this->create();
-            }
-        }
-
-        $menu2 = $menu2Model->find((int)$this->request->getPost('menu_2_id', FILTER_VALIDATE_INT));
+        $menu2Id = (int) $this->request->getPost('menu_2_id', FILTER_VALIDATE_INT);
+        $menu2 = $menu2Model->find($menu2Id);
         if (!$menu2) {
             $this->flash('validation_error', 'منو سطح 2 انتخاب شده معتبر نیست.');
             if ($task == 'edit') {
@@ -427,8 +415,23 @@ class Menu3 extends BaseController
             }
         }
 
+        $slugCheck = $menu3Model
+            ->where('menu_2_id', $menu2Id)
+            ->where('slug', $slug);
+        if ($task == 'edit') {
+            $slugCheck->where('id !=', $id);
+        }
+        if ($slugCheck->first()) {
+            $this->flash('validation_error', 'این slug قبلاً در منوی سطح 2 انتخاب‌شده استفاده شده است.');
+            if ($task == 'edit') {
+                return $this->edit($id);
+            } else {
+                return $this->create();
+            }
+        }
+
         $model_data = [
-            'menu_2_id' => (int) $this->request->getPost('menu_2_id', FILTER_VALIDATE_INT),
+            'menu_2_id' => $menu2Id,
             'name' => $this->request->getPost('name', FILTER_SANITIZE_STRING),
             'slug' => $slug,
             'description' => $this->request->getPost('description', FILTER_SANITIZE_STRING),

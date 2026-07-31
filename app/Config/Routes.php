@@ -93,6 +93,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('/', 'Dashboard::index');
 
     $routes->get('login', 'Login::index');
+    $routes->get('login/captcha', 'Login::captcha');
     $routes->post('login/authenticate', 'Login::authenticate');
 
     $routes->get('logout', 'Logout::index');

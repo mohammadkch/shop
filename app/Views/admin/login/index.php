@@ -94,6 +94,28 @@
                            placeholder="رمز عبور خود را وارد کنید" required>
                 </div>
 
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">کد امنیتی</label>
+                    <div class="flex items-stretch gap-3 mb-3" dir="ltr">
+                        <img id="adminCaptchaImage"
+                             src="<?= site_url('admin/login/captcha') ?>"
+                             class="h-[58px] flex-1 min-w-0 object-fill border border-gray-300 dark:border-gray-700 rounded-xl bg-gray-50"
+                             width="170" height="58" alt="تصویر کد امنیتی">
+                        <button type="button" id="refreshAdminCaptcha"
+                                class="shrink-0 px-4 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                                title="دریافت کد جدید" aria-label="دریافت کد امنیتی جدید">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <input type="text" name="captcha" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off"
+                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl
+                                  bg-white dark:bg-custom-dark text-gray-900 dark:text-gray-100 text-center tracking-[0.5em]
+                                  focus:ring-2 focus:ring-primary focus:border-transparent"
+                           placeholder="کد ۴ رقمی" required>
+                </div>
+
                 <button type="submit"
                         class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-xl
                                transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
@@ -105,5 +127,12 @@
     </div>
 </div>
 </body>
+<script>
+    document.getElementById('refreshAdminCaptcha').addEventListener('click', function () {
+        const image = document.getElementById('adminCaptchaImage');
+        image.src = '<?= site_url('admin/login/captcha') ?>?t=' + Date.now();
+        document.querySelector('input[name="captcha"]').value = '';
+    });
+</script>
 <?= showFlash() ?>
 </html>

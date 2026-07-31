@@ -57,7 +57,7 @@
                     <td class="px-5 py-4"><?= jdate('Y/m/d', $item['created_at']) ?></td>
                     <td class="px-5 py-4">
                         <div class="flex space-x-2">
-                            <button type="button" class="toggle-active-btn text-blue-600 hover:text-blue-800" data-id="<?= $item['id'] ?>" data-status="<?= $item['is_active'] ?>">
+                            <button type="button" class="toggle-active-btn text-blue-600 hover:text-blue-800" data-id="<?= $item['id'] ?>" data-status="<?= $item['is_active'] ?>" title="<?= $item['is_active'] == 1 ? 'غیرفعال کردن' : 'فعال کردن' ?>" aria-label="<?= $item['is_active'] == 1 ? 'غیرفعال کردن' : 'فعال کردن' ?>">
                                 <?php if ($item['is_active'] == 1): ?>
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -69,7 +69,7 @@
                                 <?php endif; ?>
                             </button>
                             <?php if ($item['is_active'] != 1): ?>
-                                <button type="button" class="delete-btn text-red-600 hover:text-red-800" data-id="<?= $item['id'] ?>" data-url="<?= site_url(ADMIN_PATH . '/menu3-image/delete') ?>">
+                                <button type="button" title="حذف" aria-label="حذف" class="delete-btn text-red-600 hover:text-red-800" data-id="<?= $item['id'] ?>" data-url="<?= site_url(ADMIN_PATH . '/menu3-image/delete') ?>">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                     </svg>

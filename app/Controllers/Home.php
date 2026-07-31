@@ -20,6 +20,7 @@ class Home extends BaseController
         $this->viewData['sliders']    = $homeData['sliders'];
         $this->viewData['categories'] = $homeData['categories'] ?? [];
         $this->viewData['latestProducts'] = $homeData['latestProducts'] ?? [];
+        $this->viewData['latestBlogPosts'] = $homeData['latestBlogPosts'] ?? [];
 
         return view('home/index', $this->viewData);
     }

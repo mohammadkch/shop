@@ -179,9 +179,8 @@
                                 <span>پیگیری سفارش</span>
                             </a>
                         </li>
-<!--                        <li class="--><?php //= site_url('/blog') ?><!--">-->
-                        <li class="#">
-                            <a href="" class="flex space-x-3 hover:text-primary transition">
+                        <li class="">
+                            <a href="<?= site_url('blog') ?>" class="flex space-x-3 hover:text-primary transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="size-6 dark:text-white">
                                     <path stroke-linecap="round" stroke-linejoin="round"

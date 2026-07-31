@@ -27,6 +27,8 @@ class UrlFilter implements FilterInterface
             'cart/index' => 'سبد خرید | فروشگاه momo',
             'cart/proceed-to-checkout' => '',
             'checkout/shipping' => '',
+            'blog/index' => 'مجله مد و پوشاک | فروشگاه momo',
+            'blog/show' => 'مقاله | فروشگاه momo',
         ];
 
         $url = service('url');

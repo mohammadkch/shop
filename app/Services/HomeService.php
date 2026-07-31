@@ -8,6 +8,7 @@ use App\Models\HomeSelectedCategoryModel;
 use App\Models\Menu1ImageModel;
 use App\Models\Menu3Model;
 use App\Models\ProductImageModel;
+use App\Models\BlogPostModel;
 
 class HomeService
 {
@@ -18,6 +19,7 @@ class HomeService
     protected $menu3Model;
     protected $productImageModel;
     protected $categoryService;
+    protected $blogPostModel;
 
     public function __construct()
     {
@@ -28,6 +30,7 @@ class HomeService
         $this->menu3Model = new Menu3Model();
         $this->productImageModel = new ProductImageModel();
         $this->categoryService = service('categoryService');
+        $this->blogPostModel = new BlogPostModel();
     }
 
     /**
@@ -160,6 +163,15 @@ class HomeService
         return $products;
     }
 
+    public function getLatestBlogPosts(int $limit = 8): array
+    {
+        return $this->blogPostModel->publicBuilder()
+            ->orderBy('post.published_at', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
     /**
      * دریافت تمام دیتاهای صفحه اصلی
      */
@@ -170,6 +182,7 @@ class HomeService
             'sliders'    => $this->getSliders($mediaPath),
             'categories' => $this->getSelectedCategories($mediaPath),
             'latestProducts' => $this->getLatestProducts(),
+            'latestBlogPosts' => $this->getLatestBlogPosts(),
         ];
     }
 }

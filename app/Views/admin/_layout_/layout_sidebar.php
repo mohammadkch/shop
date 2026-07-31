@@ -99,6 +99,22 @@
 
 
                 <?php
+                $isActive = ($className == 'blogpost');
+                $activeClass = $isActive
+                        ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
+                        : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+                ?>
+                <li class="py-2.5 px-1">
+                    <a href="<?= site_url('admin/blog-post') ?>"
+                       class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2.5">
+                            <path d="M4 5h16v14H4z"></path><path d="M8 9h8M8 13h8"></path>
+                        </svg>
+                        مدیریت بلاگ
+                    </a>
+                </li>
+
+                <?php
                 $isActive = ($className == 'product' || $className == 'productimage' || $className == 'productmenu3' || $className == 'productoption');
                 $activeClass = $isActive
                         ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
@@ -357,6 +373,19 @@
                         <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomeselectedcategory ?>"></path>
                     </svg>
                     دسته بندی منتخب
+                </a>
+            </li>
+
+            <?php
+            $isActiveBlog = ($className == 'blogpost');
+            $activeClassBlog = $isActiveBlog ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+            ?>
+            <li class="py-2.5 px-1">
+                <a href="<?= site_url('admin/blog-post') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassBlog ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2.5">
+                        <path d="M4 5h16v14H4z"></path><path d="M8 9h8M8 13h8"></path>
+                    </svg>
+                    مدیریت بلاگ
                 </a>
             </li>
 

@@ -79,6 +79,9 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
     $routes->get('contact', 'Contact::index');
     $routes->get('about', 'About::index');
     $routes->get('customer-support', 'CustomerSupport::index');
+    $routes->get('blog', 'Blog::index');
+    $routes->get('blog-sitemap.xml', 'Blog::sitemap');
+    $routes->get('blog/(:any)', 'Blog::show/$1');
 
 
 });
@@ -188,6 +191,16 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->post('product-price/save/(:num)', 'ProductPrice::save/$1');
     $routes->post('product-price/cleanup/(:num)', 'ProductPrice::cleanup/$1');
     $routes->post('product-price/delete/(:num)/(:num)', 'ProductPrice::delete/$1/$2');
+
+    // ======== Blog Post ========
+    $routes->get('blog-post', 'BlogPost::index');
+    $routes->post('blog-post', 'BlogPost::index');
+    $routes->get('blog-post/create', 'BlogPost::create');
+    $routes->post('blog-post/create', 'BlogPost::store');
+    $routes->get('blog-post/edit/(:num)', 'BlogPost::edit/$1');
+    $routes->post('blog-post/edit/(:num)', 'BlogPost::update/$1');
+    $routes->post('blog-post/toggle-status/(:num)', 'BlogPost::toggleStatus/$1');
+    $routes->delete('blog-post/delete/(:num)', 'BlogPost::delete/$1');
 
     // ======== Home Story ========
     $routes->get('home-story', 'HomeStory::index');

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="<?= $assetsPath ?>css/app.css">
     <!-- CUSTOM STYLES -->
     <link rel="stylesheet" href="<?= $assetsPath ?>custom/admin.css">
+    <?= $this->renderSection('styles') ?>
     <!-- CUSTOM STYLES END -->
 </head>
 
@@ -46,6 +47,7 @@
 <?= $this->include('admin/_layout_/partials/login_modal') ?>
 <?= $this->include('admin/_layout_/partials/overlay') ?>
 <?= $this->include('admin/_layout_/partials/scripts') ?>
+<?= $this->renderSection('scripts') ?>
 
 </body>
 

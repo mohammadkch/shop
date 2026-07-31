@@ -1,4 +1,64 @@
 // ==============================================
+// لودینگ عمومی درخواست‌های Ajax
+// ==============================================
+(function() {
+    if (!window.fetch) return;
+
+    var originalFetch = window.fetch.bind(window);
+    var activeRequests = 0;
+    var showTimer = null;
+    var shownAt = 0;
+
+    function getLoader() {
+        return document.getElementById('shopAjaxLoader');
+    }
+
+    function showLoader() {
+        clearTimeout(showTimer);
+        showTimer = setTimeout(function() {
+            if (activeRequests < 1) return;
+            var loader = getLoader();
+            if (!loader) return;
+            shownAt = Date.now();
+            loader.classList.add('is-active');
+            loader.setAttribute('aria-hidden', 'false');
+        }, 120);
+    }
+
+    function hideLoader() {
+        clearTimeout(showTimer);
+        if (activeRequests > 0) return;
+        var loader = getLoader();
+        if (!loader) return;
+        var remaining = Math.max(0, 250 - (Date.now() - shownAt));
+        setTimeout(function() {
+            if (activeRequests > 0) return;
+            loader.classList.remove('is-active');
+            loader.setAttribute('aria-hidden', 'true');
+        }, remaining);
+    }
+
+    window.fetch = function() {
+        activeRequests++;
+        showLoader();
+
+        var request;
+        try {
+            request = originalFetch.apply(null, arguments);
+        } catch (error) {
+            activeRequests = Math.max(0, activeRequests - 1);
+            hideLoader();
+            throw error;
+        }
+
+        return request.finally(function() {
+            activeRequests = Math.max(0, activeRequests - 1);
+            hideLoader();
+        });
+    };
+})();
+
+// ==============================================
 // نمایش نوتیفیکیشن
 // ==============================================
 function showNotification(message, type = 'info') {

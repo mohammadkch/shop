@@ -32,13 +32,15 @@
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/story-player/styles.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>css/app.css">
+    <link rel="stylesheet" href="<?= $assetsPath ?>custom/shop.css?v=<?= filemtime(FCPATH . 'assets/custom/shop.css') ?>">
 
     <!-- ====== فایل‌های داخل custom ====== -->
-    <script src="<?= $assetsPath ?>custom/shop.js"></script>
+    <script src="<?= $assetsPath ?>custom/shop.js?v=<?= filemtime(FCPATH . 'assets/custom/shop.js') ?>"></script>
     <?= $this->renderSection('styles') ?>
 </head>
 
 <body class="relative bg-custom-light dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 transition-colors duration-300" >
+<div id="shopAjaxLoader" class="shop-ajax-loader" aria-hidden="true"><span></span></div>
 <?= showFlash() ?>
 <?= $this->include('_layout_/layout_header') ?>
 

@@ -1,0 +1,76 @@
+.shop-ajax-loader {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 99999;
+    height: 3px;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .15s ease;
+}
+
+.shop-ajax-loader.is-active {
+    opacity: 1;
+}
+
+.shop-ajax-loader span {
+    display: block;
+    width: 38%;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, #ef4444 25%, #f97316 70%, transparent);
+    box-shadow: 0 0 8px rgba(239, 68, 68, .45);
+    animation: shop-loader-move .9s ease-in-out infinite;
+}
+
+@keyframes shop-loader-move {
+    from { transform: translateX(280%); }
+    to { transform: translateX(-280%); }
+}
+
+.product-price-box {
+    position: relative;
+    min-width: 74px;
+    transition: opacity .16s ease, transform .16s ease;
+}
+
+.product-price-box.is-price-loading {
+    opacity: .3;
+    transform: translateY(1px);
+}
+
+.product-price-box.is-price-loading::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 23px;
+    height: 23px;
+    margin-top: -12px;
+    margin-inline-start: -12px;
+    border: 3px solid rgba(239, 68, 68, .22);
+    border-top-color: #ef4444;
+    border-radius: 50%;
+    animation: shop-price-spin .5s linear infinite;
+}
+
+.product-price-box.is-price-updated {
+    animation: shop-price-updated .35s ease;
+}
+
+@keyframes shop-price-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes shop-price-updated {
+    50% { transform: scale(1.035); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shop-ajax-loader span,
+    .product-price-box.is-price-loading::after,
+    .product-price-box.is-price-updated {
+        animation: none;
+    }
+}

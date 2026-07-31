@@ -313,7 +313,7 @@
                             </div>
 
                             <!-- قیمت (راست، ستونی) - اضافه کردن space-y-1 -->
-                            <div class="flex items-center xl:items-center">
+                            <div id="productPriceBox" class="product-price-box flex items-center xl:items-center" aria-live="polite">
                                 <div class="text-gray-700 dark:text-zinc-300 flex flex-col items-end xl:items-center space-y-1">
                                     <div class="flex items-center gap-2"> <!-- gap-2 به جای gap-1 -->
                                         <del class="text-zinc-400 dark:text-zinc-500 text-xs" id="priceDel">

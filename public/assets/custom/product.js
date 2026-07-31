@@ -294,6 +294,30 @@ function updateOptions() {
 // اتصال رویدادها و مقداردهی اولیه
 // ==============================================
 document.addEventListener('DOMContentLoaded', function() {
+    let priceUpdateTimer = null;
+    const productPriceBox = document.getElementById('productPriceBox');
+
+    function updateProductWithFeedback() {
+        clearTimeout(priceUpdateTimer);
+
+        if (productPriceBox) {
+            productPriceBox.classList.remove('is-price-updated');
+            productPriceBox.classList.add('is-price-loading');
+        }
+
+        priceUpdateTimer = setTimeout(function() {
+            updateProduct();
+
+            if (productPriceBox) {
+                productPriceBox.classList.remove('is-price-loading');
+                productPriceBox.classList.add('is-price-updated');
+                setTimeout(function() {
+                    productPriceBox.classList.remove('is-price-updated');
+                }, 350);
+            }
+        }, 380);
+    }
+
     const initialColor = document.querySelector('.color-radio:checked');
     const initialSize = document.querySelector('.size-radio:checked');
     if (initialColor && initialSize) {
@@ -315,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // فقط در صورتی که غیرفعال نباشد، اجازه تغییر بده
             if (!this.disabled) {
                 window.selectedColorId = parseInt(this.dataset.optionId);
-                updateProduct();
+                updateProductWithFeedback();
             }
         });
     });
@@ -324,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function() {
         radio.addEventListener('change', function() {
             if (!this.disabled) {
                 window.selectedSizeId = parseInt(this.dataset.optionId);
-                updateProduct();
+                updateProductWithFeedback();
             }
         });
     });

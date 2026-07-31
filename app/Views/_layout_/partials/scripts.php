@@ -25,7 +25,7 @@ if (!empty($controllerScripts)):
         $filePath = FCPATH . 'assets/custom/' . $script . '.js';
         if (file_exists($filePath)):
             ?>
-            <script src="<?= $assetsPath ?>custom/<?= $script ?>.js"></script>
+            <script src="<?= $assetsPath ?>custom/<?= $script ?>.js?v=<?= filemtime($filePath) ?>"></script>
         <?php
         endif;
     endforeach;

@@ -19,13 +19,13 @@
                                 </h1>
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">
                                     شناسه محصول: <?= $product['id'] ?> |
-                                    <a href="<?= site_url('admin/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
+                                    <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
                                         ویرایش محصول
                                     </a>
                                 </p>
                             </div>
                             <div class="mt-4 md:mt-0">
-                                <a href="<?= site_url('admin/product') ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
                                    class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block">
                                     بازگشت به لیست محصولات
                                 </a>
@@ -81,7 +81,7 @@
                                 <button type="submit" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-600 transition">
                                     ذخیره
                                 </button>
-                                <a href="<?= site_url('admin/product') ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
                                    class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">
                                     انصراف
                                 </a>

@@ -134,7 +134,7 @@ class HomeSelectedCategory extends BaseController
             'is_active' => 'وضعیت'
         ];
 
-        $this->viewData['form_action'] = 'admin/home-selected-category/create/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/home-selected-category/create/handle';
 
         return view('admin/home_selected_category/create', $this->viewData);
     }
@@ -222,7 +222,7 @@ class HomeSelectedCategory extends BaseController
             $checkValue = $menu1Id;
         } else {
             $this->flash('validation_error', 'لطفاً حداقل یک منو انتخاب کنید');
-            return redirect()->to('admin/home-selected-category/create');
+            return redirect()->to(ADMIN_PATH . '/home-selected-category/create');
         }
 
         // بررسی تکراری نبودن
@@ -232,7 +232,7 @@ class HomeSelectedCategory extends BaseController
 
         if ($exists) {
             $this->flash('validation_error', 'این منو قبلاً به لیست منتخب اضافه شده است');
-            return redirect()->to('admin/home-selected-category/create');
+            return redirect()->to(ADMIN_PATH . '/home-selected-category/create');
         }
 
         // دیتای نهایی
@@ -245,11 +245,11 @@ class HomeSelectedCategory extends BaseController
 
         if (!$result) {
             $this->flash('category_create_error');
-            return redirect()->to('admin/home-selected-category/create');
+            return redirect()->to(ADMIN_PATH . '/home-selected-category/create');
         }
 
         $this->flash('category_create_success');
-        return redirect()->to('admin/home-selected-category/manage');
+        return redirect()->to(ADMIN_PATH . '/home-selected-category/manage');
     }
 
     public function delete($id)

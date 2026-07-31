@@ -141,7 +141,7 @@ class HomeStory extends BaseController
             'is_active' => 'وضعیت'
         ];
 
-        $this->viewData['form_action'] = 'admin/home-story/create/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/home-story/create/handle';
 
         return view('admin/home_story/create', $this->viewData);
     }
@@ -159,11 +159,11 @@ class HomeStory extends BaseController
 
         if ($edit_row == null) {
             $this->flash('story_not_found');
-            return redirect()->to('admin/home-story');
+            return redirect()->to(ADMIN_PATH . '/home-story');
         }
 
         $this->viewData['edit_row'] = $edit_row;
-        $this->viewData['form_action'] = 'admin/home-story/edit/' . $id . '/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/home-story/edit/' . $id . '/handle';
         $this->viewData['inputs'] = [
             'title' => [
                 'input' => 'form_input',
@@ -230,7 +230,7 @@ class HomeStory extends BaseController
     public function formHandler($task, $id = 0)
     {
         if (!in_array($task, ['create', 'edit'])) {
-            return redirect()->to('admin/home-story');
+            return redirect()->to(ADMIN_PATH . '/home-story');
         }
 
         helper('sanitize');
@@ -351,7 +351,7 @@ class HomeStory extends BaseController
 
             if (!$storyId) {
                 $this->flash('story_create_error');
-                return redirect()->to('admin/home-story/create');
+                return redirect()->to(ADMIN_PATH . '/home-story/create');
             }
         } else {
             $storyId = $id;
@@ -359,7 +359,7 @@ class HomeStory extends BaseController
 
             if (!$update_result) {
                 $this->flash('story_update_error');
-                return redirect()->to('admin/home-story/edit/' . $storyId);
+                return redirect()->to(ADMIN_PATH . '/home-story/edit/' . $storyId);
             }
         }
 
@@ -369,7 +369,7 @@ class HomeStory extends BaseController
             $this->flash('story_update_success');
         }
 
-        return redirect()->to('admin/home-story');
+        return redirect()->to(ADMIN_PATH . '/home-story');
     }
 
     public function delete($id)

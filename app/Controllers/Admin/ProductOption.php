@@ -14,7 +14,7 @@ class ProductOption extends BaseController
 
         if (!$product) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         // اگه درخواست POST بود، بره به formHandler
@@ -54,7 +54,7 @@ class ProductOption extends BaseController
         $this->viewData['optionsByLabel'] = $optionsByLabel;
         $this->viewData['existingOptionIds'] = $existingOptionIds;
         $this->viewData['title'] = 'مدیریت آپشن‌های محصول - ' . $product['name'];
-        $this->viewData['form_action'] = 'admin/product-option/form/' . $productId;
+        $this->viewData['form_action'] = ADMIN_PATH . '/product-option/form/' . $productId;
 
         return view('admin/product_option/form', $this->viewData);
     }
@@ -69,7 +69,7 @@ class ProductOption extends BaseController
 
         if (!$product) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         // دریافت آپشن‌های انتخاب شده از فرم (به صورت آرایه)
@@ -115,6 +115,6 @@ class ProductOption extends BaseController
         }
 
         $this->flash('option_update_success', 'آپشن‌های محصول با موفقیت به‌روزرسانی شد');
-        return redirect()->to('admin/product-option/form/' . $productId);
+        return redirect()->to(ADMIN_PATH . '/product-option/form/' . $productId);
     }
 }

@@ -46,7 +46,7 @@ class BlogPost extends BaseController
     {
         $post = model('App\Models\BlogPostModel')->find($id);
         if (!$post) {
-            return redirect()->to('admin/blog-post')->with('error', 'مقاله پیدا نشد.');
+            return redirect()->to(ADMIN_PATH . '/blog-post')->with('error', 'مقاله پیدا نشد.');
         }
         return $this->form($post);
     }
@@ -63,8 +63,8 @@ class BlogPost extends BaseController
         $this->viewData['users'] = model('App\Models\Admin\UserModel')->where('is_active', 1)->orderBy('full_name')->findAll();
         $this->viewData['statuses'] = self::STATUSES;
         $this->viewData['form_action'] = $post
-            ? 'admin/blog-post/edit/' . $post['id']
-            : 'admin/blog-post/create';
+            ? ADMIN_PATH . '/blog-post/edit/' . $post['id']
+            : ADMIN_PATH . '/blog-post/create';
         return view('admin/blog_post/form', $this->viewData);
     }
 
@@ -85,7 +85,7 @@ class BlogPost extends BaseController
         $blockModel = model('App\Models\BlogPostBlockModel');
         $existing = $id ? $postModel->find($id) : null;
         if ($id && !$existing) {
-            return redirect()->to('admin/blog-post')->with('error', 'مقاله پیدا نشد.');
+            return redirect()->to(ADMIN_PATH . '/blog-post')->with('error', 'مقاله پیدا نشد.');
         }
 
         $rules = [
@@ -240,7 +240,7 @@ class BlogPost extends BaseController
         foreach (array_unique($obsoleteImages) as $obsoleteImage) {
             $this->deleteMedia($obsoleteImage);
         }
-        return redirect()->to('admin/blog-post')->with('success', $id ? 'مقاله بروزرسانی شد.' : 'مقاله ساخته شد.');
+        return redirect()->to(ADMIN_PATH . '/blog-post')->with('success', $id ? 'مقاله بروزرسانی شد.' : 'مقاله ساخته شد.');
     }
 
     public function toggleStatus(int $id)

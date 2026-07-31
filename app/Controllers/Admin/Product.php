@@ -110,7 +110,7 @@ class Product extends BaseController
             'is_active' => 'وضعیت'
         ];
 
-        $this->viewData['form_action'] = 'admin/product/create/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/product/create/handle';
 
         return view('admin/product/create', $this->viewData);
     }
@@ -128,11 +128,11 @@ class Product extends BaseController
 
         if ($edit_row == null) {
             $this->flash('product_not_found');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $this->viewData['edit_row'] = $edit_row;
-        $this->viewData['form_action'] = 'admin/product/edit/' . $id . '/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/product/edit/' . $id . '/handle';
         $this->viewData['inputs'] = [
             'name' => [
                 'input' => 'form_input',
@@ -172,7 +172,7 @@ class Product extends BaseController
     public function formHandler($task, $id = 0)
     {
         if (!in_array($task, ['create', 'edit'])) {
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         helper('sanitize');
@@ -221,7 +221,7 @@ class Product extends BaseController
 
             if (!$productId) {
                 $this->flash('product_create_error');
-                return redirect()->to('admin/product/create');
+                return redirect()->to(ADMIN_PATH . '/product/create');
             }
         } else {
             $productId = $id;
@@ -229,7 +229,7 @@ class Product extends BaseController
 
             if (!$update_result) {
                 $this->flash('product_update_error');
-                return redirect()->to('admin/product/edit/' . $productId);
+                return redirect()->to(ADMIN_PATH . '/product/edit/' . $productId);
             }
         }
 
@@ -239,7 +239,7 @@ class Product extends BaseController
             $this->flash('product_update_success');
         }
 
-        return redirect()->to('admin/product');
+        return redirect()->to(ADMIN_PATH . '/product');
     }
 
     public function delete($id)

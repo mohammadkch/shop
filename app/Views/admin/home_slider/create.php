@@ -17,7 +17,7 @@
                                 <?= isset($edit_row) ? 'ویرایش اسلایدر' : 'افزودن اسلایدر جدید' ?>
                             </h1>
                             <div class="mt-4 md:mt-0">
-                                <a href="<?= site_url('admin/home-slider') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block">
+                                <a href="<?= site_url(ADMIN_PATH . '/home-slider') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block">
                                     بازگشت به لیست
                                 </a>
                             </div>
@@ -70,7 +70,7 @@
                                 <button type="submit" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-600 transition">
                                     <?= isset($edit_row) ? 'بروزرسانی' : 'ذخیره' ?>
                                 </button>
-                                <a href="<?= site_url('admin/home-slider') ?>" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">انصراف</a>
+                                <a href="<?= site_url(ADMIN_PATH . '/home-slider') ?>" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">انصراف</a>
                             </div>
                         </form>
                     </div>

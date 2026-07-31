@@ -19,13 +19,13 @@
                                 </h1>
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">
                                     شناسه محصول: <?= $product['id'] ?> |
-                                    <a href="<?= site_url('admin/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
+                                    <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
                                         ویرایش محصول
                                     </a>
                                 </p>
                             </div>
                             <div class="mt-4 md:mt-0">
-                                <a href="<?= site_url('admin/product-menu3/manage/' . $product['id']) ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $product['id']) ?>"
                                    class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block">
                                     بازگشت به مدیریت منوها
                                 </a>
@@ -88,7 +88,7 @@
                                 <button type="submit" id="submitBtn" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-600 transition" disabled>
                                     افزودن منو
                                 </button>
-                                <a href="<?= site_url('admin/product-menu3/manage/' . $product['id']) ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $product['id']) ?>"
                                    class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">
                                     انصراف
                                 </a>
@@ -126,7 +126,7 @@
 
                 menu2Select.disabled = false;
 
-                fetch('<?= site_url('admin/product-menu3/getMenu2') ?>/' + menu1Id)
+                fetch('<?= site_url(ADMIN_PATH . '/product-menu3/getMenu2') ?>/' + menu1Id)
                     .then(response => response.json())
                     .then(data => {
                         menu2Select.innerHTML = '<option value="">انتخاب منو سطح 2</option>';
@@ -163,7 +163,7 @@
                     return;
                 }
 
-                fetch('<?= site_url('admin/product-menu3/getMenu3') ?>/' + menu2Id)
+                fetch('<?= site_url(ADMIN_PATH . '/product-menu3/getMenu3') ?>/' + menu2Id)
                     .then(response => response.json())
                     .then(data => {
                         menu3Select.innerHTML = '<option value="">انتخاب منو سطح 3</option>';

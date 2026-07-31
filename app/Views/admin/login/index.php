@@ -72,7 +72,7 @@
         <?php endif; ?>
 
         <!-- فرم لاگین -->
-        <form method="post" action="<?= site_url('admin/login/authenticate') ?>">
+        <form method="post" action="<?= site_url(ADMIN_PATH . '/login/authenticate') ?>">
             <div class="space-y-5">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">نام کاربری</label>
@@ -98,7 +98,7 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">کد امنیتی</label>
                     <div class="flex items-stretch gap-3 mb-3" dir="ltr">
                         <img id="adminCaptchaImage"
-                             src="<?= site_url('admin/login/captcha') ?>"
+                             src="<?= site_url(ADMIN_PATH . '/login/captcha') ?>"
                              class="h-[58px] flex-1 min-w-0 object-fill border border-gray-300 dark:border-gray-700 rounded-xl bg-gray-50"
                              width="170" height="58" alt="تصویر کد امنیتی">
                         <button type="button" id="refreshAdminCaptcha"
@@ -130,7 +130,7 @@
 <script>
     document.getElementById('refreshAdminCaptcha').addEventListener('click', function () {
         const image = document.getElementById('adminCaptchaImage');
-        image.src = '<?= site_url('admin/login/captcha') ?>?t=' + Date.now();
+        image.src = '<?= site_url(ADMIN_PATH . '/login/captcha') ?>?t=' + Date.now();
         document.querySelector('input[name="captcha"]').value = '';
     });
 </script>

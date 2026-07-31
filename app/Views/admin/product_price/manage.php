@@ -16,7 +16,7 @@
                             </h1>
                             <p class="text-gray-600 dark:text-gray-400 mt-1">
                                 شناسه محصول: <?= $product['id'] ?> |
-                                <a href="<?= site_url('admin/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
+                                <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
                                     ویرایش محصول
                                 </a>
                                 |
@@ -26,11 +26,11 @@
                             </p>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            <a href="<?= site_url('admin/product-option/form/' . $product['id']) ?>"
+                            <a href="<?= site_url(ADMIN_PATH . '/product-option/form/' . $product['id']) ?>"
                                class="bg-purple-500 text-white py-2.5 px-4 rounded-lg hover:bg-purple-600 transition">
                                 مدیریت آپشن‌ها
                             </a>
-                            <a href="<?= site_url('admin/product') ?>"
+                            <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
                                class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow">
                                 بازگشت به لیست محصولات
                             </a>
@@ -49,7 +49,7 @@
                                     </p>
                                 </div>
                                 <form method="post"
-                                      action="<?= site_url('admin/product-price/cleanup/' . $product['id']) ?>"
+                                      action="<?= site_url(ADMIN_PATH . '/product-price/cleanup/' . $product['id']) ?>"
                                       onsubmit="return confirm('همه قیمت‌های نامعتبر حذف شوند؟');">
                                     <button type="submit"
                                             class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition">
@@ -88,7 +88,7 @@
                                             <td class="px-3 py-2"><?= number_format((float) $stale['price']) ?></td>
                                             <td class="px-3 py-2">
                                                 <form method="post"
-                                                      action="<?= site_url('admin/product-price/delete/' . $product['id'] . '/' . $stale['id']) ?>"
+                                                      action="<?= site_url(ADMIN_PATH . '/product-price/delete/' . $product['id'] . '/' . $stale['id']) ?>"
                                                       onsubmit="return confirm('این قیمت نامعتبر حذف شود؟');">
                                                     <button type="submit" class="text-red-600 hover:text-red-800">حذف</button>
                                                 </form>
@@ -210,7 +210,7 @@
                                     class="bg-primary text-white py-2.5 px-6 rounded-lg hover:bg-primary-600 transition">
                                 ذخیره قیمت‌ها
                             </button>
-                            <a href="<?= site_url('admin/product') ?>"
+                            <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
                                class="bg-gray-200 text-gray-800 py-2.5 px-6 rounded-lg hover:bg-gray-300 transition">
                                 انصراف
                             </a>

@@ -13,7 +13,7 @@ class ProductMenu3 extends BaseController
 
         if (!$product) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $menu1Model = model('App\Models\Menu1Model');
@@ -151,7 +151,7 @@ class ProductMenu3 extends BaseController
 
         if (!$product) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         // اگه درخواست POST بود، بره به formHandler
@@ -175,7 +175,7 @@ class ProductMenu3 extends BaseController
         $this->viewData['menu2List'] = $menu2List;
         $this->viewData['menu3List'] = $menu3List;
         $this->viewData['title'] = 'افزودن منو به محصول - ' . $product['name'];
-        $this->viewData['form_action'] = 'admin/product-menu3/create/' . $productId;
+        $this->viewData['form_action'] = ADMIN_PATH . '/product-menu3/create/' . $productId;
 
         return view('admin/product_menu3/create', $this->viewData);
     }
@@ -190,7 +190,7 @@ class ProductMenu3 extends BaseController
 
         if (!$product) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         // دریافت منوی سطح 3 از POST (اسم درست = menu_3_id)
@@ -198,7 +198,7 @@ class ProductMenu3 extends BaseController
 
         if ($menu3Id < 1) {
             $this->flash('validation_error', 'لطفاً یک منوی سطح 3 انتخاب کنید');
-            return redirect()->to('admin/product-menu3/create/' . $productId);
+            return redirect()->to(ADMIN_PATH . '/product-menu3/create/' . $productId);
         }
 
         // بررسی اینکه آیا این منو قبلاً به این محصول متصل شده است
@@ -210,7 +210,7 @@ class ProductMenu3 extends BaseController
 
         if ($exists) {
             $this->flash('validation_error', 'این منو قبلاً به این محصول متصل شده است');
-            return redirect()->to('admin/product-menu3/create/' . $productId);
+            return redirect()->to(ADMIN_PATH . '/product-menu3/create/' . $productId);
         }
 
         // ذخیره اتصال جدید
@@ -220,6 +220,6 @@ class ProductMenu3 extends BaseController
         ]);
 
         $this->flash('menu_add_success', 'منو با موفقیت به محصول اضافه شد');
-        return redirect()->to('admin/product-menu3/manage/' . $productId);
+        return redirect()->to(ADMIN_PATH . '/product-menu3/manage/' . $productId);
     }
 }

@@ -17,7 +17,7 @@
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">لیست تمام منوهای سطح سوم فروشگاه</p>
                             </div>
                             <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
-                                <a href="<?= site_url('admin/menu3-image') ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/menu3-image') ?>"
                                    class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <rect x="2" y="2" width="20" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
@@ -26,7 +26,7 @@
                                     </svg>
                                     مدیریت تصاویر منوی 3
                                 </a>
-                                <a href="<?= site_url('admin/menu3/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
+                                <a href="<?= site_url(ADMIN_PATH . '/menu3/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                     </svg>
@@ -125,9 +125,9 @@
                 function loadMenu2(menu1Id) {
                     let url;
                     if (!menu1Id) {
-                        url = 'http://127.0.0.1/shop/public/admin/menu3/getAllMenu2';
+                        url = '<?= site_url(ADMIN_PATH . '/menu3/getAllMenu2') ?>';
                     } else {
-                        url = 'http://127.0.0.1/shop/public/admin/menu3/getMenu2ByMenu1/' + menu1Id;
+                        url = '<?= site_url(ADMIN_PATH . '/menu3/getMenu2ByMenu1') ?>/' + menu1Id;
                     }
 
                     fetch(url)

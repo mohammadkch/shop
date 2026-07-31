@@ -19,7 +19,7 @@
                             <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
                                 <?php if (isset($edit_row)): ?>
                                     <!-- ======== دکمه مدیریت قیمت‌ها ======== -->
-                                    <a href="<?= site_url('admin/product-price/manage/' . $edit_row['id']) ?>"
+                                    <a href="<?= site_url(ADMIN_PATH . '/product-price/manage/' . $edit_row['id']) ?>"
                                        class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
                                         <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 10v2m8-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
@@ -27,7 +27,7 @@
                                         مدیریت قیمت‌ها
                                     </a>
                                     <!-- ======== دکمه مدیریت تصاویر ======== -->
-                                    <a href="<?= site_url('admin/product-image/manage/' . $edit_row['id']) ?>"
+                                    <a href="<?= site_url(ADMIN_PATH . '/product-image/manage/' . $edit_row['id']) ?>"
                                        class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
                                         <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <rect x="2" y="2" width="20" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
@@ -37,7 +37,7 @@
                                         مدیریت تصاویر
                                     </a>
                                     <!-- ======== دکمه مدیریت آپشن ======== -->
-                                    <a href="<?= site_url('admin/product-option/form/' . $edit_row['id']) ?>"
+                                    <a href="<?= site_url(ADMIN_PATH . '/product-option/form/' . $edit_row['id']) ?>"
                                        class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
                                         <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
@@ -45,7 +45,7 @@
                                         مدیریت آپشن‌ها
                                     </a>
                                     <!-- ======== دکمه مدیریت منو ======== -->
-                                    <a href="<?= site_url('admin/product-menu3/manage/' . $edit_row['id']) ?>"
+                                    <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $edit_row['id']) ?>"
                                        class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
                                         <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -55,7 +55,7 @@
                                     </a>
                                     <!-- ======== پایان ======== -->
                                 <?php endif; ?>
-                                <a href="<?= site_url('admin/product') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block text-sm">
+                                <a href="<?= site_url(ADMIN_PATH . '/product') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block text-sm">
                                     بازگشت به لیست
                                 </a>
                             </div>
@@ -98,7 +98,7 @@
                                 <button type="submit" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-600 transition">
                                     <?= isset($edit_row) ? 'بروزرسانی' : 'ذخیره' ?>
                                 </button>
-                                <a href="<?= site_url('admin/product') ?>" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">انصراف</a>
+                                <a href="<?= site_url(ADMIN_PATH . '/product') ?>" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">انصراف</a>
                             </div>
                         </form>
                     </div>

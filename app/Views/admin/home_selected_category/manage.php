@@ -17,13 +17,13 @@
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">لیست منوهای نمایش داده شده در صفحه اصلی</p>
                             </div>
                             <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
-                                <a href="<?= site_url('admin/home-selected-category/create') ?>" class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center">
+                                <a href="<?= site_url(ADMIN_PATH . '/home-selected-category/create') ?>" class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                     </svg>
                                     افزودن منو منتخب
                                 </a>
-                                <a href="<?= site_url('admin/dashboard') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
+                                <a href="<?= site_url(ADMIN_PATH . '/dashboard') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     بازگشت به داشبورد
                                 </a>
                             </div>

@@ -43,11 +43,11 @@ class AdminAuthFilter implements FilterInterface
 
         if ($className == 'login') {
             if ($auth->isLoggedIn() === true) {
-                return redirect()->to('admin/dashboard');
+                return redirect()->to(ADMIN_PATH . '/dashboard');
             }
         } else {
             if ($auth->isLoggedIn() === false) {
-                return redirect()->to('admin/login');
+                return redirect()->to(ADMIN_PATH . '/login');
             }
         }
 

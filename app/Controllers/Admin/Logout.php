@@ -8,6 +8,6 @@ class Logout extends BaseController
     {
         $this->authLib->logout();
         $this->flash('logout_success');
-        return redirect()->to('admin/login');
+        return redirect()->to(ADMIN_PATH . '/login');
     }
 }

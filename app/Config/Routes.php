@@ -89,7 +89,7 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
 // --------------------
 // shop admin routes
 // --------------------
-$routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'admin_auth'], function($routes) {
+$routes->group(ADMIN_PATH, ['namespace' => 'App\Controllers\Admin', 'filter' => 'admin_auth'], function($routes) {
     $routes->get('/', 'Dashboard::index');
 
     $routes->get('login', 'Login::index');

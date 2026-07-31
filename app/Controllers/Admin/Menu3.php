@@ -227,7 +227,7 @@ class Menu3 extends BaseController
             'is_visible' => 'نمایش در سایت'
         ];
 
-        $this->viewData['form_action'] = 'admin/menu3/create/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/menu3/create/handle';
 
         return view($this->viewPath . 'menu3/create', $this->viewData);
     }
@@ -250,7 +250,7 @@ class Menu3 extends BaseController
 
         if ($edit_row == null) {
             $this->flash('menu_not_found');
-            return redirect()->to('admin/menu3');
+            return redirect()->to(ADMIN_PATH . '/menu3');
         }
 
         // دریافت منوی سطح 2 فعلی برای تعیین menu_1_id پیش‌فرض
@@ -289,7 +289,7 @@ class Menu3 extends BaseController
         $this->viewData['menu1_options'] = $menu1_options;
         $this->viewData['menu2_options'] = $menu2_options;
         $this->viewData['default_menu_1_id'] = $default_menu_1_id;
-        $this->viewData['form_action'] = 'admin/menu3/edit/' . $id . '/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/menu3/edit/' . $id . '/handle';
         $this->viewData['edit_row'] = $edit_row;
         $this->viewData['inputs'] = [
             'menu_1_id' => [
@@ -359,7 +359,7 @@ class Menu3 extends BaseController
     public function formHandler($task, $id = 0)
     {
         if (!in_array($task, ['create', 'edit'])) {
-            return redirect()->to('admin/menu3');
+            return redirect()->to(ADMIN_PATH . '/menu3');
         }
 
         helper('sanitize');
@@ -469,7 +469,7 @@ class Menu3 extends BaseController
 
             if (!$menuId) {
                 $this->flash('menu_create_error');
-                return redirect()->to('admin/menu3/create');
+                return redirect()->to(ADMIN_PATH . '/menu3/create');
             }
         } else {
             $menuId = $id;
@@ -477,7 +477,7 @@ class Menu3 extends BaseController
 
             if (!$update_result) {
                 $this->flash('menu_update_error');
-                return redirect()->to('admin/menu3/edit/' . $menuId);
+                return redirect()->to(ADMIN_PATH . '/menu3/edit/' . $menuId);
             }
         }
 
@@ -555,7 +555,7 @@ class Menu3 extends BaseController
         if ($hasImageError) {
             $errorMessage = implode(' | ', $imageErrors);
             $this->flash('image_upload_error', $errorMessage);
-            return redirect()->to('admin/menu3/edit/' . $menuId);
+            return redirect()->to(ADMIN_PATH . '/menu3/edit/' . $menuId);
         }
 
         if ($task == 'create') {
@@ -564,7 +564,7 @@ class Menu3 extends BaseController
             $this->flash('menu_update_success');
         }
 
-        return redirect()->to('admin/menu3');
+        return redirect()->to(ADMIN_PATH . '/menu3');
     }
 
     public function delete($id)

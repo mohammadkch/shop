@@ -7,7 +7,7 @@
 
             <!-- logo - در موبایل 6 ستون، در دسکتاپ 2 ستون -->
             <div class="lg:col-span-2 lg:order-1 col-span-6 w-full">
-                <a href="<?= site_url('admin/dashboard') ?>">
+                <a href="<?= site_url(ADMIN_PATH . '/dashboard') ?>">
                     <div class="xl:text-start text-start flex items-center xl:justify-start justify-start">
                         <img class="h-12 dark:invert" src="<?= base_url('images/logo/logo-header-transparent.png') ?>" loading="lazy" alt="">
                     </div>
@@ -54,7 +54,7 @@
                     <div class="hidden md:inline-block mx-4 h-6 w-px self-center bg-gray-300 dark:bg-gray-600"></div>
 
                     <!-- دکمه خروج - فقط در دسکتاپ -->
-                    <a href="<?= site_url('admin/logout') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/logout') ?>"
                        class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg transition-colors duration-200 flex items-center gap-2 text-sm font-medium hidden md:flex">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />

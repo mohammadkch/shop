@@ -388,7 +388,7 @@ function confirmToggleActive() {
         controller = 'home-selected-category';
     }
 
-    let url = baseUrl + 'admin/' + controller + '/toggleActive/' + currentToggleId;
+    let url = baseUrl + window.adminPath + '/' + controller + '/toggleActive/' + currentToggleId;
 
     fetch(url, {
         method: 'POST',

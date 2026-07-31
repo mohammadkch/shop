@@ -30,7 +30,7 @@
                 <td class="px-5 py-4"><?= $item['published_at'] ? jdate('Y/m/d H:i', $item['published_at']) : '—' ?></td>
                 <td class="px-5 py-4">
                     <div class="flex space-x-2 rtl:space-x-reverse">
-                        <a href="<?= site_url('admin/blog-post/edit/' . $item['id']) ?>"
+                        <a href="<?= site_url(ADMIN_PATH . '/blog-post/edit/' . $item['id']) ?>"
                            class="text-primary hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
                            title="ویرایش مقاله">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,7 +39,7 @@
                         </a>
                         <button type="button"
                                 class="text-blue-600 hover:text-blue-800"
-                                data-toggle="<?= site_url('admin/blog-post/toggle-status/' . $item['id']) ?>"
+                                data-toggle="<?= site_url(ADMIN_PATH . '/blog-post/toggle-status/' . $item['id']) ?>"
                                 title="<?= $item['status'] === 'published' ? 'تبدیل به پیش‌نویس' : 'انتشار مقاله' ?>">
                             <?php if ($item['status'] === 'published'): ?>
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,7 +53,7 @@
                         </button>
                         <button type="button"
                                 class="text-red-600 hover:text-red-800"
-                                data-delete="<?= site_url('admin/blog-post/delete/' . $item['id']) ?>"
+                                data-delete="<?= site_url(ADMIN_PATH . '/blog-post/delete/' . $item['id']) ?>"
                                 title="حذف مقاله">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>

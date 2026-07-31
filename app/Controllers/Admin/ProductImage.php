@@ -11,7 +11,7 @@ class ProductImage extends BaseController
 
         if ($productId < 1) {
             $this->flash('product_not_found', 'محصولی یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $productModel = model('App\Models\ProductModel');
@@ -19,7 +19,7 @@ class ProductImage extends BaseController
 
         if (!$product) {
             $this->flash('product_not_found', 'محصولی یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $productImageModel = model('App\Models\ProductImageModel');
@@ -177,7 +177,7 @@ class ProductImage extends BaseController
 
         if (!$product) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         // دریافت انواع تصاویر
@@ -188,7 +188,7 @@ class ProductImage extends BaseController
         $this->viewData['product_id'] = $productId;
         $this->viewData['imageTypes'] = $imageTypes;
         $this->viewData['title'] = 'افزودن عکس جدید - ' . $product['name'];
-        $this->viewData['form_action'] = 'admin/product-image/create/' . $productId;
+        $this->viewData['form_action'] = ADMIN_PATH . '/product-image/create/' . $productId;
 
         return view('admin/product_image/create', $this->viewData);
     }
@@ -203,7 +203,7 @@ class ProductImage extends BaseController
 
         if (!$product) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $imageTypeModel = model('App\Models\ProductImageTypeModel');
@@ -247,7 +247,7 @@ class ProductImage extends BaseController
 
         if (!$hasFileUpload) {
             $this->flash('validation_error', 'حداقل یک تصویر باید آپلود شود');
-            return redirect()->to('admin/product-image/create/' . $productId);
+            return redirect()->to(ADMIN_PATH . '/product-image/create/' . $productId);
         }
 
         $validation = \Config\Services::validation();
@@ -259,7 +259,7 @@ class ProductImage extends BaseController
             $this->viewData['product_id'] = $productId;
             $this->viewData['imageTypes'] = $imageTypes;
             $this->viewData['title'] = 'افزودن عکس جدید - ' . $product['name'];
-            $this->viewData['form_action'] = 'admin/product-image/create/' . $productId;
+            $this->viewData['form_action'] = ADMIN_PATH . '/product-image/create/' . $productId;
 
             return view('admin/product_image/create', $this->viewData);
         }
@@ -311,6 +311,6 @@ class ProductImage extends BaseController
             $this->flash('image_upload_error', 'خطا در آپلود تصاویر');
         }
 
-        return redirect()->to('admin/product-image/manage/' . $productId);
+        return redirect()->to(ADMIN_PATH . '/product-image/manage/' . $productId);
     }
 }

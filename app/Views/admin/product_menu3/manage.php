@@ -19,20 +19,20 @@
                                 </h1>
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">
                                     شناسه محصول: <?= $product['id'] ?> |
-                                    <a href="<?= site_url('admin/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
+                                    <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
                                         ویرایش محصول
                                     </a>
                                 </p>
                             </div>
                             <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
-                                <a href="<?= site_url('admin/product-menu3/create/' . $product['id']) ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/product-menu3/create/' . $product['id']) ?>"
                                    class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                     </svg>
                                     افزودن منو جدید
                                 </a>
-                                <a href="<?= site_url('admin/product') ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
                                    class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     بازگشت به لیست محصولات
                                 </a>
@@ -100,7 +100,7 @@
                                                 <button type="button"
                                                         class="delete-menu-btn text-red-600 hover:text-red-800"
                                                         data-id="<?= $item['id'] ?>"
-                                                        data-url="<?= site_url('admin/product-menu3/delete') ?>">
+                                                        data-url="<?= site_url(ADMIN_PATH . '/product-menu3/delete') ?>">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                     </svg>
@@ -152,7 +152,7 @@
 
                 if (menu1Id) {
                     // بارگذاری منوهای 2
-                    fetch('<?= site_url('admin/product-menu3/getMenu2') ?>/' + menu1Id)
+                    fetch('<?= site_url(ADMIN_PATH . '/product-menu3/getMenu2') ?>/' + menu1Id)
                         .then(response => response.json())
                         .then(data => {
                             menu2Select.innerHTML = '<option value="">انتخاب منو سطح 2</option>';
@@ -213,7 +213,7 @@
                 menu3Select.innerHTML = '<option value="">در حال بارگذاری...</option>';
                 applyBtn.disabled = true;
 
-                fetch('<?= site_url('admin/product-menu3/getMenu3') ?>/' + menu2Id)
+                fetch('<?= site_url(ADMIN_PATH . '/product-menu3/getMenu3') ?>/' + menu2Id)
                     .then(response => response.json())
                     .then(data => {
                         menu3Select.innerHTML = '<option value="">انتخاب منو سطح 3</option>';
@@ -279,7 +279,7 @@
                     menu2Select.disabled = false;
                     menu2Select.innerHTML = '<option value="">در حال بارگذاری...</option>';
 
-                    fetch('<?= site_url('admin/product-menu3/getMenu2') ?>/' + menu1Id)
+                    fetch('<?= site_url(ADMIN_PATH . '/product-menu3/getMenu2') ?>/' + menu1Id)
                         .then(response => response.json())
                         .then(data => {
                             menu2Select.innerHTML = '<option value="">انتخاب منو سطح 2</option>';
@@ -328,7 +328,7 @@
                     menu3Select.innerHTML = '<option value="">در حال بارگذاری...</option>';
                     applyBtn.disabled = true;
 
-                    fetch('<?= site_url('admin/product-menu3/getMenu3') ?>/' + menu2Id)
+                    fetch('<?= site_url(ADMIN_PATH . '/product-menu3/getMenu3') ?>/' + menu2Id)
                         .then(response => response.json())
                         .then(data => {
                             menu3Select.innerHTML = '<option value="">انتخاب منو سطح 3</option>';
@@ -388,7 +388,7 @@
                     this.disabled = true;
                     this.textContent = 'در حال ذخیره...';
 
-                    fetch('<?= site_url('admin/product-menu3/update') ?>/' + rowId, {
+                    fetch('<?= site_url(ADMIN_PATH . '/product-menu3/update') ?>/' + rowId, {
                         method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',

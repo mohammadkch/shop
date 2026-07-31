@@ -22,7 +22,7 @@ $fileClass = 'w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
             <h1 class="font-black text-2xl with-highlight dark:text-gray-200"><?= $edit_row ? 'ویرایش مقاله' : 'افزودن مقاله جدید' ?></h1>
             <div class="mt-4 md:mt-0">
-                <a href="<?= site_url('admin/blog-post') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block">بازگشت به لیست</a>
+                <a href="<?= site_url(ADMIN_PATH . '/blog-post') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block">بازگشت به لیست</a>
             </div>
         </div>
         <?php if (!empty($validation_errors)): ?>
@@ -63,7 +63,7 @@ $fileClass = 'w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:
             <label class="block"><span class="<?= $labelClass ?>">Canonical URL (اختیاری)</span><input name="canonical_url" dir="ltr" value="<?= esc($old('canonical_url'), 'attr') ?>" class="<?= $inputClass ?>"></label>
         </div>
     </div>
-    <div class="mt-6 flex gap-3"><button class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-600 transition"><?= $edit_row ? 'بروزرسانی' : 'ذخیره' ?></button><a href="<?= site_url('admin/blog-post') ?>" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">انصراف</a></div>
+    <div class="mt-6 flex gap-3"><button class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-600 transition"><?= $edit_row ? 'بروزرسانی' : 'ذخیره' ?></button><a href="<?= site_url(ADMIN_PATH . '/blog-post') ?>" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition">انصراف</a></div>
 </form>
 </div></div></div>
 </section>

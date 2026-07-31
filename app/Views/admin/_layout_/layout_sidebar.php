@@ -36,7 +36,7 @@
                 $iconFill = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/dashboard') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/dashboard') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" class="me-2.5">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M3.78325 2.1665H6.59991C7.77491 2.1665 8.71658 3.12484 8.71658 4.30067V7.1415C8.71658 8.32484 7.77491 9.27484 6.59991 9.27484H3.78325C2.61658 9.27484 1.66658 8.32484 1.66658 7.1415V4.30067C1.66658 3.12484 2.61658 2.1665 3.78325 2.1665ZM3.78325 11.7246H6.59991C7.77491 11.7246 8.71658 12.6754 8.71658 13.8588V16.6996C8.71658 17.8746 7.77491 18.8329 6.59991 18.8329H3.78325C2.61658 18.8329 1.66658 17.8746 1.66658 16.6996V13.8588C1.66658 12.6754 2.61658 11.7246 3.78325 11.7246ZM16.2167 2.1665H13.4C12.225 2.1665 11.2833 3.12484 11.2833 4.30067V7.1415C11.2833 8.32484 12.225 9.27484 13.4 9.27484H16.2167C17.3833 9.27484 18.3333 8.32484 18.3333 7.1415V4.30067C18.3333 3.12484 17.3833 2.1665 16.2167 2.1665ZM13.4 11.7246H16.2167C17.3833 11.7246 18.3333 12.6754 18.3333 13.8588V16.6996C18.3333 17.8746 17.3833 18.8329 16.2167 18.8329H13.4C12.225 18.8329 11.2833 17.8746 11.2833 16.6996V13.8588C11.2833 12.6754 12.225 11.7246 13.4 11.7246Z" fill="<?= $iconFill ?>"></path>
@@ -53,7 +53,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/home-story') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/home-story') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -70,7 +70,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/home-slider') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/home-slider') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -87,7 +87,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/home-selected-category/manage') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/home-selected-category/manage') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -105,7 +105,7 @@
                         : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/blog-post') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/blog-post') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2.5">
                             <path d="M4 5h16v14H4z"></path><path d="M8 9h8M8 13h8"></path>
@@ -122,7 +122,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/product') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -140,7 +140,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/menu1') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/menu1') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -158,7 +158,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/menu1-image') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/menu1-image') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
@@ -178,7 +178,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/menu2') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/menu2') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -196,7 +196,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/menu2-image') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/menu2-image') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
@@ -216,7 +216,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/menu3') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/menu3') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -235,7 +235,7 @@
                 $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
                 ?>
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/menu3-image') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/menu3-image') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                             <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
@@ -249,7 +249,7 @@
 
 
                 <li class="py-2.5 px-1">
-                    <a href="<?= site_url('admin/logout') ?>"
+                    <a href="<?= site_url(ADMIN_PATH . '/logout') ?>"
                        class="relative flex justify-start items-center pt-6 px-5 text-red-500 border-t border-gray-300 dark:border-t-gray-700 before:hidden hover:text-red-500">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" class="me-2.5">
                             <path d="M7.97016 0.5C9.95621 0.5 11.576 2.092 11.576 4.052V7.884H6.69226C6.34226 7.884 6.06551 8.156 6.06551 8.5C6.06551 8.836 6.34226 9.116 6.69226 9.116H11.576V12.94C11.576 14.9 9.95621 16.5 7.95388 16.5H3.98993C1.99574 16.5 0.375977 14.908 0.375977 12.948V4.06C0.375977 2.092 2.00388 0.5 3.99807 0.5H7.97016ZM13.6081 5.74016C13.8481 5.49216 14.2401 5.49216 14.4801 5.73216L16.8161 8.06016C16.9361 8.18016 17.0001 8.33216 17.0001 8.50016C17.0001 8.66016 16.9361 8.82016 16.8161 8.93216L14.4801 11.2602C14.3601 11.3802 14.2001 11.4442 14.0481 11.4442C13.8881 11.4442 13.7281 11.3802 13.6081 11.2602C13.3681 11.0202 13.3681 10.6282 13.6081 10.3882L14.8881 9.11616H11.5761V7.88416H14.8881L13.6081 6.61216C13.3681 6.37216 13.3681 5.98016 13.6081 5.74016Z" fill="#DC3545"></path>
@@ -326,7 +326,7 @@
             $iconFillDashboard = $isActiveDashboard ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/dashboard') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassDashboard ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/dashboard') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassDashboard ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" class="me-2.5">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M3.78325 2.1665H6.59991C7.77491 2.1665 8.71658 3.12484 8.71658 4.30067V7.1415C8.71658 8.32484 7.77491 9.27484 6.59991 9.27484H3.78325C2.61658 9.27484 1.66658 8.32484 1.66658 7.1415V4.30067C1.66658 3.12484 2.61658 2.1665 3.78325 2.1665ZM3.78325 11.7246H6.59991C7.77491 11.7246 8.71658 12.6754 8.71658 13.8588V16.6996C8.71658 17.8746 7.77491 18.8329 6.59991 18.8329H3.78325C2.61658 18.8329 1.66658 17.8746 1.66658 16.6996V13.8588C1.66658 12.6754 2.61658 11.7246 3.78325 11.7246ZM16.2167 2.1665H13.4C12.225 2.1665 11.2833 3.12484 11.2833 4.30067V7.1415C11.2833 8.32484 12.225 9.27484 13.4 9.27484H16.2167C17.3833 9.27484 18.3333 8.32484 18.3333 7.1415V4.30067C18.3333 3.12484 17.3833 2.1665 16.2167 2.1665ZM13.4 11.7246H16.2167C17.3833 11.7246 18.3333 12.6754 18.3333 13.8588V16.6996C18.3333 17.8746 17.3833 18.8329 16.2167 18.8329H13.4C12.225 18.8329 11.2833 17.8746 11.2833 16.6996V13.8588C11.2833 12.6754 12.225 11.7246 13.4 11.7246Z" fill="<?= $iconFillDashboard ?>"></path>
                     </svg>
@@ -340,7 +340,7 @@
             $iconStrokeHomestory = $activeClassHomestory ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/home-story') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomestory ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/home-story') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomestory ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomestory ?>"></path>
                     </svg>
@@ -354,7 +354,7 @@
             $iconStrokeHomeslider = $activeClassHomeslider ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/home-slider') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomeslider ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/home-slider') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomeslider ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomeslider ?>"></path>
                     </svg>
@@ -368,7 +368,7 @@
             $iconStrokeHomeselectedcategory = $activeClassHomeselectedcategory ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/home-selected-category/manage') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomeselectedcategory ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/home-selected-category/manage') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomeselectedcategory ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomeselectedcategory ?>"></path>
                     </svg>
@@ -381,7 +381,7 @@
             $activeClassBlog = $isActiveBlog ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/blog-post') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassBlog ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/blog-post') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassBlog ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2.5">
                         <path d="M4 5h16v14H4z"></path><path d="M8 9h8M8 13h8"></path>
                     </svg>
@@ -395,7 +395,7 @@
             $iconStrokeProduct = $activeClassProduct ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/product') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassProduct ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/product') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassProduct ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeProduct ?>"></path>
                     </svg>
@@ -409,7 +409,7 @@
             $iconStrokeMenu1 = $isActiveMenu1 ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/menu1') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu1 ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/menu1') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu1 ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeMenu1 ?>"></path>
                     </svg>
@@ -425,7 +425,7 @@
             $iconStrokeMenu1Image = $isActiveMenu1Image ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/menu1-image') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu1Image ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/menu1-image') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu1Image ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStrokeMenu1Image ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
                         <circle cx="8.5" cy="8.5" r="2.5"></circle>
@@ -444,7 +444,7 @@
             $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/menu2') ?>"
+                <a href="<?= site_url(ADMIN_PATH . '/menu2') ?>"
                    class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -460,7 +460,7 @@
             $iconStrokeMenu2Image = $isActiveMenu2Image ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/menu2-image') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu2Image ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/menu2-image') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu2Image ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStrokeMenu2Image ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
                         <circle cx="8.5" cy="8.5" r="2.5"></circle>
@@ -477,7 +477,7 @@
             $iconStrokeMenu3 = $isActiveMenu3 ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/menu1') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu3 ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/menu1') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu3 ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeMenu3 ?>"></path>
                     </svg>
@@ -492,7 +492,7 @@
             $iconStrokeMenu3Image = $isActiveMenu3Image ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/menu3-image') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu3Image ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                <a href="<?= site_url(ADMIN_PATH . '/menu3-image') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassMenu3Image ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStrokeMenu3Image ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
                         <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
                         <circle cx="8.5" cy="8.5" r="2.5"></circle>
@@ -504,7 +504,7 @@
             */?>
 
             <li class="py-2.5 px-1">
-                <a href="<?= site_url('admin/logout') ?>" class="relative flex justify-start items-center pt-6 px-5 text-red-500 border-t border-gray-300 dark:border-t-gray-700 before:hidden hover:text-red-500">
+                <a href="<?= site_url(ADMIN_PATH . '/logout') ?>" class="relative flex justify-start items-center pt-6 px-5 text-red-500 border-t border-gray-300 dark:border-t-gray-700 before:hidden hover:text-red-500">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" class="me-2.5">
                         <path d="M7.97016 0.5C9.95621 0.5 11.576 2.092 11.576 4.052V7.884H6.69226C6.34226 7.884 6.06551 8.156 6.06551 8.5C6.06551 8.836 6.34226 9.116 6.69226 9.116H11.576V12.94C11.576 14.9 9.95621 16.5 7.95388 16.5H3.98993C1.99574 16.5 0.375977 14.908 0.375977 12.948V4.06C0.375977 2.092 2.00388 0.5 3.99807 0.5H7.97016ZM13.6081 5.74016C13.8481 5.49216 14.2401 5.49216 14.4801 5.73216L16.8161 8.06016C16.9361 8.18016 17.0001 8.33216 17.0001 8.50016C17.0001 8.66016 16.9361 8.82016 16.8161 8.93216L14.4801 11.2602C14.3601 11.3802 14.2001 11.4442 14.0481 11.4442C13.8881 11.4442 13.7281 11.3802 13.6081 11.2602C13.3681 11.0202 13.3681 10.6282 13.6081 10.3882L14.8881 9.11616H11.5761V7.88416H14.8881L13.6081 6.61216C13.3681 6.37216 13.3681 5.98016 13.6081 5.74016Z" fill="#DC3545"></path>
                     </svg>

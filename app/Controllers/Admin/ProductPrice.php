@@ -10,12 +10,12 @@ class ProductPrice extends BaseController
 
         if ($data === null) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $this->viewData = array_merge($this->viewData, $data);
         $this->viewData['title'] = 'مدیریت قیمت‌ها - ' . $data['product']['name'];
-        $this->viewData['form_action'] = 'admin/product-price/save/' . $productId;
+        $this->viewData['form_action'] = ADMIN_PATH . '/product-price/save/' . $productId;
 
         return view('admin/product_price/manage', $this->viewData);
     }
@@ -27,7 +27,7 @@ class ProductPrice extends BaseController
 
         if ($data === null) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $postedRows = $this->request->getPost('prices') ?? [];
@@ -103,12 +103,12 @@ class ProductPrice extends BaseController
 
         if (!empty($errors)) {
             $this->flash('validation_error', implode(' | ', array_unique($errors)));
-            return redirect()->to('admin/product-price/manage/' . $productId);
+            return redirect()->to(ADMIN_PATH . '/product-price/manage/' . $productId);
         }
 
         if (empty($rowsToSave)) {
             $this->flash('validation_error', 'حداقل قیمت یک ترکیب را وارد کنید.');
-            return redirect()->to('admin/product-price/manage/' . $productId);
+            return redirect()->to(ADMIN_PATH . '/product-price/manage/' . $productId);
         }
 
         $defaultKey = (string) $this->request->getPost('default_key');
@@ -147,11 +147,11 @@ class ProductPrice extends BaseController
 
         if (!$db->transStatus()) {
             $this->flash('validation_error', 'خطا در ذخیره قیمت‌های محصول.');
-            return redirect()->to('admin/product-price/manage/' . $productId);
+            return redirect()->to(ADMIN_PATH . '/product-price/manage/' . $productId);
         }
 
         $this->flash('price_update_success', 'قیمت‌های محصول با موفقیت ذخیره شدند.');
-        return redirect()->to('admin/product-price/manage/' . $productId);
+        return redirect()->to(ADMIN_PATH . '/product-price/manage/' . $productId);
     }
 
     public function cleanup($productId)
@@ -161,7 +161,7 @@ class ProductPrice extends BaseController
 
         if ($data === null) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $staleIds = array_column($data['stalePrices'], 'id');
@@ -175,7 +175,7 @@ class ProductPrice extends BaseController
 
         $this->ensureDefaultPrice($productId);
         $this->flash('price_cleanup_success', count($staleIds) . ' قیمت نامعتبر پاک‌سازی شد.');
-        return redirect()->to('admin/product-price/manage/' . $productId);
+        return redirect()->to(ADMIN_PATH . '/product-price/manage/' . $productId);
     }
 
     public function delete($productId, $priceId)
@@ -186,13 +186,13 @@ class ProductPrice extends BaseController
 
         if ($data === null) {
             $this->flash('product_not_found', 'محصول مورد نظر یافت نشد');
-            return redirect()->to('admin/product');
+            return redirect()->to(ADMIN_PATH . '/product');
         }
 
         $staleIds = array_map('intval', array_column($data['stalePrices'], 'id'));
         if (!in_array($priceId, $staleIds, true)) {
             $this->flash('validation_error', 'فقط قیمت‌های نامعتبر از این بخش قابل حذف هستند.');
-            return redirect()->to('admin/product-price/manage/' . $productId);
+            return redirect()->to(ADMIN_PATH . '/product-price/manage/' . $productId);
         }
 
         \Config\Database::connect()
@@ -203,7 +203,7 @@ class ProductPrice extends BaseController
 
         $this->ensureDefaultPrice($productId);
         $this->flash('price_delete_success', 'قیمت نامعتبر حذف شد.');
-        return redirect()->to('admin/product-price/manage/' . $productId);
+        return redirect()->to(ADMIN_PATH . '/product-price/manage/' . $productId);
     }
 
     private function getPricingData(int $productId): ?array

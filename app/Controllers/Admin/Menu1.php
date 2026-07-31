@@ -150,7 +150,7 @@ class Menu1 extends BaseController
         // ترکیب لیبل‌های دیتابیس با لیبل‌های سفارشی
         $this->viewData['fields_name'] = mergeFieldsName($dbFields, $this->viewData['inputs']);
 
-        $this->viewData['form_action'] = 'admin/menu1/create/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/menu1/create/handle';
 
         return view($this->viewPath.'menu1/create', $this->viewData);
     }
@@ -173,7 +173,7 @@ class Menu1 extends BaseController
 
         if ($edit_row == null) {
             $this->flash('menu_not_found');
-            return redirect()->to('admin/menu1');
+            return redirect()->to(ADMIN_PATH . '/menu1');
         }
 
         $existingImages = $menu1ImageModel
@@ -209,7 +209,7 @@ class Menu1 extends BaseController
         $this->viewData['groupedImages'] = $activeImages;
         $this->viewData['allImages'] = $groupedImages;
         $this->viewData['imageTypes'] = $imageTypes;
-        $this->viewData['form_action'] = 'admin/menu1/edit/' . $id . '/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/menu1/edit/' . $id . '/handle';
         $this->viewData['edit_row'] = $edit_row;
         $this->viewData['inputs'] = [
             'name' => [
@@ -258,7 +258,7 @@ class Menu1 extends BaseController
     public function formHandler($task, $id = 0)
     {
         if (!in_array($task, ['create', 'edit'])) {
-            return redirect()->to('admin/menu1');
+            return redirect()->to(ADMIN_PATH . '/menu1');
         }
 
         helper('sanitize');
@@ -334,7 +334,7 @@ class Menu1 extends BaseController
 
             if (!$menuId) {
                 $this->flash('menu_create_error');
-                return redirect()->to('admin/menu1/create');
+                return redirect()->to(ADMIN_PATH . '/menu1/create');
             }
         } else {
             $menuId = $id;
@@ -342,7 +342,7 @@ class Menu1 extends BaseController
 
             if (!$update_result) {
                 $this->flash('menu_update_error');
-                return redirect()->to('admin/menu1/edit/' . $menuId);
+                return redirect()->to(ADMIN_PATH . '/menu1/edit/' . $menuId);
             }
         }
 
@@ -353,7 +353,7 @@ class Menu1 extends BaseController
         if ($hasImageError) {
             $errorMessage = implode(' | ', $imageErrors);
             $this->flash('image_upload_error', $errorMessage);
-            return redirect()->to('admin/menu1/edit/' . $menuId);
+            return redirect()->to(ADMIN_PATH . '/menu1/edit/' . $menuId);
         }
 
         if ($task == 'create') {
@@ -362,7 +362,7 @@ class Menu1 extends BaseController
             $this->flash('menu_update_success');
         }
 
-        return redirect()->to('admin/menu1');
+        return redirect()->to(ADMIN_PATH . '/menu1');
     }
 
     public function delete($id)

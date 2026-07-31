@@ -11,7 +11,7 @@
                             <h1 class="font-black text-2xl with-highlight dark:text-gray-200">مدیریت مقالات بلاگ</h1>
                             <p class="text-gray-600 dark:text-gray-400 mt-1">مقاله‌ها، نویسنده، وضعیت انتشار و بلاک‌های محتوا</p>
                         </div>
-                        <a href="<?= site_url('admin/blog-post/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition shadow-sm flex items-center">
+                        <a href="<?= site_url(ADMIN_PATH . '/blog-post/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition shadow-sm flex items-center">
                             افزودن مقاله جدید
                         </a>
                     </div>

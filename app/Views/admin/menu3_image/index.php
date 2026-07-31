@@ -122,7 +122,7 @@
 
                 const menu1Name = getMenu1Name(menu1Id);
 
-                fetch('/shop/public/admin/menu3-image/getMenu2ByMenu1/' + menu1Id)
+                fetch('<?= site_url(ADMIN_PATH . '/menu3-image/getMenu2ByMenu1') ?>/' + menu1Id)
                     .then(res => res.json())
                     .then(data => {
                         let options = `<option value="">📁 [${menu1Name}] ➡ همه منوهای سطح 2</option>`;
@@ -153,7 +153,7 @@
 
                 const menu2Name = getMenu2Name(menu2Id);
 
-                fetch('/shop/public/admin/menu3-image/getMenu3ByMenu2/' + menu2Id)
+                fetch('<?= site_url(ADMIN_PATH . '/menu3-image/getMenu3ByMenu2') ?>/' + menu2Id)
                     .then(res => res.json())
                     .then(data => {
                         let options = `<option value="">📁 [${menu2Name}] ➡ همه منوهای سطح 3</option>`;

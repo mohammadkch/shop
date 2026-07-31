@@ -20,20 +20,20 @@
                                 </h1>
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">
                                     شناسه محصول: <?= $product['id'] ?> |
-                                    <a href="<?= site_url('admin/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
+                                    <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
                                         ویرایش محصول
                                     </a>
                                 </p>
                             </div>
                             <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
-                                <a href="<?= site_url('admin/product-image/create/' . $product['id']) ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/product-image/create/' . $product['id']) ?>"
                                    class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                     </svg>
                                     افزودن عکس جدید
                                 </a>
-                                <a href="<?= site_url('admin/product') ?>"
+                                <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
                                    class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     بازگشت به لیست محصولات
                                 </a>
@@ -125,7 +125,7 @@
                 const id = editAltId.value;
                 const alt = editAltInput.value;
 
-                fetch('<?= site_url('admin/product-image/updateAlt') ?>/' + id, {
+                fetch('<?= site_url(ADMIN_PATH . '/product-image/updateAlt') ?>/' + id, {
                     method: 'POST',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',

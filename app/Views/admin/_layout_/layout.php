@@ -29,6 +29,7 @@
 </head>
 
 <!-- FLASH MESSAGES -->
+<script>window.adminPath = <?= json_encode(ADMIN_PATH) ?>;</script>
 <script src="<?= $assetsPath ?>custom/admin.js"></script>
 <!-- END FLASH MESSAGES -->
 

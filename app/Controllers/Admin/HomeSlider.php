@@ -108,7 +108,7 @@ class HomeSlider extends BaseController
             'is_active' => 'وضعیت'
         ];
 
-        $this->viewData['form_action'] = 'admin/home-slider/create/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/home-slider/create/handle';
 
         return view('admin/home_slider/create', $this->viewData);
     }
@@ -126,11 +126,11 @@ class HomeSlider extends BaseController
 
         if ($edit_row == null) {
             $this->flash('slider_not_found');
-            return redirect()->to('admin/home-slider');
+            return redirect()->to(ADMIN_PATH . '/home-slider');
         }
 
         $this->viewData['edit_row'] = $edit_row;
-        $this->viewData['form_action'] = 'admin/home-slider/edit/' . $id . '/handle';
+        $this->viewData['form_action'] = ADMIN_PATH . '/home-slider/edit/' . $id . '/handle';
         $this->viewData['inputs'] = [
             'title' => [
                 'input' => 'form_input',
@@ -176,7 +176,7 @@ class HomeSlider extends BaseController
     public function formHandler($task, $id = 0)
     {
         if (!in_array($task, ['create', 'edit'])) {
-            return redirect()->to('admin/home-slider');
+            return redirect()->to(ADMIN_PATH . '/home-slider');
         }
 
         helper('sanitize');
@@ -263,7 +263,7 @@ class HomeSlider extends BaseController
 
             if (!$sliderId) {
                 $this->flash('slider_create_error');
-                return redirect()->to('admin/home-slider/create');
+                return redirect()->to(ADMIN_PATH . '/home-slider/create');
             }
         } else {
             $sliderId = $id;
@@ -271,7 +271,7 @@ class HomeSlider extends BaseController
 
             if (!$update_result) {
                 $this->flash('slider_update_error');
-                return redirect()->to('admin/home-slider/edit/' . $sliderId);
+                return redirect()->to(ADMIN_PATH . '/home-slider/edit/' . $sliderId);
             }
         }
 
@@ -281,7 +281,7 @@ class HomeSlider extends BaseController
             $this->flash('slider_update_success');
         }
 
-        return redirect()->to('admin/home-slider');
+        return redirect()->to(ADMIN_PATH . '/home-slider');
     }
 
     public function delete($id)

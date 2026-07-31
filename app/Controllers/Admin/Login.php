@@ -7,7 +7,7 @@ class Login extends BaseController
     public function index()
     {
         if ($this->authLib->isLoggedIn()) {
-            return redirect()->to('/admin/dashboard');
+            return redirect()->to('/' . ADMIN_PATH . '/dashboard');
         }
 
         $msg = (int)$this->request->getVar("msg", FILTER_VALIDATE_INT);
@@ -46,7 +46,7 @@ class Login extends BaseController
             $validation = \Config\Services::validation();
             $errors = $validation->getErrors();
             $this->flash('validation_error');
-            return redirect()->to('/admin/login?msg=1');
+            return redirect()->to('/' . ADMIN_PATH . '/login?msg=1');
         }
 
         $captcha = (string) $this->request->getPost('captcha');
@@ -55,7 +55,7 @@ class Login extends BaseController
         session()->remove(['admin_captcha_hash', 'admin_captcha_expires']);
 
         if ($captchaHash === '' || $captchaExpires < time() || !password_verify($captcha, $captchaHash)) {
-            return redirect()->to('/admin/login?msg=4')->withInput();
+            return redirect()->to('/' . ADMIN_PATH . '/login?msg=4')->withInput();
         }
 
         $userModel = model('App\Models\Admin\UserModel');
@@ -70,14 +70,14 @@ class Login extends BaseController
 
         if ($user === null) {
             $this->flash('user_not_found');
-            return redirect()->to('/admin/login?msg=1');
+            return redirect()->to('/' . ADMIN_PATH . '/login?msg=1');
         }
 
         $user_id = (int)$user['id'];
 
         if ($user_id < 1) {
             $this->flash('user_not_found');
-            return redirect()->to('/admin/login?msg=1');
+            return redirect()->to('/' . ADMIN_PATH . '/login?msg=1');
         }
 
         $userModel->updateLastLogin($user_id);
@@ -90,18 +90,18 @@ class Login extends BaseController
 
         if ($login_result) {
             $this->flash('login_success');
-            return redirect()->to('/admin/dashboard');
+            return redirect()->to('/' . ADMIN_PATH . '/dashboard');
         }
 
         $this->flash('login_success');
-        return redirect()->to('/admin/login?msg=2');
+        return redirect()->to('/' . ADMIN_PATH . '/login?msg=2');
     }
 
     public function logout()
     {
         service('adminAuth')->logout();
         session()->setFlashdata('success', 'با موفقیت وارد شدید');
-        return redirect()->to('/admin/login');
+        return redirect()->to('/' . ADMIN_PATH . '/login');
     }
 
     public function captcha()

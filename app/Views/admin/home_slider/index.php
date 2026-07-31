@@ -17,7 +17,7 @@
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">لیست تمام اسلایدرهای صفحه اصلی</p>
                             </div>
                             <div class="mt-4 md:mt-0">
-                                <a href="<?= site_url('admin/home-slider/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
+                                <a href="<?= site_url(ADMIN_PATH . '/home-slider/create') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
                                     <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                     </svg>

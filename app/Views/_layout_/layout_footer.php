@@ -321,6 +321,7 @@
                                                   class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
                                                   alt="نماد رسانه دیجیتال" width="80" height="80">
                                         </span>
+                                        <script src="https://zibal.ir/trust/scripts/zibal-trust-v4.js?theme=dark" type="text/javascript"></script>
                                     </div>
                                 </nav>
 

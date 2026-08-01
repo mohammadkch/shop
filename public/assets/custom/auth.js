@@ -2,6 +2,47 @@
 // لاگین / ثبت نام - کنترل مراحل
 // ==============================================
 
+// صفحه مستقل ورود shop.js را بارگذاری نمی‌کند؛ نوتیفیکیشن سبک موردنیاز
+// جریان احراز هویت را بدون وابستگی به کدهای سبد خرید فراهم می‌کنیم.
+if (typeof window.showNotification !== 'function') {
+    window.showNotification = function(message, type = 'info') {
+        const colors = {
+            success: 'bg-green-500',
+            error: 'bg-red-500',
+            warning: 'bg-yellow-500',
+            info: 'bg-blue-500'
+        };
+        const notification = document.createElement('div');
+        const content = document.createElement('div');
+        const text = document.createElement('span');
+        const closeButton = document.createElement('button');
+
+        notification.className = `fixed top-4 end-4 z-50 ${colors[type] || colors.info} text-white p-4 rounded-lg shadow-lg transform transition-all duration-300 opacity-0 translate-y-4`;
+        content.className = 'flex items-center justify-between';
+        text.textContent = message;
+        closeButton.type = 'button';
+        closeButton.className = 'ms-4 text-white hover:text-gray-200';
+        closeButton.textContent = '×';
+        closeButton.setAttribute('aria-label', 'بستن');
+        closeButton.addEventListener('click', () => notification.remove());
+
+        content.append(text, closeButton);
+        notification.appendChild(content);
+        document.body.appendChild(notification);
+
+        requestAnimationFrame(() => {
+            notification.classList.remove('opacity-0', 'translate-y-4');
+            notification.classList.add('opacity-100', 'translate-y-0');
+        });
+
+        setTimeout(() => {
+            notification.classList.remove('opacity-100', 'translate-y-0');
+            notification.classList.add('opacity-0', 'translate-y-4');
+            setTimeout(() => notification.remove(), 300);
+        }, 4000);
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
     // base_url() ends with a slash; normalize it to prevent //login/... requests.

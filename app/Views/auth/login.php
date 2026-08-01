@@ -179,7 +179,6 @@
     const BASE_URL = '<?= base_url() ?>';
 </script>
 
-<script src="<?= base_url('assets/custom/shop.js') ?>"></script>
 <script src="<?= base_url('assets/custom/auth.js') ?>"></script>
 <script src="<?= base_url('assets/js/dependencies/app.js') ?>"></script>
 

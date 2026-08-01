@@ -168,10 +168,10 @@
                                 type="tel"
                                 id="otpCode"
                                 inputmode="numeric"
-                                pattern="[0-9]{4}"
-                                maxlength="4"
+                                pattern="[0-9]{5}"
+                                maxlength="5"
                                 class="w-full px-4 text-center text-lg py-3 border border-gray-300 dark:border-gray-700 dark:bg-custom-dark dark:text-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder-gray-400 dark:placeholder-gray-500"
-                                placeholder="_ _ _ _"
+                                placeholder="_ _ _ _ _"
                                 required
                                 autofocus
                         >

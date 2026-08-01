@@ -4,6 +4,9 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    // base_url() ends with a slash; normalize it to prevent //login/... requests.
+    const AUTH_BASE_URL = BASE_URL.replace(/\/+$/, '');
+
     // ===== المان‌ها =====
     const step1 = document.getElementById('step-1');
     const step2 = document.getElementById('step-2');
@@ -74,13 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return last + '******' + first;
     }
 
-    function showOtpCode(data, mobile) {
-        if (!data.otp_code) return;
-
-        console.info('کد یکبار مصرف برای ' + mobile + ': ' + data.otp_code);
-        window.alert('به دلیل فعال نبودن سرویس پیامک، کد یکبار مصرف را در Console مرورگر مشاهده کنید.');
-    }
-
     // ==============================================
     // مرحله ۱: بررسی شماره موبایل
     // ==============================================
@@ -99,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.disabled = true;
             this.innerHTML = 'در حال بررسی...';
 
-            fetch(BASE_URL + '/login/check-mobile', {
+            fetch(AUTH_BASE_URL + '/login/check-mobile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -120,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     mobileNumber = mobile;
                     hasPassword = data.has_password;
-                    showOtpCode(data, mobileNumber);
 
                     // ====== اگر کد قبلی هنوز معتبر است ======
                     if (data.is_new_code === false) {
@@ -205,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // انتخاب OTP (برای کاربرانی که پسورد دارند و در مرحله ۲ هستند)
     if (chooseOtpLogin) {
         chooseOtpLogin.addEventListener('click', function() {
-            fetch(BASE_URL + '/login/check-mobile', {
+            fetch(AUTH_BASE_URL + '/login/check-mobile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -224,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     stepTitle.textContent = 'ورود با کد یکبار مصرف';
                     stepDescription.textContent = 'کد تایید به شماره شما ارسال شد';
                     showStep(3);
-                    showOtpCode(data, mobileNumber);
                     setTimeout(() => { if (otpCodeInput) otpCodeInput.focus(); }, 300);
                 })
                 .catch(error => {
@@ -253,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.disabled = true;
             this.textContent = 'در حال بررسی...';
 
-            fetch(BASE_URL + '/login/verify-otp', {
+            fetch(AUTH_BASE_URL + '/login/verify-otp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -327,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.disabled = true;
             this.innerHTML = 'در حال ارسال...';
 
-            fetch(BASE_URL + '/login/check-mobile', {
+            fetch(AUTH_BASE_URL + '/login/check-mobile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -344,8 +338,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         showNotification(data.message, 'error');
                         return;
                     }
-
-                    showOtpCode(data, mobileNumber);
 
                     // ====== اگر کد قبلی هنوز معتبر است ======
                     if (data.status === 'info' || (data.is_new_code === false)) {
@@ -430,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.disabled = true;
             this.textContent = 'در حال بررسی...';
 
-            fetch(BASE_URL + '/login/password', {
+            fetch(AUTH_BASE_URL + '/login/password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

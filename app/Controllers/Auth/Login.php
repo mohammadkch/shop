@@ -5,6 +5,7 @@ namespace App\Controllers\Auth;
 use App\Controllers\BaseController;
 use App\Models\CustomerModel;
 use App\Services\OtpService;
+use Throwable;
 
 class Login extends BaseController
 {
@@ -35,6 +36,10 @@ class Login extends BaseController
 
     public function checkMobile()
     {
+        // This endpoint uses a JSON-level status contract; successful dispatch
+        // and validation messages must not inherit an unrelated server status.
+        $this->response->setStatusCode(200);
+
         if (!$this->request->isAJAX()) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
@@ -58,6 +63,10 @@ class Login extends BaseController
                 return $this->response->setJSON(['status' => 'error', 'message' => 'خطا در ارسال کد']);
             }
 
+            if (! $this->sendOtp($mobile, $otpResult)) {
+                return $this->smsFailureResponse();
+            }
+
             // اگر کد قبلی هنوز معتبر است
             if (isset($otpResult['is_new_code']) && $otpResult['is_new_code'] === false) {
                 return $this->response->setJSON([
@@ -65,7 +74,6 @@ class Login extends BaseController
                     'message' => $otpResult['message'],
                     'is_new_code' => false,
                     'expires_at' => $otpResult['expires_at'],
-                    'otp_code' => $otpResult['otp_code']
                 ]);
             }
 
@@ -75,7 +83,6 @@ class Login extends BaseController
                 'message' => 'کد جدید ارسال شد',
                 'is_new_code' => true,
                 'expires_at' => $otpResult['expires_at'],
-                'otp_code' => $otpResult['otp_code']
             ]);
         }
 
@@ -104,6 +111,10 @@ class Login extends BaseController
             $otpResult = null;
         }
 
+        if ($otpResult !== null && ! $this->sendOtp($mobile, $otpResult)) {
+            return $this->smsFailureResponse();
+        }
+
         session()->set([
             'otp_mobile' => $mobile,
             'otp_expires' => $otpResult ? $otpResult['expires_at'] : null,
@@ -116,12 +127,13 @@ class Login extends BaseController
             'has_password' => $hasPassword,
             'expires_at' => $otpResult ? $otpResult['expires_at'] : null,
             'is_new_code' => $otpResult ? $otpResult['is_new_code'] : null,
-            'otp_code' => $otpResult ? $otpResult['otp_code'] : null,
         ]);
     }
 
     public function verifyOtp()
     {
+        $this->response->setStatusCode(200);
+
         if (!$this->request->isAJAX()) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'درخواست نامعتبر']);
         }
@@ -261,6 +273,37 @@ class Login extends BaseController
         }
 
         return site_url('customer/dashboard');
+    }
+
+    private function sendOtp(string $mobile, array $otpResult): bool
+    {
+        $otpCode = (string) ($otpResult['otp_code'] ?? '');
+
+        try {
+            helper('sms');
+            $result = send_otp_sms($mobile, $otpCode);
+        } catch (Throwable $exception) {
+            log_message('error', 'OTP SMS dispatch failed internally: {exception}', [
+                'exception' => $exception::class,
+            ]);
+            $result = ['success' => false];
+        }
+
+        if (($result['success'] ?? false) === true) {
+            return true;
+        }
+
+        $this->otpService->invalidateOld($mobile);
+
+        return false;
+    }
+
+    private function smsFailureResponse()
+    {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'ارسال کد تأیید با مشکل مواجه شد. لطفاً کمی بعد دوباره تلاش کنید.',
+        ]);
     }
 
 }

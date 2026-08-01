@@ -5,6 +5,8 @@ namespace Config;
 use App\Libraries\AdminAuthLib;
 use App\Libraries\CustomerAuthLib;
 use App\Libraries\UrlLib;
+use App\Libraries\Sms\LogSmsProvider;
+use App\Libraries\Sms\SmsIrProvider;
 use App\Services\AddressService;
 use App\Services\MenuService;
 use App\Services\ShippingService;
@@ -108,6 +110,25 @@ class Services extends BaseService
             return static::getSharedInstance('otpService');
         }
         return new \App\Services\OtpService();
+    }
+
+    public static function smsProvider($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('smsProvider');
+        }
+
+        $config = config('Sms');
+
+        if (! $config->enabled || $config->provider === 'log') {
+            return new LogSmsProvider($config);
+        }
+
+        if ($config->provider === 'smsir') {
+            return new SmsIrProvider($config);
+        }
+
+        throw new \RuntimeException('Unsupported SMS provider.');
     }
 
     public static function customerAuth($getShared = true)

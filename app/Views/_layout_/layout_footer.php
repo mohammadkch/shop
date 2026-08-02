@@ -306,22 +306,16 @@
                             <div class="w-full sm:w-7/12">
                                 <nav class="flex justify-center pt-0 mt-0">
                                     <div class="flex">
+
+
                                         <span class="p-1">
-                                            <img src="<?= $assetsPath ?>images/namad/enamad.png"
-                                                  class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
-                                                  alt="نماد اعتماد الکترونیکی" width="80" height="80">
+                                            <a referrerpolicy='origin' target='_blank'href='https://trustseal.enamad.ir/?id=767813&Code=PpzyjOZqCzunVCBlk90h5qtQwrPu7EVS'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=767813&Code=PpzyjOZqCzunVCBlk90h5qtQwrPu7EVS' alt='' style='cursor:pointer' code='PpzyjOZqCzunVCBlk90h5qtQwrPu7EVS'></a>                                                  
                                         </span>
-                                        <span class="p-1">
-                                            <img src="<?= $assetsPath ?>images/namad/namad-01.png"
-                                                  class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
-                                                  alt="نماد ساماندهی" width="80" height="80">
-                                        </span>
-                                        <span class="p-1">
-                                            <img src="<?= $assetsPath ?>images/namad/rezi.png"
-                                                  class="border h-23 border-gray-300 dark:border-gray-700 dark:brightness-90 rounded"
-                                                  alt="نماد رسانه دیجیتال" width="80" height="80">
-                                        </span>
-                                        <script src="https://zibal.ir/trust/scripts/zibal-trust-v4.js?theme=dark" type="text/javascript"></script>
+                                        <div>
+                                            <a href="https://gateway.zibal.ir/trustMe/{momomod.ir}" target="_blank" rel="noopener">
+                                                <img style="max-width: 110px; height: 125px;" src="https://zibal.ir/trust/assets/2.png" />
+                                            </a>
+                                        </div>
                                     </div>
                                 </nav>
 

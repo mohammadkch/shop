@@ -21,14 +21,14 @@
 
             <!-- صفحه اصلی -->
             <li class="bg-gray-50 dark:bg-custom-dark border border-gray-200 dark:border-gray-700 rounded-lg text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-[#1f242c] p-3 transition-colors duration-200">
-                <a href="<?= site_url('/') ?>" class="block">صفحه اصلی</a>
+                <a href="<?= site_url('/category') ?>" class="block">همه محصولات</a>
             </li>
 
             <!-- فروشگاه -->
             <li class="bg-gray-50 dark:bg-custom-dark border border-gray-200 dark:border-gray-700 rounded-lg text-gray-800 dark:text-gray-100 transition-colors duration-200">
                 <button onclick="toggleMobileMenu('mobile-shop')"
                         class="flex justify-between w-full text-start items-center p-3">
-                    <span class="font-bold">فروشگاه</span>
+                    <span class="font-bold">دسته بندی ها</span>
                     <svg xmlns="http://www.w3.org/2000/svg" id="icon-mobile-shop"
                          class="h-5 w-5 transition-transform duration-200 text-gray-600 dark:text-gray-300"
                          viewBox="0 0 20 20" fill="currentColor">

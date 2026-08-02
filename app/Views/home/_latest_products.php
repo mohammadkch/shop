@@ -10,6 +10,10 @@
                     after:absolute after:w-40 after:h-2 after:bottom-0 after:start-4 after:bg-primary after:rounded-lg">
                     جدیدترین محصولات
                 </h2>
+                <a href="<?= site_url('category') ?>?sort_field=published_at&amp;sort_type=desc"
+                   class="mb-4 text-sm font-bold text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition-colors">
+                    مشاهده همه
+                </a>
             </header>
 
             <div class="bg-gradient-to-b from-white dark:from-[#121923] to-transparent rounded-2xl p-5 transition-colors">
@@ -24,28 +28,27 @@
                             ?>
                             <div class="swiper-slide">
                                 <div class="relative dark:border-gray-700 dark:shadow-[0_0_10px_rgba(0,0,0,0.6)] rounded p-3 bg-white dark:bg-custom-dark transition-all duration-200 ease-in-out group">
-                                    <div class="text-center flex items-center justify-center overflow-hidden">
+                                    <div class="w-full overflow-hidden rounded-lg">
                                         <img src="<?= $thumbnail ?>"
                                              alt="<?= esc($product['name']) ?>"
                                              loading="lazy"
-                                             class="block h-40 object-contain transition-transform duration-300 group-hover:scale-105">
+                                             class="block w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105">
                                     </div>
 
-                                    <?php if ($product['has_discount'] && $product['discount_percent'] > 0): ?>
-                                        <div class="absolute end-3 top-3 bg-secondary-500 text-white text-xs font-bold px-2 py-1 rounded-xl rounded-bl-md shadow shadow-red-500/50 z-10">
-                                            <?= $product['discount_percent'] ?>%
-                                        </div>
-                                    <?php endif; ?>
-
                                     <div class="mt-3">
-                                        <h3 class="font-normal text-sm leading-6 max-h-12 min-h-12 mt-2 px-1 overflow-hidden group-hover:text-primary-600 dark:group-hover:text-primary-400 dark:text-gray-200 text-gray-900 transition-colors duration-200">
+                                        <h3 class="font-normal text-sm leading-6 max-h-12 min-h-6 mt-2 px-1 overflow-hidden group-hover:text-primary-600 dark:group-hover:text-primary-400 dark:text-gray-200 text-gray-900 transition-colors duration-200">
                                             <a href="<?= $productUrl ?>" class="font-bold">
                                                 <?= esc($product['name']) ?>
                                             </a>
                                         </h3>
                                     </div>
 
-                                    <div class="mt-2 flex justify-between items-end">
+                                    <div class="mt-2 flex justify-between items-end gap-3">
+                                        <?php if ($product['has_discount'] && $product['discount_percent'] > 0): ?>
+                                            <span class="shrink-0 bg-secondary-500 text-white text-xs font-bold px-2 py-1 rounded-xl shadow shadow-red-500/50">
+                                                <?= $product['discount_percent'] ?>%
+                                            </span>
+                                        <?php endif; ?>
                                         <div class="flex flex-col justify-end min-h-10 h-10 w-full">
                                             <?php if ($product['has_discount']): ?>
                                                 <span class="text-xs text-gray-400 dark:text-gray-500 line-through tracking-wider text-left">

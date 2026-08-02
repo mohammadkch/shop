@@ -404,13 +404,22 @@ document.addEventListener("DOMContentLoaded", function () {
  * Designed by Amir Rezaie
  * Features:
  * - Uses light mode by default if no saved preference exists
- * - The saved preference is applied in the document head before rendering
+ * - Checks and applies saved dark mode preference
  * - Toggles dark mode on button click
  */
 
 document.addEventListener("DOMContentLoaded", function () {
     const toggleButton = document.getElementById("dark-mode-toggle");
     const htmlElement = document.documentElement;
+
+    // Use light mode by default and respect an explicit saved preference
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+        htmlElement.classList.add("dark");
+    } else {
+        htmlElement.classList.remove("dark");
+    }
 
     // Toggle theme on click
     if (toggleButton) {

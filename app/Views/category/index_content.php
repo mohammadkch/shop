@@ -10,7 +10,7 @@
                     <ul class="absolute top-4 start-3 space-y-1"></ul>
 
                     <!-- Thumbnail -->
-                    <div class="text-center flex items-center justify-center overflow-hidden">
+                    <div class="w-full overflow-hidden rounded-lg">
                         <?php
                         $thumbnail = '';
                         $productImageModel = model('App\Models\ProductImageModel');
@@ -29,19 +29,12 @@
                         <img src="<?= $thumbnail ?>"
                              alt="<?= esc($product['name']) ?>"
                              loading="lazy"
-                             class="block h-40 object-contain transition-transform duration-300 group-hover:scale-105">
+                             class="block w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105">
                     </div>
-
-                    <!-- Discount Badge -->
-                    <?php if ($product['has_discount'] && $product['discount_percent'] > 0): ?>
-                        <div class="absolute end-3 top-3 bg-secondary-500 text-white text-xs font-bold px-2 py-1 rounded-xl rounded-bl-md shadow shadow-red-500/50 z-10">
-                            <?= $product['discount_percent'] ?>%
-                        </div>
-                    <?php endif; ?>
 
                     <!-- Product Body -->
                     <div class="mt-3">
-                        <h3 class="font-normal text-sm leading-6 max-h-12 min-h-12 mt-2 px-1 overflow-hidden group-hover:text-primary-600 dark:group-hover:text-primary-400 dark:text-gray-200 text-gray-900 transition-colors duration-200">
+                        <h3 class="font-normal text-sm leading-6 max-h-12 min-h-6 mt-2 px-1 overflow-hidden group-hover:text-primary-600 dark:group-hover:text-primary-400 dark:text-gray-200 text-gray-900 transition-colors duration-200">
                             <a href="<?= site_url('product/' . $product['slug']) ?>" class="font-bold">
                                 <?= esc($product['name']) ?>
                             </a>
@@ -49,7 +42,12 @@
                     </div>
 
                     <!-- Price -->
-                    <div class="mt-2 flex justify-between items-end">
+                    <div class="mt-2 flex justify-between items-end gap-3">
+                        <?php if ($product['has_discount'] && $product['discount_percent'] > 0): ?>
+                            <span class="shrink-0 bg-secondary-500 text-white text-xs font-bold px-2 py-1 rounded-xl shadow shadow-red-500/50">
+                                <?= $product['discount_percent'] ?>%
+                            </span>
+                        <?php endif; ?>
                         <div class="flex flex-col justify-end min-h-10 h-10 w-full">
                             <?php if ($product['has_discount']): ?>
                                 <span class="text-xs text-gray-400 dark:text-gray-500 line-through tracking-wider text-left">

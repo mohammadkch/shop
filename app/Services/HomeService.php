@@ -143,7 +143,7 @@ class HomeService
 
         $images = $this->productImageModel
             ->whereIn('product_id', array_column($products, 'id'))
-            ->where('product_image_type_id', 1)
+            ->where('product_image_type_id', 2)
             ->where('is_active', 1)
             ->orderBy('product_id', 'ASC')
             ->orderBy('sort_order', 'ASC')

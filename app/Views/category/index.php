@@ -161,7 +161,8 @@
                                             $productImageModel = model('App\Models\ProductImageModel');
                                             $image = $productImageModel
                                                     ->where('product_id', $product['id'])
-                                                    ->where('product_image_type_id', 1)
+                                                    ->where('product_image_type_id', 2)
+                                                    ->where('is_active', 1)
                                                     ->orderBy('sort_order', 'ASC')
                                                     ->first();
 

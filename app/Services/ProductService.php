@@ -82,12 +82,12 @@ class ProductService
             }
         }
 
+        // Thumbnail is the main product image; gallery images remain separate.
         if (!empty($type2)) {
             $result['main'] = $type2[0];
-            for ($i = 1; $i < count($type2); $i++) {
-                $result['gallery'][] = $type2[$i];
-            }
+            $result['gallery'] = $type1;
         } else if (!empty($type1)) {
+            // Fallback for products without a thumbnail.
             $result['main'] = $type1[0];
             for ($i = 1; $i < count($type1); $i++) {
                 $result['gallery'][] = $type1[$i];

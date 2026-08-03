@@ -77,7 +77,7 @@ class ProductModel extends Model
             $builder->limit($limit, $offset);
         }
 
-        $builder->orderBy("{$this->table}.created_at", 'DESC');
+        $builder->orderBy("{$this->table}.updated_at", 'DESC');
 
         return $builder->get()->getResultArray();
     }

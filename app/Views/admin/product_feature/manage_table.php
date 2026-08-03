@@ -24,20 +24,20 @@
                         <?php endif; ?>
                     </td>
                     <td class="px-5 py-4">
-                        <div class="flex items-center gap-3">
+                        <div class="inline-flex items-center gap-3 align-middle">
                             <a href="<?= site_url(ADMIN_PATH . '/product-feature/manage/' . $product['id']) ?>?edit=<?= (int) $feature['id'] ?>"
-                               class="text-primary hover:text-primary-800" title="ویرایش فیچر" aria-label="ویرایش فیچر">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="inline-flex w-5 h-5 items-center justify-center leading-none text-primary hover:text-primary-800" title="ویرایش فیچر" aria-label="ویرایش فیچر">
+                                <svg class="block w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                 </svg>
                             </a>
 
-                            <form method="post" action="<?= site_url(ADMIN_PATH . '/product-feature/toggle-active/' . $product['id'] . '/' . $feature['id']) ?>">
+                            <form method="post" class="inline-flex items-center m-0" action="<?= site_url(ADMIN_PATH . '/product-feature/toggle-active/' . $product['id'] . '/' . $feature['id']) ?>">
                                 <?= csrf_field() ?>
-                                <button type="submit" class="text-blue-600 hover:text-blue-800"
+                                <button type="submit" class="inline-flex w-5 h-5 items-center justify-center leading-none text-blue-600 hover:text-blue-800"
                                         title="<?= (int) $feature['is_active'] === 1 ? 'غیرفعال‌کردن فیچر' : 'فعال‌کردن فیچر' ?>"
                                         aria-label="<?= (int) $feature['is_active'] === 1 ? 'غیرفعال‌کردن فیچر' : 'فعال‌کردن فیچر' ?>">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="block w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <?php if ((int) $feature['is_active'] === 1): ?>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         <?php else: ?>
@@ -47,11 +47,11 @@
                                 </button>
                             </form>
 
-                            <form method="post" action="<?= site_url(ADMIN_PATH . '/product-feature/delete/' . $product['id'] . '/' . $feature['id']) ?>"
+                            <form method="post" class="inline-flex items-center m-0" action="<?= site_url(ADMIN_PATH . '/product-feature/delete/' . $product['id'] . '/' . $feature['id']) ?>"
                                   onsubmit="return confirm('این فیچر حذف شود؟');">
                                 <?= csrf_field() ?>
-                                <button type="submit" class="text-red-600 hover:text-red-800" title="حذف فیچر" aria-label="حذف فیچر">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <button type="submit" class="inline-flex w-5 h-5 items-center justify-center leading-none text-red-600 hover:text-red-800" title="حذف فیچر" aria-label="حذف فیچر">
+                                    <svg class="block w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                     </svg>
                                 </button>

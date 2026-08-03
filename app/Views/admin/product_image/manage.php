@@ -109,12 +109,13 @@
             const editAltInput = document.getElementById('editAltInput');
             const editAltId = document.getElementById('editAltId');
 
-            document.querySelectorAll('.edit-alt-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    editAltId.value = this.dataset.id;
-                    editAltInput.value = this.dataset.alt || '';
+            document.addEventListener('click', function(event) {
+                const button = event.target.closest('.edit-alt-btn');
+                if (button) {
+                    editAltId.value = button.dataset.id;
+                    editAltInput.value = button.dataset.alt || '';
                     editAltModal.classList.remove('hidden');
-                });
+                }
             });
 
             document.getElementById('cancelEditAltBtn').addEventListener('click', function() {
@@ -136,8 +137,13 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
+                            const button = document.querySelector('.edit-alt-btn[data-id="' + id + '"]');
+                            if (button) {
+                                button.dataset.alt = alt;
+                                const altCell = button.closest('tr')?.querySelector('.alt-text');
+                                if (altCell) altCell.textContent = alt || '-';
+                            }
                             showNotification(data.message, 'success');
-                            showPage();  // <-- بجای location.reload()
                         } else {
                             showNotification(data.message, 'error');
                         }

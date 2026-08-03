@@ -31,7 +31,7 @@
                         <div class="flex space-x-2 rtl:space-x-reverse">
                             <!-- ======== دکمه مدیریت قیمت‌ها ======== -->
                             <a href="<?= site_url(ADMIN_PATH . '/product-price/manage/' . $item['id']) ?>"
-                               class="text-green-600 hover:text-green-800"
+                               class="text-amber-500 hover:text-amber-700"
                                title="مدیریت قیمت‌ها">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 10v2m8-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
@@ -51,7 +51,7 @@
 
                             <!-- ======== دکمه مدیریت آپشن‌ها ======== -->
                             <a href="<?= site_url(ADMIN_PATH . '/product-option/form/' . $item['id']) ?>"
-                               class="text-purple-500 hover:text-purple-700"
+                               class="text-amber-500 hover:text-amber-700"
                                title="مدیریت آپشن‌ها">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
@@ -60,7 +60,7 @@
 
                             <!-- ======== دکمه مدیریت فیچرها ======== -->
                             <a href="<?= site_url(ADMIN_PATH . '/product-feature/manage/' . $item['id']) ?>"
-                               class="text-primary hover:text-primary-800"
+                               class="text-amber-500 hover:text-amber-700"
                                title="مدیریت فیچرهای محصول"
                                aria-label="مدیریت فیچرهای محصول">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,7 +70,7 @@
 
                             <!-- ======== دکمه مدیریت منوی سطح ۳ ======== -->
                             <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $item['id']) ?>"
-                               class="text-emerald-500 hover:text-emerald-700"
+                               class="text-amber-500 hover:text-amber-700"
                                title="مدیریت منو">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -98,7 +98,7 @@
                                 <?php endif; ?>
                             </button>
 
-                            <button type="button" class="delete-btn text-blue-600 hover:text-blue-800" data-id="<?= $item['id'] ?>" data-url="<?= site_url(ADMIN_PATH . '/product/delete') ?>" title="حذف محصول" aria-label="حذف محصول">
+                            <button type="button" class="delete-btn text-red-600 hover:text-red-800" data-id="<?= $item['id'] ?>" data-url="<?= site_url(ADMIN_PATH . '/product/delete') ?>" title="حذف محصول" aria-label="حذف محصول">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                 </svg>

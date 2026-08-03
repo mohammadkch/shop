@@ -56,8 +56,8 @@
                     <a href="<?= site_url(ADMIN_PATH . '/home-story') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
-                            <path d="M4 6h16M4 12h16M4 18h16"></path>
-                            <path d="M8 6v12"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M10 8.5l5.5 3.5-5.5 3.5v-7z"></path>
                         </svg>
                         صفحه اصلی - استوری
                     </a>
@@ -73,8 +73,9 @@
                     <a href="<?= site_url(ADMIN_PATH . '/home-slider') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
-                            <path d="M4 6h16M4 12h16M4 18h16"></path>
-                            <path d="M8 6v12"></path>
+                            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                            <path d="M7 15l3-3 2 2 3-4 3 5"></path>
+                            <path d="M8 9h.01"></path>
                         </svg>
                         صفحه اصلی - اسلایدر
                     </a>
@@ -90,8 +91,10 @@
                     <a href="<?= site_url(ADMIN_PATH . '/home-selected-category/manage') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
-                            <path d="M4 6h16M4 12h16M4 18h16"></path>
-                            <path d="M8 6v12"></path>
+                            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                            <path d="M15 17l2 2 4-5"></path>
                         </svg>
                         صفحه اصلی - دسته بندی منتخب
                     </a>
@@ -115,7 +118,7 @@
                 </li>
 
                 <?php
-                $isActive = ($className == 'product' || $className == 'productimage' || $className == 'productmenu3' || $className == 'productoption');
+                $isActive = in_array($className, ['product', 'productimage', 'productmenu3', 'productoption', 'productprice', 'productfeature'], true);
                 $activeClass = $isActive
                         ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
                         : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
@@ -125,8 +128,9 @@
                     <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
                        class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
-                            <path d="M4 6h16M4 12h16M4 18h16"></path>
-                            <path d="M8 6v12"></path>
+                            <path d="M21 8l-9-5-9 5 9 5 9-5z"></path>
+                            <path d="M3 8v8l9 5 9-5V8"></path>
+                            <path d="M12 13v8"></path>
                         </svg>
                         مدیریت محصول
                     </a>
@@ -337,12 +341,13 @@
             <?php
             $isActiveHomestory = ($className == 'homestory');
             $activeClassHomestory = $isActiveHomestory ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
-            $iconStrokeHomestory = $activeClassHomestory ? '#4f46e5' : 'currentColor';
+            $iconStrokeHomestory = $isActiveHomestory ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
                 <a href="<?= site_url(ADMIN_PATH . '/home-story') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomestory ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
-                        <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomestory ?>"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStrokeHomestory ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M10 8.5l5.5 3.5-5.5 3.5v-7z"></path>
                     </svg>
                     استوری
                 </a>
@@ -351,12 +356,14 @@
             <?php
             $isActiveHomeslider = ($className == 'homeslider');
             $activeClassHomeslider = $isActiveHomeslider ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
-            $iconStrokeHomeslider = $activeClassHomeslider ? '#4f46e5' : 'currentColor';
+            $iconStrokeHomeslider = $isActiveHomeslider ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
                 <a href="<?= site_url(ADMIN_PATH . '/home-slider') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomeslider ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
-                        <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomeslider ?>"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStrokeHomeslider ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                        <path d="M7 15l3-3 2 2 3-4 3 5"></path>
+                        <path d="M8 9h.01"></path>
                     </svg>
                     اسلایدر
                 </a>
@@ -365,12 +372,15 @@
             <?php
             $isActiveHomeselectedcategory = ($className == 'homeselectedcategory');
             $activeClassHomeselectedcategory = $isActiveHomeselectedcategory ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
-            $iconStrokeHomeselectedcategory = $activeClassHomeselectedcategory ? '#4f46e5' : 'currentColor';
+            $iconStrokeHomeselectedcategory = $isActiveHomeselectedcategory ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
                 <a href="<?= site_url(ADMIN_PATH . '/home-selected-category/manage') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassHomeselectedcategory ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
-                        <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeHomeselectedcategory ?>"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStrokeHomeselectedcategory ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                        <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                        <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                        <path d="M15 17l2 2 4-5"></path>
                     </svg>
                     دسته بندی منتخب
                 </a>
@@ -390,14 +400,16 @@
             </li>
 
             <?php
-            $isActiveProduct = ($className == 'product' || $className == 'productimage' || $className == 'productmenu3' || $className == 'productoption');
+            $isActiveProduct = in_array($className, ['product', 'productimage', 'productmenu3', 'productoption', 'productprice', 'productfeature'], true);
             $activeClassProduct = $isActiveProduct ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
-            $iconStrokeProduct = $activeClassProduct ? '#4f46e5' : 'currentColor';
+            $iconStrokeProduct = $isActiveProduct ? '#4f46e5' : 'currentColor';
             ?>
             <li class="py-2.5 px-1">
                 <a href="<?= site_url(ADMIN_PATH . '/product') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassProduct ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
-                        <path d="M4 6h16M4 12h16M4 18h16" fill="<?= $iconStrokeProduct ?>"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStrokeProduct ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <path d="M21 8l-9-5-9 5 9 5 9-5z"></path>
+                        <path d="M3 8v8l9 5 9-5V8"></path>
+                        <path d="M12 13v8"></path>
                     </svg>
                     مدیریت محصول
                 </a>

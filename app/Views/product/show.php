@@ -374,68 +374,60 @@
 
             </div><!-- end grid اصلی -->
 
-            <!-- ====== بخش تب‌ها (زیر گالری و آپشن‌ها) ====== -->
+            <!-- ====== توضیحات و ویژگی‌های محصول ====== -->
             <div class="mt-8">
-                <div class="bg-white dark:bg-custom-dark dark:text-gray-200 shadow-sm border border-gray-200 dark:border-gray-700 rounded-2xl px-4 sm:px-6 py-4">
+                <nav id="topBar"
+                     class="lg:sticky border border-gray-200 shadow-sm dark:border-gray-700 z-10 px-5 bg-white dark:bg-zinc-800 rounded-2xl mb-6"
+                     style="z-index: 39; top: 75px">
+                    <ul class="flex space-x-1 min-w-48 overflow-x-auto py-4 hide-scrollbar" id="tabContainer">
+                        <li>
+                            <button type="button" class="tab-btn whitespace-nowrap px-6 py-3 rounded-xl transition-all" data-tab="desc">
+                                توضیحات محصول
+                            </button>
+                        </li>
+                        <?php if (!empty($features)): ?>
+                            <li>
+                                <button type="button" class="tab-btn whitespace-nowrap px-6 py-3 rounded-xl transition-all" data-tab="features">
+                                    ویژگی‌های محصول
+                                </button>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
 
-                    <!-- نوار تب‌ها -->
-                    <nav class="border-b border-gray-200 dark:border-gray-700 mb-6">
-                        <ul class="flex space-x-1 overflow-x-auto hide-scrollbar" id="tabContainer">
-                            <li>
-                                <button class="tab-btn active whitespace-nowrap px-6 py-3 rounded-t-xl transition-all border-b-2 border-primary text-primary font-medium"
-                                        data-tab="desc">
-                                    معرفی محصول
-                                </button>
-                            </li>
-                            <!-- تب‌های دیگه فعلاً کامنتن (بعداً فعال میشن) -->
-                            <!--
-                            <li>
-                                <button class="tab-btn whitespace-nowrap px-6 py-3 rounded-t-xl transition-all border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                                        data-tab="specs">
-                                    مشخصات فنی
-                                </button>
-                            </li>
-                            <li>
-                                <button class="tab-btn whitespace-nowrap px-6 py-3 rounded-t-xl transition-all border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                                        data-tab="comments">
-                                    نظرات
-                                </button>
-                            </li>
-                            <li>
-                                <button class="tab-btn whitespace-nowrap px-6 py-3 rounded-t-xl transition-all border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                                        data-tab="question">
-                                    پرسش و پاسخ
-                                </button>
-                            </li>
-                            -->
-                        </ul>
-                    </nav>
+                <div class="space-y-8">
+                    <section id="desc"
+                             class="tab-section p-5 sm:p-8 bg-white dark:bg-custom-dark dark:border-gray-700 rounded-2xl shadow-md border border-gray-200"
+                             style="scroll-margin-top: 9rem">
+                        <h2 class="text-xl sm:text-2xl pb-3 mb-5 font-black text-zinc-800 relative before:absolute before:bottom-0 before:right-0 before:h-1 before:w-22 before:bg-secondary-500 before:rounded dark:text-white">
+                            توضیحات محصول
+                        </h2>
+                        <div class="prose dark:prose-invert max-w-none text-neutral-700 leading-9 text-justify dark:text-white">
+                            <?= $product['description'] ?? '<p class="text-gray-500 dark:text-gray-400">توضیحاتی برای این محصول ثبت نشده است.</p>' ?>
+                        </div>
+                    </section>
 
-                    <!-- محتوای تب‌ها -->
-                    <div class="tab-content">
+                    <?php if (!empty($features)): ?>
+                        <section id="features"
+                                 class="tab-section p-5 sm:p-8 bg-white dark:bg-custom-dark dark:border-gray-700 rounded-2xl shadow-md border border-gray-200"
+                                 style="scroll-margin-top: 9rem">
+                            <h2 class="text-xl sm:text-2xl pb-3 mb-5 font-black text-zinc-800 relative before:absolute before:bottom-0 before:right-0 before:h-1 before:w-22 before:bg-secondary-500 before:rounded dark:text-white">
+                                ویژگی‌های محصول
+                            </h2>
 
-                        <!-- تب معرفی محصول -->
-                        <div id="tab-desc" class="tab-pane active">
-                            <div class="prose dark:prose-invert max-w-none">
-                                <?= $product['description'] ?? '<p class="text-gray-500 dark:text-gray-400">توضیحاتی برای این محصول ثبت نشده است.</p>' ?>
+                            <div class="grid grid-cols-2 gap-3 sm:gap-4 text-right">
+                                <?php foreach ($features as $feature): ?>
+                                    <div class="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
+                                        <div class="bg-gray-200 border border-gray-300 dark:border-gray-700 px-4 rounded text-gray-900 text-sm py-4 flex items-center dark:bg-[#1e232a] dark:text-white">
+                                            <?= esc($feature['feature_key']) ?>
+                                        </div>
+                                        <div class="bg-gray-100 border border-gray-200 px-4 py-4 text-sm text-gray-900 flex items-center dark:bg-[#252b33] dark:border-gray-700 rounded dark:text-white"
+                                             style="white-space: pre-line"><?= esc($feature['feature_value']) ?></div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                        </div>
-
-                        <!-- تب‌های دیگه فعلاً کامنتن -->
-                        <!--
-                        <div id="tab-specs" class="tab-pane hidden">
-                            <p class="text-gray-500 dark:text-gray-400">مشخصات فنی محصول در اینجا نمایش داده می‌شود.</p>
-                        </div>
-                        <div id="tab-comments" class="tab-pane hidden">
-                            <p class="text-gray-500 dark:text-gray-400">نظرات کاربران در اینجا نمایش داده می‌شود.</p>
-                        </div>
-                        <div id="tab-question" class="tab-pane hidden">
-                            <p class="text-gray-500 dark:text-gray-400">پرسش و پاسخ در اینجا نمایش داده می‌شود.</p>
-                        </div>
-                        -->
-
-                    </div>
-
+                        </section>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -448,34 +440,6 @@
         window.priceMap = <?= json_encode($priceMap) ?>;
     </script>
 
-    <!-- ====== JS برای مدیریت تب‌ها ====== -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabPanes = document.querySelectorAll('.tab-pane');
-
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    tabBtns.forEach(b => {
-                        b.classList.remove('active', 'border-primary', 'text-primary');
-                        b.classList.add('border-transparent', 'text-gray-500');
-                    });
-
-                    this.classList.add('active', 'border-primary', 'text-primary');
-                    this.classList.remove('border-transparent', 'text-gray-500');
-
-                    tabPanes.forEach(p => p.classList.add('hidden'));
-
-                    const targetId = 'tab-' + this.dataset.tab;
-                    const targetPane = document.getElementById(targetId);
-                    if (targetPane) {
-                        targetPane.classList.remove('hidden');
-                    }
-                });
-            });
-        });
-    </script>
-
     <!-- ====== استایل‌های اضافه ====== -->
     <style>
         .hide-scrollbar::-webkit-scrollbar {
@@ -485,16 +449,5 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        .tab-btn.active {
-            border-bottom-width: 2px;
-        }
-        .tab-pane {
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
     </style>
 <?= $this->endSection() ?>

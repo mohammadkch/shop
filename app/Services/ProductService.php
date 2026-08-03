@@ -7,6 +7,7 @@ use App\Models\ProductImageModel;
 use App\Models\ProductMenuModel;
 use App\Models\Menu3Model;
 use App\Models\ProductPriceModel;
+use App\Models\ProductFeatureModel;
 
 class ProductService
 {
@@ -15,6 +16,7 @@ class ProductService
     protected $productMenuModel;
     protected $menu3Model;
     protected $productPriceModel;
+    protected $productFeatureModel;
 
     public function __construct()
     {
@@ -23,6 +25,7 @@ class ProductService
         $this->productMenuModel = new ProductMenuModel();
         $this->menu3Model = new Menu3Model();
         $this->productPriceModel = new ProductPriceModel();
+        $this->productFeatureModel = new ProductFeatureModel();
     }
 
     public function getProductBySlug($slug)
@@ -459,6 +462,12 @@ class ProductService
 
         $images = $this->getProductImages($product['id']);
         $options = $this->getProductOptions($product['id']);
+        $features = $this->productFeatureModel
+            ->where('product_id', $product['id'])
+            ->where('is_active', 1)
+            ->orderBy('sort_order', 'ASC')
+            ->orderBy('id', 'ASC')
+            ->findAll();
 
         // ۱. انتخاب ارزان‌ترین ترکیب موجود بر اساس sale_price
         $cheapestRecord = $this->productPriceModel
@@ -553,6 +562,7 @@ class ProductService
             'product'        => $product,
             'images'         => $images,
             'options'        => $options,
+            'features'       => $features,
             'priceInfo'      => $priceInfo,
             'totalStock'     => $totalStock,
             'selectedStock'  => $selectedStock,

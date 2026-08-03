@@ -44,6 +44,15 @@
                                         </svg>
                                         مدیریت آپشن‌ها
                                     </a>
+                                    <!-- ======== دکمه مدیریت فیچرها ======== -->
+                                    <a href="<?= site_url(ADMIN_PATH . '/product-feature/manage/' . $edit_row['id']) ?>"
+                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm"
+                                       title="مدیریت فیچرهای محصول">
+                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2m-4 0a2 2 0 002 2h2a2 2 0 002-2m-4 0a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                        </svg>
+                                        مدیریت فیچرها
+                                    </a>
                                     <!-- ======== دکمه مدیریت منو ======== -->
                                     <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $edit_row['id']) ?>"
                                        class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">

@@ -187,6 +187,13 @@ $routes->group(ADMIN_PATH, ['namespace' => 'App\Controllers\Admin', 'filter' => 
     $routes->get('product-option/form/(:num)', 'ProductOption::form/$1');
     $routes->post('product-option/form/(:num)', 'ProductOption::form/$1');
 
+    // ======== Product Feature ========
+    $routes->get('product-feature/manage/(:num)', 'ProductFeature::manage/$1');
+    $routes->post('product-feature/store/(:num)', 'ProductFeature::store/$1');
+    $routes->post('product-feature/update/(:num)/(:num)', 'ProductFeature::update/$1/$2');
+    $routes->post('product-feature/toggle-active/(:num)/(:num)', 'ProductFeature::toggleActive/$1/$2');
+    $routes->post('product-feature/delete/(:num)/(:num)', 'ProductFeature::delete/$1/$2');
+
     // ======== Product Price ========
     $routes->get('product-price/manage/(:num)', 'ProductPrice::manage/$1');
     $routes->post('product-price/save/(:num)', 'ProductPrice::save/$1');

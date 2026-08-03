@@ -58,6 +58,16 @@
                                 </svg>
                             </a>
 
+                            <!-- ======== دکمه مدیریت فیچرها ======== -->
+                            <a href="<?= site_url(ADMIN_PATH . '/product-feature/manage/' . $item['id']) ?>"
+                               class="text-primary hover:text-primary-800"
+                               title="مدیریت فیچرهای محصول"
+                               aria-label="مدیریت فیچرهای محصول">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2m-4 0a2 2 0 002 2h2a2 2 0 002-2m-4 0a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                </svg>
+                            </a>
+
                             <!-- ======== دکمه مدیریت منوی سطح ۳ ======== -->
                             <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $item['id']) ?>"
                                class="text-emerald-500 hover:text-emerald-700"

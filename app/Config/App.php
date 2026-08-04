@@ -81,7 +81,7 @@ class App extends BaseConfig
     | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
     |
     */
-    public string $permittedURIChars = 'a-z 0-9~%.:_\-';
+    public string $permittedURIChars = '\p{L}\p{N}~%.:_\-\x{200C}\x{200D}';
 
     /**
      * --------------------------------------------------------------------------

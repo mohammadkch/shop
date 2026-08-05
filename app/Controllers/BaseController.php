@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
 abstract class BaseController extends Controller
 {
 
-    protected $helpers = ['html', 'flash'];
+    protected $helpers = ['html', 'flash', 'product'];
     protected $viewPath = '';
     protected $viewData;
     protected $auth;

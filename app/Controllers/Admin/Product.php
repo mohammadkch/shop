@@ -89,8 +89,18 @@ class Product extends BaseController
                 'type' => 'text'
             ],
             'description' => [
+                'input' => 'quill',
+                'data' => ['id' => 'description', 'name' => 'description'],
+                'type' => 'quill'
+            ],
+            'meta_title' => [
+                'input' => 'form_input',
+                'data' => ['class' => 'form-control', 'id' => 'meta_title', 'name' => 'meta_title', 'placeholder' => 'عنوان سئو بدون عبارت فروشگاه مومو', 'maxlength' => 255],
+                'type' => 'text'
+            ],
+            'meta_description' => [
                 'input' => 'form_textarea',
-                'data' => ['class' => 'form-control', 'id' => 'description', 'name' => 'description', 'placeholder' => 'توضیحات محصول', 'rows' => 6],
+                'data' => ['class' => 'form-control', 'id' => 'meta_description', 'name' => 'meta_description', 'placeholder' => 'توضیحات متای صفحه محصول', 'rows' => 4, 'maxlength' => 320],
                 'type' => 'textarea'
             ],
             'is_active' => [
@@ -107,6 +117,8 @@ class Product extends BaseController
             'name' => 'نام محصول',
             'slug' => 'slug',
             'description' => 'توضیحات',
+            'meta_title' => 'عنوان سئو',
+            'meta_description' => 'توضیحات متا',
             'is_active' => 'وضعیت'
         ];
 
@@ -145,8 +157,18 @@ class Product extends BaseController
                 'type' => 'text'
             ],
             'description' => [
+                'input' => 'quill',
+                'data' => ['id' => 'description', 'name' => 'description'],
+                'type' => 'quill'
+            ],
+            'meta_title' => [
+                'input' => 'form_input',
+                'data' => ['class' => 'form-control', 'id' => 'meta_title', 'name' => 'meta_title', 'placeholder' => 'عنوان سئو بدون عبارت فروشگاه مومو', 'maxlength' => 255],
+                'type' => 'text'
+            ],
+            'meta_description' => [
                 'input' => 'form_textarea',
-                'data' => ['class' => 'form-control', 'id' => 'description', 'name' => 'description', 'placeholder' => 'توضیحات محصول', 'rows' => 6],
+                'data' => ['class' => 'form-control', 'id' => 'meta_description', 'name' => 'meta_description', 'placeholder' => 'توضیحات متای صفحه محصول', 'rows' => 4, 'maxlength' => 320],
                 'type' => 'textarea'
             ],
             'is_active' => [
@@ -163,6 +185,8 @@ class Product extends BaseController
             'name' => 'نام محصول',
             'slug' => 'slug',
             'description' => 'توضیحات',
+            'meta_title' => 'عنوان سئو',
+            'meta_description' => 'توضیحات متا',
             'is_active' => 'وضعیت'
         ];
 
@@ -187,6 +211,14 @@ class Product extends BaseController
             'is_active' => [
                 'label' => 'وضعیت',
                 'rules' => 'required|in_list[0,1]'
+            ],
+            'meta_title' => [
+                'label' => 'عنوان سئو',
+                'rules' => 'permit_empty|max_length[255]'
+            ],
+            'meta_description' => [
+                'label' => 'توضیحات متا',
+                'rules' => 'permit_empty|max_length[320]'
             ]
         ];
 
@@ -201,15 +233,20 @@ class Product extends BaseController
             }
         }
 
-        $slug = $this->request->getPost('slug', FILTER_SANITIZE_STRING);
-        if (empty($slug)) {
-            $slug = $this->slugify($this->request->getPost('name', FILTER_SANITIZE_STRING));
+        $slugSource = trim(strip_tags((string) $this->request->getPost('slug')));
+        if ($slugSource === '') {
+            $slugSource = (string) $this->request->getPost('name');
         }
+        $slug = $this->slugify($slugSource);
+
+        helper('blog_content');
 
         $model_data = [
-            'name' => $this->request->getPost('name', FILTER_SANITIZE_STRING),
+            'name' => trim(strip_tags((string) $this->request->getPost('name'))),
             'slug' => $slug,
-            'description' => $this->request->getPost('description', FILTER_SANITIZE_STRING),
+            'description' => sanitizeBlogHtml((string) $this->request->getPost('description')),
+            'meta_title' => trim(strip_tags((string) $this->request->getPost('meta_title'))) ?: null,
+            'meta_description' => trim(strip_tags((string) $this->request->getPost('meta_description'))) ?: null,
             'is_active' => (int) $this->request->getPost('is_active', FILTER_VALIDATE_INT),
             'published_at' => time(),
             'updated_at' => time()
@@ -310,12 +347,11 @@ class Product extends BaseController
 
     private function slugify($text)
     {
-        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-        $text = preg_replace('~[^-\w]+~', '', $text);
+        $text = trim(strip_tags((string) $text));
+        $text = preg_replace('~[^\p{L}\p{N}]+~u', '-', $text);
         $text = trim($text, '-');
         $text = preg_replace('~-+~', '-', $text);
-        $text = strtolower($text);
+        $text = mb_strtolower($text, 'UTF-8');
         if (empty($text)) {
             return 'n-a';
         }

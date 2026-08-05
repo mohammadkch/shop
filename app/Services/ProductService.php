@@ -28,17 +28,33 @@ class ProductService
         $this->productFeatureModel = new ProductFeatureModel();
     }
 
-    public function getProductBySlug($slug)
+    public function getProductById(int $id)
+    {
+        $product = $this->productModel
+            ->where('id', $id)
+            ->where('is_active', 1)
+            ->first();
+
+        return $product ? $this->attachCategory($product) : null;
+    }
+
+    public function getProductBySlug(string $slug)
     {
         $product = $this->productModel
             ->where('slug', $slug)
             ->where('is_active', 1)
+            ->orderBy('id', 'ASC')
             ->first();
 
         if (!$product) {
             return null;
         }
 
+        return $this->attachCategory($product);
+    }
+
+    private function attachCategory(array $product): array
+    {
         $productMenu = $this->productMenuModel
             ->where('product_id', $product['id'])
             ->first();
@@ -450,12 +466,12 @@ class ProductService
 
     /**
      * آماده‌سازی تمام داده‌های مورد نیاز برای صفحه نمایش محصول
-     * @param string $slug
+     * @param int $productId
      * @return array|null
      */
-    public function prepareProductShowData(string $slug)
+    public function prepareProductShowData(int $productId)
     {
-        $product = $this->getProductBySlug($slug);
+        $product = $this->getProductById($productId);
         if (!$product) {
             return null;
         }

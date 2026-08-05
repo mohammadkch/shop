@@ -17,7 +17,7 @@ class Category extends BaseController
 
     public function index(...$slugs)
     {
-        helper(['menu']);
+        helper(['menu', 'blog_content']);
 
         $pager = service('pager');
         $page = (int) $this->request->getGet('page');
@@ -33,16 +33,30 @@ class Category extends BaseController
         $sortField = in_array($sortField, $allowedFields) ? $sortField : 'published_at';
         $sortType = in_array($sortType, $allowedTypes) ? $sortType : 'desc';
 
-        // ====== پیدا کردن منو بر اساس اسلاگ‌ها ======
-        if (empty($slugs) || (count($slugs) === 1 && empty($slugs[0]))) {
-            // حالت level 0: همه محصولات
-            $menu = [
-                'id' => 0,
-                'name' => 'همه محصولات',
-                'slug' => 'all',
-                'level' => 0,
-                'description' => 'همه محصولات فروشگاه'
-            ];
+        $isAllProductsPage = empty($slugs) || (count($slugs) === 1 && empty($slugs[0]));
+        $allProductsPage = null;
+        $contentBlocks = [];
+
+        // ====== صفحه مستقل همه محصولات یا منوی واقعی ======
+        if ($isAllProductsPage) {
+            $allProductsPage = model('App\Models\AllProductsPageModel')->find(1);
+            if (!$allProductsPage) {
+                throw new \RuntimeException('تنظیمات صفحه همه محصولات پیدا نشد.');
+            }
+            $menu = null;
+            if (!$this->request->isAJAX()) {
+                $contentBlocks = model('App\Models\AllProductsPageBlockModel')
+                    ->where('all_products_page_id', $allProductsPage['id'])
+                    ->orderBy('sort_order', 'ASC')
+                    ->orderBy('id', 'ASC')
+                    ->findAll();
+                foreach ($contentBlocks as &$block) {
+                    if (!empty($block['content'])) {
+                        $block['content'] = sanitizeBlogHtml($block['content']);
+                    }
+                }
+                unset($block);
+            }
         } else {
             $menu = $this->findMenuBySlugs($slugs);
             if (!$menu) {
@@ -52,16 +66,15 @@ class Category extends BaseController
 
         // ====== زیرمنوها (فقط برای level 1 و 2) ======
         $subMenus = [];
-        if ($menu['level'] == 0) {
-            // سطح ۰ → همه منوهای سطح ۱ به عنوان ساب‌منو
-            $subMenus = $this->menuService->getSubMenusWithImages($menu, 0);
+        if ($isAllProductsPage) {
+            $subMenus = $this->menuService->getSubMenusWithImages(null, 0);
         } elseif ($menu['level'] == 1 || $menu['level'] == 2) {
             $menu1Slug = $slugs[0] ?? null;
             $subMenus = $this->menuService->getSubMenusWithImages($menu, $menu['level'], $menu1Slug);
         }
 
         // ====== دریافت menu3Ids ======
-        $menu3Ids = $this->getMenu3Ids($menu);
+        $menu3Ids = $this->getMenu3Ids($menu, $isAllProductsPage);
 
         // ====== دریافت فیلترها ======
         $filters = [];
@@ -89,15 +102,30 @@ class Category extends BaseController
         );
 
         $pagination = $pager->makeLinks($page, $per_page, $totalProducts, 'shop_pagination');
-        $breadcrumb = $this->breadcrumbService->buildFromMenu($menu);
+        $breadcrumb = $isAllProductsPage
+            ? $this->breadcrumbService->buildAllProducts($allProductsPage['h1_title'])
+            : $this->breadcrumbService->buildFromMenu($menu);
+
+        $pageHeading = $isAllProductsPage ? $allProductsPage['h1_title'] : $menu['name'];
 
         $this->viewData['menu'] = $menu;
+        $this->viewData['isAllProductsPage'] = $isAllProductsPage;
+        $this->viewData['allProductsPage'] = $allProductsPage;
+        $this->viewData['contentBlocks'] = $contentBlocks;
+        $this->viewData['pageHeading'] = $pageHeading;
         $this->viewData['subMenus'] = $subMenus;
         $this->viewData['filterData'] = $filterData;
         $this->viewData['selectedFilters'] = $filters;
         $this->viewData['products'] = $products;
         $this->viewData['breadcrumb'] = $breadcrumb;
-        $this->viewData['title'] = $menu['name'];
+        $this->viewData['title'] = $isAllProductsPage
+            ? (!empty($allProductsPage['meta_title']) ? $allProductsPage['meta_title'] : $pageHeading . ' | فروشگاه مومو')
+            : $menu['name'];
+        if ($isAllProductsPage) {
+            $this->viewData['metaDescription'] = $allProductsPage['meta_description']
+                ?: 'مشاهده و خرید همه محصولات فروشگاه مومو با امکان فیلتر و مرتب‌سازی.';
+            $this->viewData['canonicalUrl'] = site_url('category');
+        }
         $this->viewData['pagination'] = $pagination;
         $this->viewData['sortField'] = $sortField;
         $this->viewData['sortType'] = $sortType;
@@ -111,11 +139,6 @@ class Category extends BaseController
 
     private function findMenuBySlugs(array $slugs)
     {
-
-        // اگر هیچ اسلاگی وجود نداشت → سطح صفر
-        if (empty($slugs)) {
-            return ['level' => 0, 'id' => 0, 'name' => 'همه محصولات', 'slug' => ''];
-        }
 
         if (count($slugs) > 3) {
             return null;
@@ -163,12 +186,11 @@ class Category extends BaseController
         return null;
     }
 
-    private function getMenu3Ids($menu)
+    private function getMenu3Ids(?array $menu, bool $isAllProductsPage = false)
     {
         $menu3Ids = [];
 
-        if ($menu['level'] == 0) {
-            // سطح ۰ → همه menu_3 های فعال
+        if ($isAllProductsPage) {
             $menu3Model = model('App\Models\Menu3Model');
             $allMenu3 = $menu3Model->where('is_active', 1)->findAll();
             $menu3Ids = array_column($allMenu3, 'id');

@@ -47,7 +47,8 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
 
     $routes->get('/', 'Home::index');
     $routes->get('home', 'Home::index');
-    $routes->get('product/(:any)', 'Product::show/$1');
+    $routes->get('product/(:num)/(:any)', 'Product::show/$1/$2');
+    $routes->get('product/(:any)', 'Product::legacy/$1');
 
     // بعد روت‌های category (به ترتیب از طولانی‌ترین به کوتاه‌ترین)
     $routes->get('category/(:any)/(:any)/(:any)', 'Category::index/$1/$2/$3');
@@ -101,6 +102,10 @@ $routes->group(ADMIN_PATH, ['namespace' => 'App\Controllers\Admin', 'filter' => 
 
     $routes->get('dashboard', 'Dashboard::index');
     $routes->get('test', 'Test::index');
+
+    // صفحه مستقل همه محصولات
+    $routes->get('all-products-page', 'AllProductsPage::edit');
+    $routes->post('all-products-page', 'AllProductsPage::update');
 
     // menu_1
     $routes->get('menu1', 'Menu1::index');

@@ -100,6 +100,25 @@
                     </a>
                 </li>
 
+                <?php
+                $isActive = ($className == 'allproductspage');
+                $activeClass = $isActive
+                        ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100'
+                        : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+                $iconStroke = $isActive ? '#4f46e5' : 'currentColor';
+                ?>
+                <li class="py-2.5 px-1">
+                    <a href="<?= site_url(ADMIN_PATH . '/all-products-page') ?>"
+                       class="relative flex justify-start items-center py-1 px-5 <?= $activeClass ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStroke ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                            <path d="M3 9l2-5h14l2 5"></path>
+                            <path d="M5 13v7h14v-7"></path>
+                            <path d="M9 20v-5h6v5"></path>
+                            <path d="M3 9a3 3 0 006 0 3 3 0 006 0 3 3 0 006 0"></path>
+                        </svg>
+                        صفحه همه محصولات
+                    </a>
+                </li>
 
                 <?php
                 $isActive = ($className == 'blogpost');
@@ -383,6 +402,23 @@
                         <path d="M15 17l2 2 4-5"></path>
                     </svg>
                     دسته بندی منتخب
+                </a>
+            </li>
+
+            <?php
+            $isActiveAllProductsPage = ($className == 'allproductspage');
+            $activeClassAllProductsPage = $isActiveAllProductsPage ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
+            $iconStrokeAllProductsPage = $isActiveAllProductsPage ? '#4f46e5' : 'currentColor';
+            ?>
+            <li class="py-2.5 px-1">
+                <a href="<?= site_url(ADMIN_PATH . '/all-products-page') ?>" class="relative flex justify-start items-center py-1 px-5 <?= $activeClassAllProductsPage ?> before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:transition before:duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="<?= $iconStrokeAllProductsPage ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2.5">
+                        <path d="M3 9l2-5h14l2 5"></path>
+                        <path d="M5 13v7h14v-7"></path>
+                        <path d="M9 20v-5h6v5"></path>
+                        <path d="M3 9a3 3 0 006 0 3 3 0 006 0 3 3 0 006 0"></path>
+                    </svg>
+                    صفحه همه محصولات
                 </a>
             </li>
 

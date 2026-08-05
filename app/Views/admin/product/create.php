@@ -1,6 +1,15 @@
 <?= $this->extend('admin/_layout_/layout') ?>
 <?php helper('form'); ?>
 
+<?= $this->section('styles') ?>
+    <link rel="stylesheet" href="<?= base_url('assets/js/plugin/quill/quill.snow.css') ?>">
+    <style>
+        .product-editor { min-height: 190px; background: #fff; color: #111; direction: rtl; text-align: right; }
+        .ql-toolbar.ql-snow { direction: rtl; }
+        .ql-editor { min-height: 190px; font-size: 15px; line-height: 2; }
+    </style>
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 
     <section class="py-5">
@@ -80,7 +89,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <form method="post" action="<?= site_url($form_action) ?>" enctype="multipart/form-data">
+                        <form id="productForm" method="post" action="<?= site_url($form_action) ?>" enctype="multipart/form-data">
                             <div class="space-y-4">
                                 <?php foreach ($inputs as $input_key => $input): ?>
                                     <div>
@@ -95,6 +104,11 @@
                                             echo form_input(array_merge($input['data'], ['value' => $value, 'class' => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white']));
                                         elseif ($inputType == 'form_textarea'):
                                             echo form_textarea(array_merge($input['data'], ['value' => $value, 'class' => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white']));
+                                        elseif ($inputType == 'quill'):
+                                            ?>
+                                            <div id="descriptionEditor" class="product-editor"></div>
+                                            <input type="hidden" id="description" name="description" value="<?= esc($value, 'attr') ?>">
+                                            <?php
                                         elseif ($inputType == 'form_dropdown'):
                                             echo form_dropdown($input_key, $input['options'], $value, array_merge($input['data'], ['class' => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white']));
                                         endif;
@@ -117,4 +131,40 @@
         </div>
     </section>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+    <script src="<?= base_url('assets/js/plugin/quill/quill.js') ?>"></script>
+    <script>
+        (() => {
+            const form = document.getElementById('productForm');
+            const input = document.getElementById('description');
+            const editorElement = document.getElementById('descriptionEditor');
+            if (!form || !input || !editorElement || typeof Quill === 'undefined') return;
+
+            editorElement.innerHTML = input.value;
+            const editor = new Quill(editorElement, {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{header: [2, 3, 4, false]}],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{list: 'ordered'}, {list: 'bullet'}],
+                        ['blockquote', 'link'],
+                        [{align: []}],
+                        [{direction: 'rtl'}],
+                        ['clean']
+                    ]
+                },
+                formats: ['header', 'bold', 'italic', 'underline', 'strike', 'list', 'blockquote', 'link', 'align', 'direction']
+            });
+            editor.format('direction', 'rtl');
+            editor.format('align', 'right');
+
+            form.addEventListener('submit', () => {
+                const html = editor.root.innerHTML.trim();
+                input.value = html === '<p><br></p>' ? '' : html;
+            });
+        })();
+    </script>
 <?= $this->endSection() ?>

@@ -36,7 +36,7 @@
                     <!-- Product Body -->
                     <div class="mt-3">
                         <h3 class="font-normal text-sm leading-6 max-h-12 min-h-6 mt-2 px-1 overflow-hidden group-hover:text-primary-600 dark:group-hover:text-primary-400 dark:text-gray-200 text-gray-900 transition-colors duration-200">
-                            <a href="<?= site_url('product/' . $product['slug']) ?>" class="font-bold">
+                            <a href="<?= product_url($product) ?>" class="font-bold">
                                 <?= esc($product['name']) ?>
                             </a>
                         </h3>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
 
-                    <a class="absolute inset-0 w-full h-full" href="<?= site_url('product/' . $product['slug']) ?>"></a>
+                    <a class="absolute inset-0 w-full h-full" href="<?= product_url($product) ?>"></a>
                 </div>
             </div>
         <?php endforeach; ?>

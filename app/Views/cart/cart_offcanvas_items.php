@@ -16,7 +16,7 @@
 
                 <div class="w-2/3 space-y-2 px-2">
                     <h3 class="font-bold leading-7 text-gray-800 dark:text-gray-100 text-sm line-clamp-2">
-                        <a href="<?= base_url('product/'.$item['slug']) ?>"><?= esc($item['product_name']) ?></a>
+                        <a href="<?= product_url($item) ?>"><?= esc($item['product_name']) ?></a>
                     </h3>
 
                     <!-- ====== رنگ و سایز ====== -->

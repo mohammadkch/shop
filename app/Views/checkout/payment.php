@@ -96,7 +96,7 @@
                                                         <span class="text-xs text-gray-500">بدون تصویر</span>
                                                     <?php endif; ?>
                                                 </div>
-                                                <a href="<?= base_url('product/' . $item['product_slug']) ?>"
+                                                <a href="<?= product_url($item) ?>"
                                                    target="_blank"
                                                    class="text-gray-800 dark:text-gray-200 font-medium hover:text-primary transition-colors">
                                                     <?= esc($item['product_name']) ?>

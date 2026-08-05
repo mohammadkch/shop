@@ -80,7 +80,7 @@
                                                             <img src="<?= base_url($type['path'] . '/' . $existingImage['image_name']) ?>" class="w-20 h-20 object-cover rounded-lg border">
                                                         </div>
                                                     <?php endif; ?>
-                                                    <input type="file" name="image_<?= $type['id'] ?>" accept="image/jpeg,image/png,image/gif,image/webp" class="w-full text-sm">
+                                                    <input type="file" name="image_<?= $type['id'] ?>" accept="image/jpeg,image/png,image/gif,image/webp" class="w-full text-sm text-gray-600 dark:text-gray-300 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100">
                                                     <?php if ($type['file_size_limit']): ?>
                                                         <p class="text-xs text-gray-500 mt-1">حداکثر: <?= $type['file_size_limit'] ?>KB</p>
                                                     <?php endif; ?>

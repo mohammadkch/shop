@@ -9,11 +9,11 @@
 
         <!-- Title -->
         <div class="py-5">
-            <h2 class="font-black text-2xl mb-4 relative pb-4 text-gray-900 dark:text-gray-200
+            <h1 class="font-black text-2xl mb-4 relative pb-4 text-gray-900 dark:text-gray-200
                 before:absolute before:start-0 before:bottom-0 before:size-2 before:rounded-full before:bg-primary
                 after:absolute after:w-40 after:h-2 after:bottom-0 after:start-4 after:bg-primary after:rounded-lg">
-                <?= esc($menu['name']) ?>
-            </h2>
+                <?= esc($pageHeading) ?>
+            </h1>
             <p class="text-gray-500 dark:text-gray-400 text-sm">
                 <?= count($products) ?> محصول
             </p>
@@ -181,7 +181,7 @@
                                         <!-- Product Body -->
                                         <div class="mt-3">
                                             <h3 class="font-normal text-sm leading-6 max-h-12 min-h-6 mt-2 px-1 overflow-hidden group-hover:text-primary-600 dark:group-hover:text-primary-400 dark:text-gray-200 text-gray-900 transition-colors duration-200">
-                                                <a href="<?= site_url('product/' . $product['slug']) ?>" class="font-bold">
+                                                <a href="<?= product_url($product) ?>" class="font-bold">
                                                     <?= esc($product['name']) ?>
                                                 </a>
                                             </h3>
@@ -210,7 +210,7 @@
                                             </div>
                                         </div>
 
-                                        <a class="absolute inset-0 w-full h-full" href="<?= site_url('product/' . $product['slug']) ?>"></a>
+                                        <a class="absolute inset-0 w-full h-full" href="<?= product_url($product) ?>"></a>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -297,7 +297,7 @@
     </div>
 
     <!-- ====== توضیحات پایین (داینامیک) ====== -->
-    <?php if (!empty($menu['description'])): ?>
+    <?php if (!$isAllProductsPage && !empty($menu['description'])): ?>
         <div class="p-5 mt-5 bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 rounded-xl tab-content border border-gray-300 drop-shadow">
             <div class="space-y-5">
                 <h2 class="text-lg pb-3 font-black text-zinc-800 relative before:absolute before:bottom-0 before:start-0 before:h-1 before:w-22 before:bg-primary-500 before:rounded dark:text-white">
@@ -312,6 +312,10 @@
 
         <?php endif; ?>
 
+    <?php if ($isAllProductsPage && !empty($contentBlocks)): ?>
+        <?= $this->include('category/_all_products_content') ?>
+    <?php endif; ?>
+
 </section>
 
 <style>
@@ -322,6 +326,18 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+    .category-page-content { font-size: 1rem; line-height: 2.2; overflow-wrap: anywhere; text-align: justify; }
+    .category-page-content h2 { font-size: 1.5rem; font-weight: 900; margin: 1.8rem 0 .75rem; }
+    .category-page-content h3 { font-size: 1.25rem; font-weight: 800; margin: 1.5rem 0 .65rem; }
+    .category-page-content h4 { font-size: 1.1rem; font-weight: 800; margin: 1.25rem 0 .55rem; }
+    .category-page-content p { margin: .75rem 0; }
+    .category-page-content ul { list-style: disc; padding-right: 1.5rem; }
+    .category-page-content ol { list-style: decimal; padding-right: 1.5rem; }
+    .category-page-content blockquote { border-right: 4px solid #6366f1; padding: 1rem 1.25rem; margin: 1.4rem 0; background: rgba(99,102,241,.07); border-radius: .6rem; }
+    .category-page-content a { color: #4f46e5; text-decoration: underline; }
+    .category-page-content .ql-align-center { text-align: center; }
+    .category-page-content .ql-align-right { text-align: right; }
+    .category-page-content .ql-align-justify { text-align: justify; }
 </style>
 
 <?= $this->endSection() ?>

@@ -21,7 +21,7 @@
                     <div class="swiper-wrapper" style="padding-bottom:0!important;">
                         <?php foreach ($latestProducts as $product): ?>
                             <?php
-                            $productUrl = site_url('product/' . $product['slug']);
+                            $productUrl = product_url($product);
                             $thumbnail = !empty($product['thumbnail'])
                                 ? base_url('images/products/' . $product['thumbnail'])
                                 : base_url('assets/images/product/placeholder.jpg');

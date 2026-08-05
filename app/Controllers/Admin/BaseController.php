@@ -20,7 +20,7 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-    protected $helpers = ['flash', 'html', 'rowset'];
+    protected $helpers = ['flash', 'html', 'rowset', 'product'];
     protected $viewPath = 'admin/';
     protected $viewData;
     protected $authLib;

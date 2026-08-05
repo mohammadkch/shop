@@ -135,7 +135,7 @@
                                     </ul>
 
                                     <div class="space-y-2 mt-2 pb-2 border-b border-b-gray-300 dark:border-b-gray-700">
-                                        <h2 class="font-black leading-8"><?= esc($product['name']) ?></h2>
+                                        <h1 class="font-black leading-8"><?= esc($product['name']) ?></h1>
                                         <?php if (!empty($product['name_en'])): ?>
                                             <h2 class="text-gray-400 dark:text-gray-500 text-sm leading-8"><?= esc($product['name_en']) ?></h2>
                                         <?php endif; ?>
@@ -403,7 +403,7 @@
                             توضیحات محصول
                         </h2>
                         <div class="prose dark:prose-invert max-w-none text-neutral-700 leading-9 text-justify dark:text-white">
-                            <?= $product['description'] ?? '<p class="text-gray-500 dark:text-gray-400">توضیحاتی برای این محصول ثبت نشده است.</p>' ?>
+                            <?= !empty($product['description']) ? $product['description'] : '<p class="text-gray-500 dark:text-gray-400">توضیحاتی برای این محصول ثبت نشده است.</p>' ?>
                         </div>
                     </section>
 

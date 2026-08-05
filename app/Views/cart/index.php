@@ -84,7 +84,7 @@
                                             <div class="flex items-start justify-between">
                                                 <div class="flex-1">
                                                     <h3 class="font-bold text-gray-800 dark:text-white line-clamp-2">
-                                                        <a href="<?= base_url('/product/'.$item['slug']) ?>"
+                                                        <a href="<?= product_url($item) ?>"
                                                            class="hover:text-primary transition-colors">
                                                             <?= esc($item['product_name']) ?>
                                                         </a>

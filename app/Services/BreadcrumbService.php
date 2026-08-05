@@ -4,6 +4,15 @@ namespace App\Services;
 
 class BreadcrumbService
 {
+    public function buildAllProducts(string $title): array
+    {
+        return [[
+            'name' => $title,
+            'full_slug' => null,
+            'is_last' => true,
+        ]];
+    }
+
     /**
      * ساخت breadcrumb از روی منو (برای صفحه کتگوری)
      */
@@ -11,15 +20,6 @@ class BreadcrumbService
     {
         $breadcrumb = [];
 
-        if ($menu['level'] == 0) {
-            // همه محصولات
-            $breadcrumb[] = [
-                'name' => 'همه محصولات',
-                'url' => '/category',
-                'is_active' => true
-            ];
-            return $breadcrumb;
-        }
         $menu1 = null;
         $menu2 = null;
 

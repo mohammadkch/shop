@@ -2,7 +2,7 @@
 var baseUrl = '/shop/public/';  // یا هر چی که پروژه‌ات هست
 
 // ==================== Notification ====================
-function showNotification(message, type = 'success') {
+function showNotification(message, type = 'info') {
     const colors = {
         success: 'bg-green-500',
         error: 'bg-red-500',
@@ -10,16 +10,16 @@ function showNotification(message, type = 'success') {
         info: 'bg-blue-500'
     };
 
-    const bgColor = colors[type] || colors.success;
+    const bgColor = colors[type] || colors.info;
 
     const notification = document.createElement('div');
-    notification.className = `fixed top-5 left-1/2 transform -translate-x-1/2 z-50 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-300 opacity-0 translate-y-[-20px]`;
+    notification.className = `fixed top-4 end-4 z-50 ${bgColor} text-white p-4 rounded-lg shadow-lg transform transition-all duration-300 opacity-0 translate-y-4`;
     notification.innerHTML = `
-        <div class="flex items-center gap-3">
-            <span class="text-sm font-medium">${message}</span>
-            <button onclick="this.parentElement.parentElement.remove()" class="text-white hover:text-gray-200">
+        <div class="flex items-center justify-between">
+            <span>${message}</span>
+            <button class="ms-4 text-white hover:text-gray-200" onclick="this.parentElement.parentElement.remove()">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
@@ -27,16 +27,18 @@ function showNotification(message, type = 'success') {
 
     document.body.appendChild(notification);
 
-    setTimeout(() => {
-        notification.classList.remove('opacity-0', '-translate-y-[20px]');
+    requestAnimationFrame(() => {
+        notification.classList.remove('opacity-0', 'translate-y-4');
         notification.classList.add('opacity-100', 'translate-y-0');
-    }, 10);
+    });
 
     setTimeout(() => {
         notification.classList.remove('opacity-100', 'translate-y-0');
-        notification.classList.add('opacity-0', '-translate-y-[20px]');
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+        notification.classList.add('opacity-0', 'translate-y-4');
+        setTimeout(() => {
+            if (notification.parentNode) notification.remove();
+        }, 300);
+    }, 4000);
 }
 
 // ==================== Sidebar Functions ====================

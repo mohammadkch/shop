@@ -30,7 +30,7 @@
 
 <!-- FLASH MESSAGES -->
 <script>window.adminPath = <?= json_encode(ADMIN_PATH) ?>;</script>
-<script src="<?= $assetsPath ?>custom/admin.js"></script>
+<script src="<?= $assetsPath ?>custom/admin.js?v=<?= filemtime(FCPATH . 'assets/custom/admin.js') ?>"></script>
 <!-- END FLASH MESSAGES -->
 
 <body class="relative bg-custom-light dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 transition-colors duration-300">

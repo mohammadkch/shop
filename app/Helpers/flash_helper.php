@@ -17,6 +17,17 @@ function getFlash()
             'type' => session()->get('flash_type')
         ];
     }
+
+    foreach (['success', 'error', 'warning', 'info'] as $type) {
+        $message = session()->getFlashdata($type);
+        if ($message !== null && $message !== '') {
+            return [
+                'message' => $message,
+                'type' => $type,
+            ];
+        }
+    }
+
     return null;
 }
 
@@ -24,6 +35,10 @@ function showFlash()
 {
     $flash = getFlash();
     if ($flash) {
-        echo "<script>showNotification('" . addslashes($flash['message']) . "', '" . $flash['type'] . "');</script>";
+        echo '<script>showNotification('
+            . json_encode((string) $flash['message'], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)
+            . ', '
+            . json_encode((string) $flash['type'])
+            . ');</script>';
     }
 }

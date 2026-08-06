@@ -16,9 +16,20 @@ class PaymentModel extends Model
         'factor_id',
         'customer_id',
         'payment_method_id',
+        'gateway',
+        'order_id',
         'final_amount',
         'status',
         'payment_token',
+        'gateway_track_id',
+        'ref_number',
+        'card_number',
+        'gateway_amount',
+        'gateway_result',
+        'gateway_status',
+        'gateway_message',
+        'paid_at',
+        'verified_at',
         'expires_at'
     ];
 

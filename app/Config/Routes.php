@@ -43,7 +43,11 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
         $routes->post('get-shipping-prices', 'Checkout::getShippingPrices');
         $routes->get('get-cities/(:num)', 'Checkout::getCities/$1');
         $routes->get('payment/(:num)', 'Checkout::payment/$1');
+        $routes->post('payment/(:num)/start', 'Payment::start/$1');
     });
+
+    // Callback زیبال باید بدون Session و بدون فیلتر ورود در دسترس باشد.
+    $routes->get('checkout/zibal/callback', 'Payment::callback');
 
     $routes->get('/', 'Home::index');
     $routes->get('home', 'Home::index');
@@ -102,6 +106,11 @@ $routes->group(ADMIN_PATH, ['namespace' => 'App\Controllers\Admin', 'filter' => 
 
     $routes->get('dashboard', 'Dashboard::index');
     $routes->get('test', 'Test::index');
+
+    // orders
+    $routes->get('order', 'Order::index');
+    $routes->get('order/(:num)', 'Order::show/$1');
+    $routes->post('order/(:num)/confirm', 'Order::confirm/$1');
 
     // صفحه مستقل همه محصولات
     $routes->get('all-products-page', 'AllProductsPage::edit');

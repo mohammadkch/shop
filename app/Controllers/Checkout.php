@@ -404,12 +404,12 @@ class Checkout extends BaseController
         $factor = $factor[0];
 
         // ====== ۲. چک کردن وضعیت فاکتور ======
-        if ($factor['status'] !== 'awaiting_payment') {
+        if (!in_array($factor['status'], ['awaiting_payment', 'payment_pending'], true)) {
             return redirect()->to('cart')->with('error', 'این فاکتور قابل پرداخت نیست');
         }
 
         // ====== ۳. چک کردن انقضا ======
-        if ($factor['expires_at'] < time()) {
+        if ($factor['status'] === 'awaiting_payment' && $factor['expires_at'] < time()) {
             $factorModel->update($factorId, ['status' => 'expired']);
             // payment رو هم expire کن
             $paymentModel = model('App\Models\PaymentModel');
@@ -433,7 +433,7 @@ class Checkout extends BaseController
         $paymentMethods = $paymentMethodModel->where('is_active', 1)->findAll();
 
         // ====== ۷. محاسبه زمان باقیمانده ======
-        $remainingMinutes = ceil(($factor['expires_at'] - time()) / 60);
+        $remainingMinutes = max(0, ceil(($factor['expires_at'] - time()) / 60));
 
         // ====== ۸. نمایش ویو ======
         $this->viewData['factor'] = $factor;

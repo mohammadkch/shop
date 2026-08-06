@@ -5,11 +5,11 @@
         <div class="container">
             <div class="w-full px-4">
                 <nav class="flex">
-                    <ul class="flex justify-between space-y-3 w-full flex-wrap">
+                    <ul class="flex justify-between gap-y-3 w-full flex-wrap">
                         <!--Service 1: 24-hour support-->
                         <li class="flex lg:w-auto sm:w-1/2 w-full">
                             <div class="flex items-center p-2">
-                                <div class="flex-shrink-0">
+                                <div class="flex flex-shrink-0 w-16 justify-center">
                                     <!-- SVG ICON -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="34" height="41" viewBox="0 0 34 41" fill="none">
                                         <!--SVG code for the first icon-->
@@ -71,7 +71,7 @@
                         <!--Service 2: Return of goods-->
                         <li class="flex lg:w-auto sm:w-1/2 w-full">
                             <div class="flex items-center p-2">
-                                <div class="flex-shrink-0">
+                                <div class="flex flex-shrink-0 w-16 justify-center">
                                     <!-- SVG ICON -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="53" height="39" viewBox="0 0 53 39" fill="none">
                                         <!--SVG code for the second icon-->
@@ -145,7 +145,7 @@
                         <!--Service 3: Quality Assurance-->
                         <li class="flex lg:w-auto sm:w-1/2 w-full">
                             <div class="flex items-center p-2">
-                                <div class="flex-shrink-0">
+                                <div class="flex flex-shrink-0 w-16 justify-center">
                                     <!-- SVG ICON -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="38" height="39" viewBox="0 0 38 39" fill="none">
                                         <!--SVG code for the third icon-->
@@ -192,7 +192,7 @@
                         <!--Service 4: Secure Payment-->
                         <li class="flex lg:w-auto sm:w-1/2 w-full">
                             <div class="flex items-center p-2">
-                                <div class="flex-shrink-0">
+                                <div class="flex flex-shrink-0 w-16 justify-center">
                                     <!-- SVG ICON -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="42" height="38" viewBox="0 0 42 38" fill="none">
                                         <!--SVG code for the fourth icon-->
@@ -290,7 +290,7 @@
                         <div class="flex flex-wrap">
                             <!--Store address-->
                             <div class="w-full sm:w-5/12">
-                                <div class="pe-4 mb-6 sm:mb-0">
+                                <div class="pe-4 mb-6">
                                     <div class="mb-3 text-gray-900 dark:text-gray-200 font-bold">فروشگاه رونیکا مال</div>
                                     <p class="text-sm leading-7 text-gray-600 dark:text-gray-400">
                                         تهران، هروی، مجتمع رونیکا مال، طبقه همکف، پلاک ۶۹
@@ -298,6 +298,17 @@
                                     <a href="tel:09102046144"
                                        class="inline-block mt-3 text-sm text-primary hover:text-primary-600 dark:text-primary-400">
                                         ۰۹۱۰۲۰۴۶۱۴۴
+                                    </a>
+                                </div>
+
+                                <div class="pe-4 mb-6 sm:mb-0">
+                                    <div class="mb-3 text-gray-900 dark:text-gray-200 font-bold">فروشگاه انزل مال</div>
+                                    <p class="text-sm leading-7 text-gray-600 dark:text-gray-400">
+                                         بندر انزلی، مجتمع انزل مال، پلاک 95
+                                    </p>
+                                    <a href="tel:09102046144"
+                                       class="inline-block mt-3 text-sm text-primary hover:text-primary-600 dark:text-primary-400">
+                                        09351657173
                                     </a>
                                 </div>
                             </div>

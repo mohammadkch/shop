@@ -7,8 +7,10 @@ use App\Libraries\CustomerAuthLib;
 use App\Libraries\UrlLib;
 use App\Libraries\Sms\LogSmsProvider;
 use App\Libraries\Sms\SmsIrProvider;
+use App\Libraries\Payment\ZibalGateway;
 use App\Services\AddressService;
 use App\Services\MenuService;
+use App\Services\PaymentService;
 use App\Services\ShippingService;
 use CodeIgniter\Config\BaseService;
 
@@ -153,6 +155,24 @@ class Services extends BaseService
             return static::getSharedInstance('shippingService');
         }
         return new ShippingService();
+    }
+
+    public static function paymentGateway($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('paymentGateway');
+        }
+
+        return new ZibalGateway(config('Zibal'));
+    }
+
+    public static function paymentService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('paymentService');
+        }
+
+        return new PaymentService(static::paymentGateway(), static::cartService());
     }
 
 

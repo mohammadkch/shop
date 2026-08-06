@@ -45,25 +45,12 @@ class ProductPriceModel extends Model
             return $record;
         }
 
-        // ۲. فقط رنگ (اگه سایز null باشه)
-        if ($colorOptionId && !$sizeOptionId) {
-            $record = $this->where('product_id', $productId)
-                ->where('color_option_id', $colorOptionId)
-                ->where('size_option_id', null)
-                ->first();
-            if ($record) return $record;
+        // برای ترکیب انتخاب‌شده هرگز به قیمت پیش‌فرض یک ترکیب دیگر برنگرد.
+        if ($colorOptionId || $sizeOptionId) {
+            return null;
         }
 
-        // ۳. فقط سایز (اگه رنگ null باشه)
-        if (!$colorOptionId && $sizeOptionId) {
-            $record = $this->where('product_id', $productId)
-                ->where('color_option_id', null)
-                ->where('size_option_id', $sizeOptionId)
-                ->first();
-            if ($record) return $record;
-        }
-
-        // ۴. قیمت پیش‌فرض
+        // محصول بدون آپشن می‌تواند از رکورد پیش‌فرض استفاده کند.
         return $this->where('product_id', $productId)
             ->where('is_default', 1)
             ->first();

@@ -57,7 +57,11 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    این سفارش ثبت نهایی نشده است. برای پرداخت و ثبت نهایی این سفارش تنها <strong><?= $remaining_minutes ?? 60 ?></strong> دقیقه دیگر فرصت دارید
+                    <?php if (($factor['status'] ?? '') === 'payment_pending'): ?>
+                        یک تلاش پرداخت برای این سفارش در جریان است؛ با ادامه پرداخت به همان تراکنش برمی‌گردید.
+                    <?php else: ?>
+                        این سفارش ثبت نهایی نشده است. برای پرداخت و ثبت نهایی این سفارش تنها <strong><?= $remaining_minutes ?? 60 ?></strong> دقیقه دیگر فرصت دارید
+                    <?php endif; ?>
                 </p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -185,13 +189,16 @@
                         </div>
 
                         <!-- ====== دکمه پرداخت ====== -->
-                        <button type="button" id="paymentSubmitBtn"
-                                class="w-full bg-green-500 shadow-green-500/50 hover:bg-green-600 text-white font-semibold rounded-xl px-6 py-4 text-sm transition-all duration-200 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            پرداخت و ثبت نهایی
-                        </button>
+                        <form method="post" action="<?= site_url('checkout/payment/' . $factor['id'] . '/start') ?>">
+                            <?= csrf_field() ?>
+                            <button type="submit" id="paymentSubmitBtn"
+                                    class="w-full bg-green-500 shadow-green-500/50 hover:bg-green-600 text-white font-semibold rounded-xl px-6 py-4 text-sm transition-all duration-200 flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                پرداخت و ثبت نهایی
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

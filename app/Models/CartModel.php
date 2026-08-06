@@ -31,25 +31,33 @@ class CartModel extends Model
 
     public function getOrCreateCart($userId = null, $sessionId = null)
     {
-        $cart = null;
-
         if ($userId) {
-            $cart = $this->getCartByUserId($userId);
+            $userCart = $this->getCartByUserId($userId);
+            if ($userCart) {
+                return $userCart;
+            }
+
+            if ($sessionId) {
+                $sessionCart = $this->getCartBySessionId($sessionId);
+                if ($sessionCart && empty($sessionCart['user_id'])) {
+                    $this->update($sessionCart['id'], ['user_id' => $userId]);
+                    return $this->find($sessionCart['id']);
+                }
+            }
         }
 
-        if (!$cart && $sessionId) {
-            $cart = $this->getCartBySessionId($sessionId);
+        if ($sessionId) {
+            $sessionCart = $this->getCartBySessionId($sessionId);
+            if ($sessionCart) {
+                return $sessionCart;
+            }
         }
 
-        if (!$cart) {
-            $data = [];
-            if ($userId) $data['user_id'] = $userId;
-            if ($sessionId) $data['session_id'] = $sessionId;
+        $data = [];
+        if ($userId) $data['user_id'] = $userId;
+        if ($sessionId) $data['session_id'] = $sessionId;
 
-            $this->insert($data);
-            $cart = $this->find($this->insertID());
-        }
-
-        return $cart;
+        $this->insert($data);
+        return $this->find($this->insertID());
     }
 }

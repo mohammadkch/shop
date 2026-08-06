@@ -14,9 +14,11 @@ class Cart extends BaseController
 
     public function index()
     {
+        $refresh = $this->cartService->refreshPricesAndAvailability();
         $summary = $this->cartService->getCartSummary();
 
         $this->viewData['cart'] = $summary;
+        $this->viewData['has_unavailable_items'] = $refresh['has_unavailable_items'];
         $this->viewData['title'] = 'سبد خرید';
 
         return view('cart/index', $this->viewData);
@@ -167,6 +169,16 @@ class Cart extends BaseController
         $items = $this->cartService->getItems();
         if (empty($items)) {
             $this->flash('empty_cart');
+            return redirect()->to('cart');
+        }
+
+        $refresh = $this->cartService->refreshPricesAndAvailability();
+        if ($refresh['has_unavailable_items']) {
+            $this->flash('cart_stock_changed', 'موجودی یک یا چند محصول کافی نیست. لطفاً سبد خرید را بررسی کنید.');
+            return redirect()->to('cart');
+        }
+        if ($refresh['price_changed']) {
+            $this->flash('cart_price_changed', 'قیمت یک یا چند محصول تغییر کرده است. لطفاً سبد خرید را مجدداً بررسی و تأیید کنید.');
             return redirect()->to('cart');
         }
 

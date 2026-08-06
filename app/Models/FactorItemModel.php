@@ -15,6 +15,7 @@ class FactorItemModel extends Model
     protected $allowedFields = [
         'factor_id',
         'product_id',
+        'cart_item_id',
         'color_option_id',
         'size_option_id',
         'quantity',
@@ -120,6 +121,7 @@ class FactorItemModel extends Model
             $insertData[] = [
                 'factor_id' => $factorId,
                 'product_id' => $item['product_id'],
+                'cart_item_id' => $item['id'],
                 'color_option_id' => $item['color_option_id'],
                 'size_option_id' => $item['size_option_id'],
                 'quantity' => $item['quantity'],

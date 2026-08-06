@@ -26,7 +26,7 @@ class CartService
 
     public function getCart()
     {
-        $userId = $this->session->get('user_id');
+        $userId = $this->session->get('customer_id');
         $sessionId = $this->session->get('session_id');
 
         if (!$sessionId) {
@@ -44,6 +44,57 @@ class CartService
         }
 
         return $cart;
+    }
+
+    /**
+     * قیمت ذخیره‌شده در سبد را با قیمت زنده همان ترکیب محصول هماهنگ می‌کند.
+     * این متد عمداً فقط از نقاط صریح Cart/Checkout فراخوانی می‌شود و Offcanvas
+     * به‌تنهایی باعث نوشتن در دیتابیس نمی‌شود.
+     */
+    public function refreshPricesAndAvailability(): array
+    {
+        $cart = $this->getCart();
+        $items = $this->cartItemModel->where('cart_id', $cart['id'])->findAll();
+        $priceChanged = false;
+        $unavailableItems = [];
+
+        foreach ($items as $item) {
+            $priceRow = $this->productPriceModel->getPriceForCombination(
+                (int) $item['product_id'],
+                $item['color_option_id'] ? (int) $item['color_option_id'] : null,
+                $item['size_option_id'] ? (int) $item['size_option_id'] : null
+            );
+
+            if (!$priceRow || (int) $priceRow['stock'] < (int) $item['quantity']) {
+                $unavailableItems[] = (int) $item['id'];
+            }
+
+            if (!$priceRow) {
+                continue;
+            }
+
+            $price = (float) $priceRow['price'];
+            $salePrice = isset($priceRow['sale_price'])
+                && (float) $priceRow['sale_price'] > 0
+                && (float) $priceRow['sale_price'] < $price
+                    ? (float) $priceRow['sale_price']
+                    : null;
+            $storedSalePrice = $item['sale_price'] !== null ? (float) $item['sale_price'] : null;
+
+            if ((float) $item['price'] !== $price || $storedSalePrice !== $salePrice) {
+                $this->cartItemModel->update($item['id'], [
+                    'price' => $price,
+                    'sale_price' => $salePrice,
+                ]);
+                $priceChanged = true;
+            }
+        }
+
+        return [
+            'price_changed' => $priceChanged,
+            'unavailable_item_ids' => $unavailableItems,
+            'has_unavailable_items' => $unavailableItems !== [],
+        ];
     }
 
     protected function mergeGuestCart($guestCartId, $userCartId)

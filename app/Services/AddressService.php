@@ -130,6 +130,13 @@ class AddressService
             return ['status' => 'error', 'message' => 'آدرس یافت نشد'];
         }
 
+        if (model('App\Models\FactorModel')->where('address_id', $addressId)->countAllResults() > 0) {
+            return [
+                'status' => 'error',
+                'message' => 'این آدرس در یک فاکتور استفاده شده و قابل حذف نیست.',
+            ];
+        }
+
         $this->addressModel->delete($addressId);
 
         return [

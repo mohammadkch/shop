@@ -60,10 +60,25 @@ class Checkout extends BaseController
             $factor = $factorModel->find($factorId);
 
             // چک کن فاکتور متعلق به این کاربره و awaiting_payment هست
-            if ($factor && $factor['customer_id'] == $customerId && $factor['status'] == 'awaiting_payment') {
+            if ($factor
+                && $factor['customer_id'] == $customerId
+                && $factor['status'] == 'awaiting_payment'
+                && $factor['expires_at'] > time()) {
                 $selectedAddressId = $factor['address_id'];
                 $selectedShippingTypeId = $factor['shipping_type_id'];
             } else {
+                if ($factor
+                    && $factor['customer_id'] == $customerId
+                    && $factor['status'] == 'awaiting_payment'
+                    && $factor['expires_at'] <= time()) {
+                    $factorModel->update($factorId, ['status' => 'expired']);
+                    model('App\Models\PaymentModel')->where('factor_id', $factorId)
+                        ->whereIn('status', ['created', 'pending'])
+                        ->set(['status' => 'expired'])
+                        ->update();
+                    $this->flash('invoice_expired', 'زمان این فاکتور به پایان رسیده است. لطفاً دوباره از سبد خرید ادامه دهید.');
+                    return redirect()->to('cart');
+                }
                 $factor = null;
                 $selectedAddressId = null;
                 $selectedShippingTypeId = null;
@@ -181,8 +196,9 @@ class Checkout extends BaseController
         }
 
         // ====== ۳. بررسی آدرس ======
+        $customerId = (int) service('customerAuth')->getCustomerId();
         $address = $this->addressService->getAddressDetails($addressId);
-        if (!$address) {
+        if (!$address || (int) $address['customer_id'] !== $customerId) {
             $this->flash('invalid_address');
             return redirect()->back();
         }
@@ -207,6 +223,20 @@ class Checkout extends BaseController
             return redirect()->back();
         }
 
+        // قیمت و موجودی فقط در نقاط صریح Cart/Checkout با منبع اصلی همگام می‌شوند.
+        $refresh = $this->cartService->refreshPricesAndAvailability();
+        if ($refresh['has_unavailable_items']) {
+            $this->flash('cart_stock_changed', 'موجودی یک یا چند محصول کافی نیست. لطفاً سبد خرید را بررسی کنید.');
+            return redirect()->to('cart');
+        }
+        if ($refresh['price_changed']) {
+            $this->flash('cart_price_changed', 'قیمت یک یا چند محصول تغییر کرده است. لطفاً سبد خرید را مجدداً بررسی و تأیید کنید.');
+            return redirect()->to('cart');
+        }
+
+        // پس از همگام‌سازی، داده‌ای که Snapshot می‌شود دوباره خوانده می‌شود.
+        $cartItems = $this->cartService->getItems();
+
         // ====== ۶. محاسبه مبالغ از آیتم‌های سبد ======
         $subtotal = 0;
         foreach ($cartItems as $item) {
@@ -219,29 +249,51 @@ class Checkout extends BaseController
         $total = $subtotal + (float) $shippingPrice['price'];
 
         // ====== ۷. ساخت یا آپدیت فاکتور ======
-        $customer_id = service('customerAuth')->getCustomerId();
         $factorModel = model('App\Models\FactorModel');
         $factorItemModel = model('App\Models\FactorItemModel');
 
+        // فاکتورهای رهاشده حذف نمی‌شوند؛ فقط برای حفظ سابقه منقضی می‌شوند.
+        $expiredFactors = $factorModel->where('cart_id', $cart['id'])
+            ->where('customer_id', $customerId)
+            ->where('status', 'awaiting_payment')
+            ->where('expires_at <=', time())
+            ->findAll();
+        if ($expiredFactors) {
+            $expiredFactorIds = array_column($expiredFactors, 'id');
+            $factorModel->whereIn('id', $expiredFactorIds)->set(['status' => 'expired'])->update();
+            model('App\Models\PaymentModel')->whereIn('factor_id', $expiredFactorIds)
+                ->whereIn('status', ['created', 'pending'])
+                ->set(['status' => 'expired'])
+                ->update();
+        }
+
         $existingFactor = $factorModel->where('cart_id', $cart['id'])
+            ->where('customer_id', $customerId)
             ->where('status', 'awaiting_payment')
             ->where('expires_at >', time())
             ->first();
 
+        $db = db_connect();
+        $db->transStart();
+
         if ($existingFactor) {
             $factorId = $existingFactor['id'];
+            // هر Payment ساخته‌شده ولی شروع‌نشده به مبلغ Snapshot قبلی وابسته است.
+            model('App\Models\PaymentModel')->where('factor_id', $factorId)
+                ->where('status', 'created')
+                ->set(['status' => 'cancelled'])
+                ->update();
             $factorModel->update($factorId, [
                 'address_id' => $addressId,
                 'shipping_type_id' => $shippingTypeId,
                 'shipping_price' => $shippingPrice['price'],
                 'subtotal' => $subtotal,
-                'total' => $total,
-                'expires_at' => time() + (60 * 60)
+                'total' => $total
             ]);
             $factorItemModel->where('factor_id', $factorId)->delete();
         } else {
             $factorId = $factorModel->insert([
-                'customer_id' => $customer_id,
+                'customer_id' => $customerId,
                 'cart_id' => $cart['id'],
                 'address_id' => $addressId,
                 'shipping_type_id' => $shippingTypeId,
@@ -256,30 +308,13 @@ class Checkout extends BaseController
         // ====== ۸. کپی آیتم‌های سبد خرید به فاکتور ======
         $factorItemModel->copyFromCartItems($factorId, $cartItems);
 
-        // ====== ۹. ساخت یا آپدیت رکورد payment ======
-        $paymentModel = model('App\Models\PaymentModel');
-        $existingPayment = $paymentModel->where('factor_id', $factorId)
-            ->where('status', 'awaiting_payment')
-            ->where('expires_at >', time())
-            ->first();
-
-        if ($existingPayment) {
-            $paymentModel->update($existingPayment['id'], [
-                'final_amount' => $total,
-                'expires_at' => time() + (60 * 60)
-            ]);
-        } else {
-            $paymentModel->insert([
-                'factor_id' => $factorId,
-                'customer_id' => $customer_id,
-                'payment_method_id' => 1,
-                'final_amount' => $total,
-                'status' => 'awaiting_payment',
-                'expires_at' => time() + (60 * 60)
-            ]);
+        $db->transComplete();
+        if (!$db->transStatus()) {
+            $this->flash('invoice_create_error');
+            return redirect()->back();
         }
 
-        // ====== ۱۰. ریدایرکت به صفحه payment ======
+        // Payment در این مرحله ساخته نمی‌شود؛ هر تلاش پرداخت رکورد مستقل خود را دارد.
         return redirect()->to('checkout/payment/' . $factorId);
     }
 
@@ -379,7 +414,7 @@ class Checkout extends BaseController
             // payment رو هم expire کن
             $paymentModel = model('App\Models\PaymentModel');
             $paymentModel->where('factor_id', $factorId)
-                ->where('status', 'awaiting_payment')
+                ->whereIn('status', ['created', 'pending'])
                 ->set(['status' => 'expired'])
                 ->update();
             return redirect()->to('cart')->with('error', 'زمان ثبت سفارش به پایان رسیده. لطفاً مجدداً اقدام کنید.');

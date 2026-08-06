@@ -131,13 +131,13 @@ class FactorModel extends Model
     }
 
     /**
-     * دریافت فاکتور pending فعال برای یک کارت
+     * دریافت فاکتور در انتظار پرداخت و معتبر برای یک سبد
      */
     public function getActivePendingFactorByCart($cartId)
     {
         $now = time();
         return $this->where('cart_id', $cartId)
-            ->where('status', 'pending')
+            ->where('status', 'awaiting_payment')
             ->where('expires_at >', $now)
             ->first();
     }

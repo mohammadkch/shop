@@ -33,7 +33,7 @@ class PaymentModel extends Model
     public function getActivePaymentByFactor($factorId)
     {
         return $this->where('factor_id', $factorId)
-            ->whereIn('status', ['pending', 'awaiting_payment'])
+            ->whereIn('status', ['created', 'pending'])
             ->where('expires_at >', time())
             ->first();
     }

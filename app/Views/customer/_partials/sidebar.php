@@ -11,7 +11,7 @@ if (strpos($controllerName, 'Customer\\') !== false) {
 }
 
 // تابع کمکی برای تشخیص فعال بودن منو
-function isActive($targetController, $targetMethod = null, $simpleController, $methodName)
+function isActive($targetController, $targetMethod, $simpleController, $methodName)
 {
     if ($targetController !== $simpleController) {
         return false;

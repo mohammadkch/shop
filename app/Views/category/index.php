@@ -298,13 +298,15 @@
 
     <!-- ====== توضیحات پایین (داینامیک) ====== -->
     <?php if (!$isAllProductsPage && !empty($menu['description'])): ?>
-        <div class="p-5 mt-5 bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 rounded-xl tab-content border border-gray-300 drop-shadow">
-            <div class="space-y-5">
-                <h2 class="text-lg pb-3 font-black text-zinc-800 relative before:absolute before:bottom-0 before:start-0 before:h-1 before:w-22 before:bg-primary-500 before:rounded dark:text-white">
-                    دسته بندی <?= esc($menu['name']) ?>
-                </h2>
-                <div class="text-neutral-700 leading-9 text-justify text-base dark:text-white">
-                    <?= nl2br(esc($menu['description'])) ?>
+        <div class="container mt-5">
+            <div class="p-5 bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 rounded-xl tab-content border border-gray-300 drop-shadow">
+                <div class="space-y-5">
+                    <h2 class="text-lg pb-3 font-black text-zinc-800 relative before:absolute before:bottom-0 before:start-0 before:h-1 before:w-22 before:bg-primary-500 before:rounded dark:text-white">
+                        دسته بندی <?= esc($menu['name']) ?>
+                    </h2>
+                    <div class="text-neutral-700 leading-9 text-justify text-base dark:text-white">
+                        <?= nl2br(esc($menu['description'])) ?>
+                    </div>
                 </div>
             </div>
         </div>

@@ -84,14 +84,20 @@ class FactorItemModel extends Model
             product.slug as product_slug,
             color_option.value as color_value,
             color_option.color_code,
-            size_option.value as size_value,
-            product_image.image_name
+            size_option.value as size_value
         ');
+        $builder->select('(
+            SELECT product_thumbnail.image_name
+            FROM product_image AS product_thumbnail
+            WHERE product_thumbnail.product_id = factor_item.product_id
+              AND product_thumbnail.product_image_type_id = 2
+              AND product_thumbnail.is_active = 1
+            ORDER BY product_thumbnail.sort_order ASC, product_thumbnail.id ASC
+            LIMIT 1
+        ) AS image_name', false);
         $builder->join('product', 'product.id = factor_item.product_id');
         $builder->join('option as color_option', 'color_option.id = factor_item.color_option_id', 'left');
         $builder->join('option as size_option', 'size_option.id = factor_item.size_option_id', 'left');
-        $builder->join('product_image', 'product_image.product_id = product.id AND product_image.product_image_type_id = 2 AND product_image.is_active = 1', 'left');
-        $builder->groupBy('factor_item.id');
 
         if ($limit !== null) {
             $builder->limit($limit, $offset);

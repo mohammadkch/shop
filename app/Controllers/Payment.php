@@ -39,6 +39,7 @@ class Payment extends BaseController
             'result' => $result,
             'payment' => $payment,
             'factor' => $factor,
+            'robots' => 'noindex, nofollow',
         ];
 
         return view(

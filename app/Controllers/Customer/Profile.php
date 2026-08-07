@@ -32,6 +32,7 @@ class Profile extends BaseController
         $this->viewData['isProfileComplete'] = $this->auth->hasMinimunProfile();
         $this->viewData['hasPassword'] = $hasPassword;
         $this->viewData['title'] = 'اطلاعات کاربری';
+        $this->viewData['robots'] = 'noindex, nofollow';
 
         return view('customer/profile/index', $this->viewData);
     }

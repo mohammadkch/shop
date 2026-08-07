@@ -48,6 +48,7 @@ class Orders extends BaseController
         $this->viewData['customer'] = $customer;
         $this->viewData['orders'] = $orders;
         $this->viewData['title'] = 'سفارش‌های من';
+        $this->viewData['robots'] = 'noindex, nofollow';
 
         return view('customer/orders/index', $this->viewData);
     }

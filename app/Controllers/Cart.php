@@ -20,6 +20,7 @@ class Cart extends BaseController
         $this->viewData['cart'] = $summary;
         $this->viewData['has_unavailable_items'] = $refresh['has_unavailable_items'];
         $this->viewData['title'] = 'سبد خرید';
+        $this->viewData['robots'] = 'noindex, nofollow';
 
         return view('cart/index', $this->viewData);
     }

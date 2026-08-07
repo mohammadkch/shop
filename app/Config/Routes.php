@@ -6,13 +6,12 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-// --------------------
-// Testing routes
-// --------------------
-$routes->get('/dbtest', function () {
-    $db = \Config\Database::connect();
-    return "Platform: " . $db->getPlatform();
-});
+$routes->get('sitemap.xml', 'Sitemap::index');
+$routes->get('sitemap-products.xml', 'Sitemap::products');
+$routes->get('sitemap-categories.xml', 'Sitemap::categories');
+$routes->get('sitemap-blog.xml', 'Sitemap::blog');
+$routes->get('sitemap-pages.xml', 'Sitemap::pages');
+$routes->get('blog-sitemap.xml', 'Sitemap::legacyBlog');
 
 // --------------------
 // shop routes
@@ -52,7 +51,7 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
     $routes->get('checkout/zibal/callback', 'Payment::callback');
 
     $routes->get('/', 'Home::index');
-    $routes->get('home', 'Home::index');
+    $routes->get('home', 'Home::legacy');
     $routes->get('product/(:num)/(:any)', 'Product::show/$1/$2');
     $routes->get('product/(:any)', 'Product::legacy/$1');
 
@@ -87,7 +86,6 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
     $routes->get('about', 'About::index');
     $routes->get('customer-support', 'CustomerSupport::index');
     $routes->get('blog', 'Blog::index');
-    $routes->get('blog-sitemap.xml', 'Blog::sitemap');
     $routes->get('blog/(:any)', 'Blog::show/$1');
 
 

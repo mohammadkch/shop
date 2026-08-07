@@ -10,7 +10,7 @@
     <meta name="description"
           content="قالب فرشگاهی دیارا، بهترین قالب برای فروشگاه‌های اینترنتی با طراحی مدرن و واکنش‌گرا.">
     <meta name="keywords" content="قالب فروشگاهی, قالب دیارا, فروشگاه اینترنتی, طراحی واکنش‌گرا">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex, nofollow">
     <meta name="author" content="امیر رضایی">
     <meta name="copyright" content="All rights belong to diara.">
     <link rel="icon" href="<?= base_url('images/favicon/favicon.ico') ?>" sizes="any">
@@ -18,7 +18,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('images/favicon/apple-touch-icon.png') ?>">
     <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('images/favicon/icon-192.png') ?>">
     <link rel="icon" type="image/png" sizes="512x512" href="<?= base_url('images/favicon/icon-512.png') ?>">
-    <link rel="canonical" href="https://example.com/your-page-url">
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/story-player/styles.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>css/app.css">
@@ -29,7 +28,10 @@
 </head>
 
 <!-- FLASH MESSAGES -->
-<script>window.adminPath = <?= json_encode(ADMIN_PATH) ?>;</script>
+<script>
+    window.adminPath = <?= json_encode(ADMIN_PATH) ?>;
+    window.adminBaseUrl = <?= json_encode(rtrim(site_url(ADMIN_PATH), '/')) ?>;
+</script>
 <script src="<?= $assetsPath ?>custom/admin.js?v=<?= filemtime(FCPATH . 'assets/custom/admin.js') ?>"></script>
 <!-- END FLASH MESSAGES -->
 

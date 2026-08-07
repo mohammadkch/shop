@@ -24,4 +24,9 @@ class Home extends BaseController
 
         return view('home/index', $this->viewData);
     }
+
+    public function legacy()
+    {
+        return redirect()->to(site_url('/'))->setStatusCode(301);
+    }
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ورود / ثبت نام</title>
+    <meta name="robots" content="noindex, follow">
     <link rel="icon" href="<?= base_url('images/favicon/favicon.ico') ?>" sizes="any">
     <link rel="icon" type="image/svg+xml" href="<?= base_url('images/favicon/favicon.svg') ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('images/favicon/apple-touch-icon.png') ?>">

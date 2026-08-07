@@ -38,6 +38,15 @@
     <script src="<?= $assetsPath ?>custom/shop.js?v=<?= filemtime(FCPATH . 'assets/custom/shop.js') ?>"></script>
     <?= $this->renderSection('styles') ?>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TDQ4RELK5X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TDQ4RELK5X');
+</script>
 
 <body class="relative bg-custom-light dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 transition-colors duration-300" >
 <div id="shopAjaxLoader" class="shop-ajax-loader" aria-hidden="true"><span></span></div>

@@ -61,18 +61,4 @@ class Blog extends BaseController
         return view('blog/show', $this->viewData);
     }
 
-    public function sitemap()
-    {
-        $posts = model('App\Models\BlogPostModel')->publicBuilder()
-            ->orderBy('post.updated_at', 'DESC')->get()->getResultArray();
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>';
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-        $xml .= '<url><loc>' . htmlspecialchars(site_url('blog'), ENT_XML1, 'UTF-8') . '</loc></url>';
-        foreach ($posts as $post) {
-            $xml .= '<url><loc>' . htmlspecialchars(site_url('blog/' . $post['slug']), ENT_XML1, 'UTF-8') . '</loc>';
-            $xml .= '<lastmod>' . date('c', $post['updated_at']) . '</lastmod></url>';
-        }
-        $xml .= '</urlset>';
-        return $this->response->setContentType('application/xml')->setBody($xml);
-    }
 }

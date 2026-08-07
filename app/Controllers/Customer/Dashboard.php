@@ -26,6 +26,7 @@ class Dashboard extends BaseController
 
         $this->viewData['customer'] = $customer;
         $this->viewData['title'] = 'پیشخوان کاربری';
+        $this->viewData['robots'] = 'noindex, nofollow';
 
         return view('customer/dashboard/index', $this->viewData);
     }

@@ -117,6 +117,7 @@ class Checkout extends BaseController
         $this->viewData['selected_city_id'] = $selectedCityId;
         $this->viewData['factor_id'] = $factorId;
         $this->viewData['title'] = 'آدرس و روش ارسال';
+        $this->viewData['robots'] = 'noindex, nofollow';
 
         return view('checkout/shipping', $this->viewData);
     }
@@ -442,6 +443,7 @@ class Checkout extends BaseController
         $this->viewData['payment_methods'] = $paymentMethods;
         $this->viewData['remaining_minutes'] = $remainingMinutes;
         $this->viewData['title'] = 'پرداخت';
+        $this->viewData['robots'] = 'noindex, nofollow';
 
         return view('checkout/payment', $this->viewData);
     }

@@ -1,6 +1,3 @@
-// ==================== Base URL ====================
-var baseUrl = '/shop/public/';  // یا هر چی که پروژه‌ات هست
-
 // ==================== Notification ====================
 function showNotification(message, type = 'info') {
     const colors = {
@@ -390,7 +387,7 @@ function confirmToggleActive() {
         controller = 'home-selected-category';
     }
 
-    let url = baseUrl + window.adminPath + '/' + controller + '/toggleActive/' + currentToggleId;
+    let url = window.adminBaseUrl + '/' + controller + '/toggleActive/' + currentToggleId;
 
     fetch(url, {
         method: 'POST',

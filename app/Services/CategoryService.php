@@ -140,25 +140,33 @@ class CategoryService
         // ====== دریافت محصولات با قیمت ======
         $builder = $db->table('product p');
         $builder->select('p.*');
+        $builder->select('EXISTS (
+            SELECT 1
+            FROM product_price stock_price
+            WHERE stock_price.product_id = p.id
+              AND stock_price.stock > 0
+              AND stock_price.price > 0
+        ) AS is_in_stock', false);
         $builder->whereIn('p.id', $productIds);
         $builder->where('p.is_active', 1);
-        $builder->groupBy('p.id');
+        $builder->orderBy('is_in_stock', 'DESC');
 
         // ====== سورت ======
-        $allowedFields = ['published_at', 'created_at', 'visit_count'];
+        $allowedFields = ['published_at', 'created_at', 'visit_count', 'price'];
         $allowedTypes = ['asc', 'desc'];
 
         $field = in_array($sortField, $allowedFields) ? $sortField : 'published_at';
         $type = in_array($sortType, $allowedTypes) ? $sortType : 'desc';
 
         if ($field == 'price') {
-            // قیمت رو جداگانه هندل میکنیم
-            $builder->orderBy('sort_price', $type);
+            // مرتب‌سازی قیمت بعد از محاسبه قیمت زنده انجام می‌شود.
+            $builder->orderBy('p.id', 'DESC');
         } else {
             $builder->orderBy("p.{$field}", $type);
         }
 
-        if ($limit !== null) {
+        // برای سورت قیمت باید ابتدا قیمت همه محصولات محاسبه شود.
+        if ($limit !== null && $field !== 'price') {
             $builder->limit($limit, $offset);
         }
 
@@ -174,6 +182,7 @@ class CategoryService
                 ->getResultArray();
 
             if (empty($allPrices)) {
+                $product['is_in_stock'] = false;
                 $product['final_price'] = 0;
                 $product['original_price'] = 0;
                 $product['has_discount'] = false;
@@ -188,7 +197,7 @@ class CategoryService
 
             foreach ($allPrices as $record) {
                 // موجودی نداره → رد کن
-                if ((int) $record['stock'] <= 0) {
+                if ((int) $record['stock'] <= 0 || (float) $record['price'] <= 0) {
                     continue;
                 }
 
@@ -217,6 +226,7 @@ class CategoryService
 
             // ====== ۳. اگه هیچ رکوردی با موجودی پیدا نشد ======
             if (!$selectedRecord) {
+                $product['is_in_stock'] = false;
                 $product['final_price'] = 0;
                 $product['original_price'] = 0;
                 $product['has_discount'] = false;
@@ -243,6 +253,7 @@ class CategoryService
             // ====== ۵. ذخیره در محصول ======
             $product['final_price'] = $finalPrice;
             $product['original_price'] = $price;
+            $product['is_in_stock'] = true;
             $product['has_discount'] = $hasDiscount;
             $product['discount_percent'] = $discountPercent;
             $product['sort_price'] = $finalPrice; // ← این برای سورت قیمت
@@ -253,14 +264,23 @@ class CategoryService
         // ====== ۶. سورت بر اساس sort_price ======
         if ($sortField == 'price') {
             usort($products, function($a, $b) use ($sortType) {
+                $stockComparison = (int) ($b['is_in_stock'] ?? false) <=> (int) ($a['is_in_stock'] ?? false);
+                if ($stockComparison !== 0) {
+                    return $stockComparison;
+                }
+
                 $priceA = $a['sort_price'] ?? 0;
                 $priceB = $b['sort_price'] ?? 0;
                 if ($sortType == 'asc') {
-                    return $priceA - $priceB;
+                    return $priceA <=> $priceB;
                 } else {
-                    return $priceB - $priceA;
+                    return $priceB <=> $priceA;
                 }
             });
+
+            if ($limit !== null) {
+                $products = array_slice($products, $offset, $limit);
+            }
         }
 
         return $products;
@@ -311,32 +331,10 @@ class CategoryService
             return 0;
         }
 
-        // ====== ۲. فقط محصولاتی رو شمارش کن که حداقل یه رکورد قیمت با موجودی > ۰ دارن ======
-        // ساخت ساب‌کوئری برای product_id هایی که stock > 0 دارن
-        $priceSubQuery = $db->table('product_price pp')
-            ->select('pp.product_id')
-            ->where('pp.stock >', 0)
-            ->groupBy('pp.product_id')
-            ->get()
-            ->getResultArray();
-
-        $productIdsWithStock = array_column($priceSubQuery, 'product_id');
-
-        if (empty($productIdsWithStock)) {
-            return 0;
-        }
-
-        // حالا شمارش نهایی با ترکیب دو مجموعه
-        $finalProductIds = array_intersect($productIds, $productIdsWithStock);
-
-        if (empty($finalProductIds)) {
-            return 0;
-        }
-
-        // شمارش نهایی
+        // موجودی معیار نمایش نیست؛ تمام محصولات فعال شمارش می‌شوند.
         $builder = $db->table('product p');
         $builder->select('p.id');
-        $builder->whereIn('p.id', $finalProductIds);
+        $builder->whereIn('p.id', $productIds);
         $builder->where('p.is_active', 1);
 
         return $builder->countAllResults();

@@ -44,13 +44,17 @@
 
                     <!-- Price -->
                     <div class="mt-2 flex justify-between items-end gap-3">
-                        <?php if ($product['has_discount'] && $product['discount_percent'] > 0): ?>
+                        <?php if (!empty($product['is_in_stock']) && $product['has_discount'] && $product['discount_percent'] > 0): ?>
                             <span class="shrink-0 bg-secondary-500 text-white text-xs font-bold px-2 py-1 rounded-xl shadow shadow-red-500/50">
                                 <?= $product['discount_percent'] ?>%
                             </span>
                         <?php endif; ?>
                         <div class="flex flex-col justify-end min-h-10 h-10 w-full">
-                            <?php if ($product['has_discount']): ?>
+                            <?php if (empty($product['is_in_stock'])): ?>
+                                <span class="font-bold text-sm text-red-500 tracking-wider text-left">
+                                    ناموجود
+                                </span>
+                            <?php elseif ($product['has_discount']): ?>
                                 <span class="text-xs text-gray-400 dark:text-gray-500 line-through tracking-wider text-left">
                                             <?= number_format($product['original_price']) ?>
                                         </span>

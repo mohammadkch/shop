@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\CustomerWishlistModel;
+
 class Product extends BaseController
 {
     protected $breadcrumbService;
@@ -50,6 +52,11 @@ class Product extends BaseController
         }
         $data['metaDescription'] = $metaDescription;
         $data['canonicalUrl'] = $canonicalUrl;
+        $data['isWishlisted'] = $this->auth->isLoggedIn()
+            && (new CustomerWishlistModel())->hasProduct(
+                (int) $this->auth->getCustomerId(),
+                (int) $data['product']['id']
+            );
 
         // ادغام با viewData موجود (که از BaseController می‌آید)
         $this->viewData = array_merge($this->viewData, $data);

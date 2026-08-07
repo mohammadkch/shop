@@ -54,6 +54,7 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
     $routes->get('home', 'Home::legacy');
     $routes->get('product/(:num)/(:any)', 'Product::show/$1/$2');
     $routes->get('product/(:any)', 'Product::legacy/$1');
+    $routes->post('wishlist/toggle', 'Wishlist::toggle');
 
     // بعد روت‌های category (به ترتیب از طولانی‌ترین به کوتاه‌ترین)
     $routes->get('category/(:any)/(:any)/(:any)', 'Category::index/$1/$2/$3');

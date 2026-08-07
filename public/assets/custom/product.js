@@ -353,4 +353,60 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    const wishlistButton = document.getElementById('productWishlistButton');
+    if (wishlistButton) {
+        wishlistButton.addEventListener('click', function() {
+            if (this.disabled) return;
+
+            this.disabled = true;
+            const body = new URLSearchParams({product_id: this.dataset.productId});
+
+            fetch(this.dataset.toggleUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: body.toString()
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'login_required') {
+                        window.location.href = data.login_url || this.dataset.loginUrl;
+                        return;
+                    }
+
+                    if (data.status !== 'success') {
+                        showNotification(data.message || 'تغییر علاقه‌مندی انجام نشد.', 'error');
+                        return;
+                    }
+
+                    updateWishlistButton(this, data.is_wishlisted === true);
+                    showNotification(data.message, 'success');
+                })
+                .catch(error => {
+                    console.error(error);
+                    showNotification('خطا در ارتباط با سرور', 'error');
+                })
+                .finally(() => {
+                    this.disabled = false;
+                });
+        });
+    }
+
 });
+
+function updateWishlistButton(button, isWishlisted) {
+    const label = isWishlisted ? 'حذف از علاقه‌مندی‌ها' : 'افزودن به علاقه‌مندی‌ها';
+    const icon = button.querySelector('svg');
+
+    button.setAttribute('aria-pressed', isWishlisted ? 'true' : 'false');
+    button.setAttribute('aria-label', label);
+    button.setAttribute('title', label);
+    button.classList.toggle('text-red-500', isWishlisted);
+    button.classList.toggle('text-gray-400', !isWishlisted);
+
+    if (icon) {
+        icon.setAttribute('fill', isWishlisted ? 'currentColor' : 'none');
+    }
+}

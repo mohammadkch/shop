@@ -16,16 +16,16 @@
                         </p>
                         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-primary/10 dark:bg-primary/20 rounded-xl p-4 text-center">
-                                <div class="text-2xl font-bold text-primary">0</div>
-                                <div class="text-sm text-gray-600 dark:text-gray-400">سفارشات</div>
+                                <div class="text-2xl font-bold text-primary"><?= number_format($awaitingOrdersCount) ?></div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">سفارش‌های در انتظار</div>
                             </div>
                             <div class="bg-green-500/10 dark:bg-green-500/20 rounded-xl p-4 text-center">
-                                <div class="text-2xl font-bold text-green-500">0</div>
-                                <div class="text-sm text-gray-600 dark:text-gray-400">در انتظار</div>
+                                <div class="text-2xl font-bold text-green-500"><?= number_format($deliveredOrdersCount) ?></div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">سفارش‌های تحویل‌شده</div>
                             </div>
                             <div class="bg-yellow-500/10 dark:bg-yellow-500/20 rounded-xl p-4 text-center">
-                                <div class="text-2xl font-bold text-yellow-500">0</div>
-                                <div class="text-sm text-gray-600 dark:text-gray-400">تحویل شده</div>
+                                <div class="text-2xl font-bold text-yellow-500"><?= number_format($wishlistCount) ?></div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">لیست علاقه‌مندی‌ها</div>
                             </div>
                         </div>
                     </div>

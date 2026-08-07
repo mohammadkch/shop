@@ -155,6 +155,54 @@ class Profile extends BaseController
         ]);
     }
 
+    public function removeAvatar()
+    {
+        if (!$this->request->isAJAX()) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'درخواست نامعتبر',
+            ]);
+        }
+
+        $customerId = (int) $this->auth->getCustomerId();
+        $customer = $this->customerModel->find($customerId);
+
+        if (!$customer) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'کاربر یافت نشد',
+            ]);
+        }
+
+        if (empty($customer['avatar'])) {
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => 'آواتاری برای حذف وجود ندارد',
+            ]);
+        }
+
+        $avatarPath = FCPATH . 'images/avatar/' . basename((string) $customer['avatar']);
+        if (!$this->customerModel->update($customerId, ['avatar' => null])) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'حذف آواتار ذخیره نشد',
+            ]);
+        }
+
+        $this->auth->setData('avatar', null);
+
+        if (is_file($avatarPath) && !unlink($avatarPath)) {
+            log_message('warning', 'Avatar file could not be removed for customer ID {customerId}.', [
+                'customerId' => $customerId,
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'آواتار با موفقیت حذف شد',
+        ]);
+    }
+
     public function changePassword()
     {
         if (!$this->request->isAJAX()) {

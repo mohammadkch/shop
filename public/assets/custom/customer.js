@@ -128,15 +128,13 @@ document.addEventListener('DOMContentLoaded', function() {
         removeAvatarBtn.addEventListener('click', function() {
             if (!confirm('آیا از حذف آواتار خود اطمینان دارید؟')) return;
 
-            const formData = new FormData();
-            formData.append('remove_avatar', '1');
+            removeAvatarBtn.disabled = true;
 
-            fetch(BASE_URL + '/customer/profile/update', {
+            fetch(BASE_URL + '/customer/profile/remove-avatar', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: formData
+                }
             })
                 .then(response => response.json())
                 .then(data => {
@@ -146,10 +144,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         showNotification('آواتار با موفقیت حذف شد', 'success');
                         setTimeout(() => window.location.reload(), 1000);
                     } else {
+                        removeAvatarBtn.disabled = false;
                         showNotification(data.message, 'error');
                     }
                 })
                 .catch(error => {
+                    removeAvatarBtn.disabled = false;
                     showNotification('خطا در حذف آواتار', 'error');
                     console.error(error);
                 });

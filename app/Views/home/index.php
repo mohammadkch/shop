@@ -585,9 +585,9 @@
                                 <div class="bg-white dark:bg-custom-dark dark:border-gray-700 dark:text-gray-200 space-y-3 shadow-sm border border-gray-200 p-3 rounded-2xl flex flex-col items-center justify-center duration-200 hover:shadow-md hover:scale-[1.02] transition-all">
                                     <figure>
                                         <?php if (!empty($category['image'])): ?>
-                                            <img src="<?= $category['image'] ?>" alt="<?= esc($category['name']) ?>" class="w-20 h-20 object-contain dark:invert-0">
+                                            <img src="<?= $category['image'] ?>" alt="<?= esc($category['name']) ?>" class="w-20 h-20 object-contain rounded-lg dark:invert-0">
                                         <?php else: ?>
-                                            <img src="<?= $assetsPath ?>images/category/default.png" alt="<?= esc($category['name']) ?>" class="w-20 h-20 object-contain dark:invert-0">
+                                            <img src="<?= $assetsPath ?>images/category/default.png" alt="<?= esc($category['name']) ?>" class="w-20 h-20 object-contain rounded-lg dark:invert-0">
                                         <?php endif; ?>
                                     </figure>
                                     <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center">

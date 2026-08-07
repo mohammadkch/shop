@@ -39,11 +39,11 @@
                                         <?php if (!empty($sub['image']['image_name'])): ?>
                                             <img src="<?= base_url('images/menus/' . $sub['image']['image_name']) ?>"
                                                  alt="<?= esc($sub['name']) ?>"
-                                                 class="w-20 h-20 object-contain dark:invert-0">
+                                                 class="w-20 h-20 object-contain rounded-lg dark:invert-0">
                                         <?php else: ?>
                                             <img src="<?= $assetsPath ?>images/category/default.png"
                                                  alt="<?= esc($sub['name']) ?>"
-                                                 class="w-20 h-20 object-contain dark:invert-0">
+                                                 class="w-20 h-20 object-contain rounded-lg dark:invert-0">
                                         <?php endif; ?>
                                     </figure>
                                     <h3 class="text-sm font-medium text-gray-900 dark:text-gray-200 text-center"><?= esc($sub['name']) ?></h3>

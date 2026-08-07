@@ -27,7 +27,9 @@ $routes->group('', ['filter' => 'parse_url'], function ($routes) {
         $routes->get('', 'Customer\Dashboard::index');
         $routes->get('dashboard', 'Customer\Dashboard::index');
         $routes->get('profile', 'Customer\Profile::index');
+        $routes->get('orders', 'Customer\Orders::index');
         $routes->post('profile/update', 'Customer\Profile::update');
+        $routes->post('profile/remove-avatar', 'Customer\Profile::removeAvatar');
         $routes->post('profile/change-password', 'Customer\Profile::changePassword');
     });
 

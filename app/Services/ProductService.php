@@ -79,6 +79,7 @@ class ProductService
             ->where('product_id', $productId)
             ->where('is_active', 1)
             ->orderBy('sort_order', 'ASC')
+            ->orderBy('id', 'ASC')
             ->findAll();
 
         $result = [
@@ -101,23 +102,32 @@ class ProductService
             }
         }
 
-        // Thumbnail is the main product image; gallery images remain separate.
+        // Thumbnail is displayed first. Some legacy products have additional
+        // gallery images saved as type 2, so keep those after the type 1 gallery.
         if (!empty($type2)) {
             $result['main'] = $type2[0];
-            $result['gallery'] = $type1;
+            $galleryCandidates = array_merge($type1, array_slice($type2, 1));
         } else if (!empty($type1)) {
             // Fallback for products without a thumbnail.
             $result['main'] = $type1[0];
-            for ($i = 1; $i < count($type1); $i++) {
-                $result['gallery'][] = $type1[$i];
-            }
+            $galleryCandidates = array_slice($type1, 1);
+        } else {
+            $galleryCandidates = [];
         }
 
-        if (empty($result['main']) && !empty($images)) {
-            $result['main'] = $images[0];
-            for ($i = 1; $i < count($images); $i++) {
-                $result['gallery'][] = $images[$i];
+        $usedImageNames = [];
+        if (!empty($result['main']['image_name'])) {
+            $usedImageNames[$result['main']['image_name']] = true;
+        }
+
+        foreach ($galleryCandidates as $image) {
+            $imageName = (string) ($image['image_name'] ?? '');
+            if ($imageName === '' || isset($usedImageNames[$imageName])) {
+                continue;
             }
+
+            $result['gallery'][] = $image;
+            $usedImageNames[$imageName] = true;
         }
 
         return $result;

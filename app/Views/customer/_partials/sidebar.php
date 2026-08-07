@@ -78,7 +78,7 @@ $avatar = !empty($customer['avatar'])
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                             <circle cx="12" cy="7" r="4"/>
                         </svg>
-                        اطلاعات کاربری
+                        اطلاعات من
                         <?php if (!($isProfileComplete ?? false)): ?>
                             <span class="ms-auto size-5 flex items-center justify-center rounded-full bg-secondary text-white text-xs font-bold"
                                   title="اطلاعات پروفایل شما ناقص است">!</span>
@@ -190,7 +190,7 @@ $avatar = !empty($customer['avatar'])
             <li class="py-2 px-1">
                 <a href="<?= site_url('customer/profile') ?>"
                    class="flex items-center py-1 px-4 rounded-lg <?= isActive('Profile', null, $simpleController, $methodName) ? 'bg-primary/10 text-primary font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1f242c]' ?> transition-colors">
-                    اطلاعات کاربری
+                    اطلاعات من
                     <?php if (!($isProfileComplete ?? false)): ?>
                         <span class="ms-auto size-5 flex items-center justify-center rounded-full bg-secondary text-white text-xs font-bold"
                               title="اطلاعات پروفایل شما ناقص است">!</span>

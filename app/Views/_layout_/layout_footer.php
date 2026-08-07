@@ -323,7 +323,7 @@
                                             <a referrerpolicy='origin' target='_blank'href='https://trustseal.enamad.ir/?id=767813&Code=PpzyjOZqCzunVCBlk90h5qtQwrPu7EVS'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=767813&Code=PpzyjOZqCzunVCBlk90h5qtQwrPu7EVS' alt='' style='cursor:pointer' code='PpzyjOZqCzunVCBlk90h5qtQwrPu7EVS'></a>                                                  
                                         </span>
                                         <div>
-                                            <a href="https://gateway.zibal.ir/trustMe/{momomod.ir}" target="_blank" rel="noopener">
+                                            <a href="https://gateway.zibal.ir/trustMe/momomod.ir" target="_blank" rel="noopener">
                                                 <img style="max-width: 110px; height: 125px;" src="https://zibal.ir/trust/assets/2.png" />
                                             </a>
                                         </div>

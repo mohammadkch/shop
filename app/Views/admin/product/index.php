@@ -29,7 +29,7 @@
                         <!-- فرم جستجو -->
                         <div class="search-filters mb-6">
                             <form id="searchForm" method="post" action="<?= current_url() ?>">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                                     <?php helper('form'); ?>
                                     <?php foreach ($search_fields as $field_name => $field): ?>
                                         <div>

@@ -63,6 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const resendOtpBtn = document.getElementById('resend-otp-button');
     const cancelOtpBtn = document.getElementById('cancelOtp');
     const maskedMobile = document.getElementById('maskedMobile');
+    const otpExpiryMessage = document.getElementById('otp-expiry-message');
+    const otpCountdown = document.getElementById('otp-countdown');
 
     const chooseOtpLogin = document.getElementById('chooseOtpLogin');
     const choosePasswordLogin = document.getElementById('choosePasswordLogin');
@@ -178,8 +180,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         stepDescription.textContent = 'کد تایید به شماره شما ارسال شد';
                         showStep(3);
 
-                        // اگر کد قبلی معتبر است، تایمر را از زمان باقی‌مانده شروع کن
-                        if (data.is_new_code === false && data.expires_at) {
+                        // تایمر را از زمان واقعی انقضای کد شروع کن
+                        if (data.expires_at) {
                             var now = Math.floor(Date.now() / 1000);
                             var remaining = data.expires_at - now;
                             if (remaining > 0 && typeof startResendTimer === 'function') {
@@ -260,6 +262,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     stepTitle.textContent = 'ورود با کد یکبار مصرف';
                     stepDescription.textContent = 'کد تایید به شماره شما ارسال شد';
                     showStep(3);
+                    if (data.expires_at) {
+                        var now = Math.floor(Date.now() / 1000);
+                        var remaining = data.expires_at - now;
+                        if (remaining > 0 && typeof startResendTimer === 'function') {
+                            startResendTimer(remaining);
+                        }
+                    }
                     setTimeout(() => { if (otpCodeInput) otpCodeInput.focus(); }, 300);
                 })
                 .catch(error => {
@@ -332,9 +341,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearInterval(resendTimer);
             }
 
-            remainingSeconds = seconds || 120;
+            remainingSeconds = Math.max(0, Math.ceil(seconds || 240));
             resendOtpBtn.disabled = true;
-            updateResendButtonText();
+            updateOtpTimer();
 
             resendTimer = setInterval(function() {
                 remainingSeconds--;
@@ -343,13 +352,39 @@ document.addEventListener('DOMContentLoaded', function() {
                     resendTimer = null;
                     resendOtpBtn.disabled = false;
                     resendOtpBtn.innerHTML = 'ارسال دوباره کد';
+                    updateOtpTimer();
                 } else {
-                    updateResendButtonText();
+                    updateOtpTimer();
                 }
             }, 1000);
         }
 
-        function updateResendButtonText() {
+        function toPersianDigits(value) {
+            return String(value).replace(/\d/g, digit => '۰۱۲۳۴۵۶۷۸۹'[digit]);
+        }
+
+        function updateOtpTimer() {
+            if (remainingSeconds <= 0) {
+                if (otpExpiryMessage) {
+                    otpExpiryMessage.classList.remove('text-amber-600', 'dark:text-amber-400');
+                    otpExpiryMessage.classList.add('text-red-600', 'dark:text-red-400');
+                    otpExpiryMessage.textContent = 'زمان اعتبار کد به پایان رسید؛ کد جدید دریافت کنید.';
+                }
+                return;
+            }
+
+            const minutes = Math.floor(remainingSeconds / 60);
+            const seconds = remainingSeconds % 60;
+            const formattedTime = toPersianDigits(String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0'));
+
+            if (otpExpiryMessage) {
+                otpExpiryMessage.classList.remove('text-red-600', 'dark:text-red-400');
+                otpExpiryMessage.classList.add('text-amber-600', 'dark:text-amber-400');
+                otpExpiryMessage.innerHTML = 'برای وارد کردن کد <strong id="otp-countdown" dir="ltr">' + formattedTime + '</strong> فرصت دارید.';
+            } else if (otpCountdown) {
+                otpCountdown.textContent = formattedTime;
+            }
+
             resendOtpBtn.innerHTML = 'ارسال مجدد پس از ' + remainingSeconds + ' ثانیه';
         }
 
@@ -402,7 +437,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         showError('otp-error', 'کد جدید ارسال شد');
                         showNotification('کد جدید ارسال شد', 'success');
 
-                        startResendTimer(120);
+                        if (data.expires_at) {
+                            var now = Math.floor(Date.now() / 1000);
+                            startResendTimer(data.expires_at - now);
+                        } else {
+                            startResendTimer(240);
+                        }
 
                         setTimeout(function() {
                             var el = document.getElementById('otp-error');

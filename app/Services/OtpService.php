@@ -30,8 +30,8 @@ class OtpService
         // ۱. تولید کد
         $otpCode = $this->generateCode();
 
-        // ۲. زمان انقضا (۲ دقیقه بعد)
-        $expiresAt = time() + 120;
+        // ۲. زمان انقضا (۴ دقیقه بعد)
+        $expiresAt = time() + 240;
 
         // ۳. ذخیره در دیتابیس (قبلی‌ها باطل میشن)
         $insertId = $this->otpModel->saveOtp($mobile, $otpCode, $expiresAt);
@@ -96,7 +96,7 @@ class OtpService
 
     public function getLogMessage($mobile, $otpCode)
     {
-        return "🔐 کد تایید برای {$mobile}: {$otpCode} (معتبر تا ۲ دقیقه)";
+        return "🔐 کد تایید برای {$mobile}: {$otpCode} (معتبر تا ۴ دقیقه)";
     }
 
     /**

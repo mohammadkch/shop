@@ -9,6 +9,7 @@ class Product extends BaseController
         helper('sanitize');
         $pager = service('pager');
         $productModel = model('App\Models\ProductModel');
+        $menu1Model = model('App\Models\Menu1Model');
 
         $page = (int) ($this->request->getPost('page') ?? $this->request->getGet('page'));
         $page = $page > 0 ? $page : 1;
@@ -16,15 +17,20 @@ class Product extends BaseController
         $name = $this->request->getPost('name', FILTER_CALLBACK, ['options' => 'sanitizeStripTags']);
         $slug = $this->request->getPost('slug', FILTER_CALLBACK, ['options' => 'sanitizeStripTags']);
         $is_active = $this->request->getPost('is_active', FILTER_VALIDATE_INT);
+        $menu_1_id = $this->request->getPost('menu_1_id', FILTER_VALIDATE_INT);
 
         $condition = [];
         if (!empty($name)) $condition['name'] = $name;
         if (!empty($slug)) $condition['slug'] = $slug;
         if ($is_active !== '' && $is_active !== null) $condition['is_active'] = $is_active;
+        if ($menu_1_id !== false && $menu_1_id !== null) $condition['menu_1_id'] = $menu_1_id;
 
-        $per_page = 10;
+        $per_page = 20;
         $total_rows = $productModel->getData($condition, null, 0, true);
         $rowset = $productModel->getData($condition, $per_page, ($page - 1) * $per_page);
+
+        $menu1List = $menu1Model->orderBy('sort_order', 'ASC')->findAll();
+        $menu1Options = ['' => 'همه منوهای سطح ۱'] + \ROWSET::toKeyValue($menu1List, 'id', 'name');
 
         $pagination = $pager->makeLinks($page, $per_page, $total_rows, 'admin_pagination');
 
@@ -44,6 +50,12 @@ class Product extends BaseController
                 'input' => 'form_input',
                 'data' => ['class' => 'search-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white', 'placeholder' => 'slug'],
                 'type' => 'text'
+            ],
+            'menu_1_id' => [
+                'label' => 'منوی سطح ۱',
+                'input' => 'form_dropdown',
+                'data' => ['class' => 'search-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white'],
+                'options' => $menu1Options
             ],
             'is_active' => [
                 'label' => 'وضعیت',

@@ -42,26 +42,40 @@ class ProductModel extends Model
 
         // فیلتر بر اساس id
         if (isset($where['id']) && !empty($where['id'])) {
-            $builder->where('id', $where['id']);
+            $builder->where("{$this->table}.id", $where['id']);
             unset($where['id']);
         }
 
         // جستجو در name
         if (isset($where['name']) && !empty($where['name'])) {
-            $builder->like('name', $where['name']);
+            $builder->like("{$this->table}.name", $where['name']);
             unset($where['name']);
         }
 
         // جستجو در slug
         if (isset($where['slug']) && !empty($where['slug'])) {
-            $builder->like('slug', $where['slug']);
+            $builder->like("{$this->table}.slug", $where['slug']);
             unset($where['slug']);
         }
 
         // فیلتر بر اساس is_active
         if (isset($where['is_active']) && $where['is_active'] !== '') {
-            $builder->where('is_active', $where['is_active']);
+            $builder->where("{$this->table}.is_active", $where['is_active']);
             unset($where['is_active']);
+        }
+
+        // فیلتر محصول براساس منوی سطح ۱، فقط در صورت انتخاب این فیلتر
+        if (isset($where['menu_1_id']) && $where['menu_1_id'] !== '') {
+            $menu1Id = (int) $where['menu_1_id'];
+            $builder->whereIn("{$this->table}.id", static function ($subQuery) use ($menu1Id) {
+                return $subQuery
+                    ->select('product_menu.product_id')
+                    ->from('product_menu')
+                    ->join('menu_3', 'menu_3.id = product_menu.menu_3_id')
+                    ->join('menu_2', 'menu_2.id = menu_3.menu_2_id')
+                    ->where('menu_2.menu_1_id', $menu1Id);
+            });
+            unset($where['menu_1_id']);
         }
 
         // شرط‌های معمولی

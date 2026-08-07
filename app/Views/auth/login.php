@@ -135,6 +135,9 @@
                 <form class="space-y-5" id="otpForm" novalidate>
                     <div class="text-center mb-4">
                         <p class="text-green-600 text-sm mb-3">کد تایید برای <strong style="direction: ltr" id="maskedMobile">09******123</strong> ارسال شد</p>
+                        <p id="otp-expiry-message" class="text-sm text-amber-600 dark:text-amber-400 mb-3" aria-live="polite">
+                            برای وارد کردن کد <strong id="otp-countdown" dir="ltr">۰۴:۰۰</strong> فرصت دارید.
+                        </p>
                         <input
                                 name="otp_code"
                                 type="tel"

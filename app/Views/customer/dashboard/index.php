@@ -23,10 +23,10 @@
                                 <div class="text-2xl font-bold text-green-500"><?= number_format($deliveredOrdersCount) ?></div>
                                 <div class="text-sm text-gray-600 dark:text-gray-400">سفارش‌های تحویل‌شده</div>
                             </div>
-                            <div class="bg-yellow-500/10 dark:bg-yellow-500/20 rounded-xl p-4 text-center">
+                            <a href="<?= site_url('customer/wishlist') ?>" class="block bg-yellow-500/10 dark:bg-yellow-500/20 rounded-xl p-4 text-center hover:shadow transition-shadow">
                                 <div class="text-2xl font-bold text-yellow-500"><?= number_format($wishlistCount) ?></div>
                                 <div class="text-sm text-gray-600 dark:text-gray-400">لیست علاقه‌مندی‌ها</div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

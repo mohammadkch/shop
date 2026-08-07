@@ -43,6 +43,7 @@ abstract class BaseController extends Controller
             'checkout' => ['checkout'],
             'customer/dashboard' => ['customer'],
             'customer/profile' => ['customer'],
+            'customer/wishlist' => ['customer'],
         ];
 
         $className = $this->urlLib->getClassName();

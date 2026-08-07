@@ -103,6 +103,19 @@ $avatar = !empty($customer['avatar'])
 
                 <!-- تغییر رمز -->
                 <li class="py-2.5 px-1">
+                    <a href="<?= site_url('customer/wishlist') ?>"
+                       class="relative flex justify-start items-center py-1 px-5 text-gray-800 dark:text-gray-300 hover:text-primary transition-colors <?= isActive('Wishlist', null, $simpleController, $methodName) ? 'text-primary font-bold' : '' ?>
+                              before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:bg-primary before:scale-y-0 before:origin-center before:transition before:duration-300
+                              <?= isActive('Wishlist', null, $simpleController, $methodName) ? 'before:scale-y-100' : 'hover:before:scale-y-100' ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2.5 size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733C11.285 4.876 9.623 3.75 7.687 3.75 5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+                        </svg>
+                        لیست علاقه‌مندی‌ها
+                    </a>
+                </li>
+
+                <!-- تغییر رمز -->
+                <li class="py-2.5 px-1">
                     <a href="<?= site_url('customer/change-password') ?>"
                        class="relative flex justify-start items-center py-1 px-5 text-gray-800 dark:text-gray-300 hover:text-primary transition-colors <?= isActive('Profile', 'changePassword', $simpleController, $methodName) ? 'text-primary font-bold' : '' ?>
                               before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:w-1 before:rounded before:bg-primary before:scale-y-0 before:origin-center before:transition before:duration-300
@@ -201,6 +214,12 @@ $avatar = !empty($customer['avatar'])
                 <a href="<?= site_url('customer/orders') ?>"
                    class="flex items-center py-1 px-4 rounded-lg <?= isActive('Orders', null, $simpleController, $methodName) ? 'bg-primary/10 text-primary font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1f242c]' ?> transition-colors">
                     سفارش‌های من
+                </a>
+            </li>
+            <li class="py-2 px-1">
+                <a href="<?= site_url('customer/wishlist') ?>"
+                   class="flex items-center py-1 px-4 rounded-lg <?= isActive('Wishlist', null, $simpleController, $methodName) ? 'bg-primary/10 text-primary font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1f242c]' ?> transition-colors">
+                    لیست علاقه‌مندی‌ها
                 </a>
             </li>
             <li class="py-2 px-1">

@@ -219,3 +219,55 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+// ==============================================
+// لیست علاقه‌مندی‌های مشتری
+// ==============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const productsContainer = document.getElementById('wishlistProducts');
+    const emptyState = document.getElementById('wishlistEmptyState');
+    const countElement = document.getElementById('wishlistPageCount');
+
+    document.querySelectorAll('.wishlist-remove-button').forEach(button => {
+        button.addEventListener('click', function() {
+            if (this.disabled) return;
+            this.disabled = true;
+
+            fetch(this.dataset.toggleUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: new URLSearchParams({product_id: this.dataset.productId}).toString()
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status !== 'success' || data.is_wishlisted !== false) {
+                        showNotification(data.message || 'حذف محصول انجام نشد.', 'error');
+                        return;
+                    }
+
+                    const card = this.closest('.wishlist-product');
+                    if (card) card.remove();
+
+                    const count = Number(data.count) || 0;
+                    if (countElement) countElement.textContent = count.toLocaleString('fa-IR') + ' محصول';
+
+                    if (count === 0) {
+                        if (productsContainer) productsContainer.classList.add('hidden');
+                        if (emptyState) emptyState.classList.remove('hidden');
+                    }
+
+                    showNotification(data.message, 'success');
+                })
+                .catch(error => {
+                    console.error(error);
+                    showNotification('خطا در ارتباط با سرور', 'error');
+                })
+                .finally(() => {
+                    this.disabled = false;
+                });
+        });
+    });
+});

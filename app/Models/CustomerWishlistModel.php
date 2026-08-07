@@ -42,4 +42,23 @@ class CustomerWishlistModel extends Model
 
         return array_map('intval', array_column($rows, 'product_id'));
     }
+
+    public function getProductsForCustomer(int $customerId): array
+    {
+        return $this->select('customer_wishlist.id AS wishlist_id, customer_wishlist.created_at AS wishlist_created_at')
+            ->select('product.*')
+            ->select('(
+                SELECT product_thumbnail.image_name
+                FROM product_image AS product_thumbnail
+                WHERE product_thumbnail.product_id = product.id
+                  AND product_thumbnail.product_image_type_id = 2
+                  AND product_thumbnail.is_active = 1
+                ORDER BY product_thumbnail.sort_order ASC, product_thumbnail.id ASC
+                LIMIT 1
+            ) AS thumbnail', false)
+            ->join('product', 'product.id = customer_wishlist.product_id')
+            ->where('customer_wishlist.customer_id', $customerId)
+            ->orderBy('customer_wishlist.id', 'DESC')
+            ->findAll();
+    }
 }

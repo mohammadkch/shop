@@ -183,6 +183,7 @@
     const BASE_URL = '<?= base_url() ?>';
 </script>
 
+<script src="<?= base_url('assets/custom/password-toggle.js') ?>?v=<?= filemtime(FCPATH . 'assets/custom/password-toggle.js') ?>"></script>
 <script src="<?= base_url('assets/custom/auth.js') ?>"></script>
 <script src="<?= base_url('assets/js/dependencies/app.js') ?>"></script>
 

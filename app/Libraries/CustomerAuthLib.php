@@ -25,12 +25,17 @@ class CustomerAuthLib
             }
         }
 
+        // مالکیت/ادغام سبد همان لحظه ورود قطعی شود؛ منتظر لود صفحه بعد نمی‌مانیم.
+        service('cartService')->getCart();
+
         return true;
     }
 
     public function logout()
     {
         $this->session->remove('customer_id');
+        // بعد از خروج، مرورگر باید یک سبد مهمان کاملاً مستقل بگیرد.
+        $this->session->remove('session_id');
 
         // حذف همه کلیدهای customer_*
         foreach ($_SESSION as $key => $value) {

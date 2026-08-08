@@ -29,35 +29,54 @@ class CartModel extends Model
         return $this->where('session_id', $sessionId)->first();
     }
 
+    public function getGuestCartBySessionId($sessionId)
+    {
+        return $this->where('session_id', $sessionId)
+            ->where('user_id IS NULL')
+            ->first();
+    }
+
     public function getOrCreateCart($userId = null, $sessionId = null)
     {
+        $userId = $userId ? (int) $userId : null;
+
         if ($userId) {
             $userCart = $this->getCartByUserId($userId);
             if ($userCart) {
+                // سبد حساب کاربری با user_id شناخته می‌شود، نه Session مرورگر.
+                if ($userCart['session_id'] !== null) {
+                    $this->update($userCart['id'], ['session_id' => null]);
+                    $userCart['session_id'] = null;
+                }
                 return $userCart;
             }
 
             if ($sessionId) {
-                $sessionCart = $this->getCartBySessionId($sessionId);
-                if ($sessionCart && empty($sessionCart['user_id'])) {
-                    $this->update($sessionCart['id'], ['user_id' => $userId]);
-                    return $this->find($sessionCart['id']);
+                $guestCart = $this->getGuestCartBySessionId($sessionId);
+                if ($guestCart) {
+                    $this->update($guestCart['id'], [
+                        'user_id' => $userId,
+                        'session_id' => null,
+                    ]);
+                    return $this->find($guestCart['id']);
                 }
             }
+
+            $this->insert(['user_id' => $userId]);
+            return $this->find($this->insertID());
         }
 
         if ($sessionId) {
-            $sessionCart = $this->getCartBySessionId($sessionId);
-            if ($sessionCart) {
-                return $sessionCart;
+            $guestCart = $this->getGuestCartBySessionId($sessionId);
+            if ($guestCart) {
+                return $guestCart;
             }
         }
 
-        $data = [];
-        if ($userId) $data['user_id'] = $userId;
-        if ($sessionId) $data['session_id'] = $sessionId;
-
-        $this->insert($data);
+        $this->insert([
+            'user_id' => null,
+            'session_id' => $sessionId,
+        ]);
         return $this->find($this->insertID());
     }
 }

@@ -26,19 +26,32 @@ class CartService
 
     public function getCart()
     {
-        $userId = $this->session->get('customer_id');
-        $sessionId = $this->session->get('session_id');
+        $userId = (int) ($this->session->get('customer_id') ?? 0);
+        $sessionId = (string) ($this->session->get('session_id') ?? '');
 
-        if (!$sessionId) {
-            $sessionId = session_id();
+        if ($sessionId === '') {
+            $sessionId = bin2hex(random_bytes(16));
             $this->session->set('session_id', $sessionId);
         }
 
-        $cart = $this->cartModel->getOrCreateCart($userId, $sessionId);
+        // قبل از گرفتن سبد کاربر، سبد مهمان همین مرورگر را نگه می‌داریم؛
+        // getOrCreateCart ممکن است همان سبد را به نام کاربر ثبت کند.
+        $guestCart = $userId > 0
+            ? $this->cartModel->getGuestCartBySessionId($sessionId)
+            : null;
 
-        if ($userId) {
-            $guestCart = $this->cartModel->getCartBySessionId($sessionId);
-            if ($guestCart && $guestCart['id'] != $cart['id']) {
+        $cart = $this->cartModel->getOrCreateCart($userId ?: null, $sessionId);
+
+        if ($userId > 0) {
+            if ((int) ($cart['user_id'] ?? 0) !== $userId) {
+                $this->cartModel->update($cart['id'], [
+                    'user_id' => $userId,
+                    'session_id' => null,
+                ]);
+                $cart = $this->cartModel->find($cart['id']);
+            }
+
+            if ($guestCart && (int) $guestCart['id'] !== (int) $cart['id']) {
                 $this->mergeGuestCart($guestCart['id'], $cart['id']);
             }
         }
@@ -101,6 +114,9 @@ class CartService
     {
         $guestItems = $this->cartItemModel->where('cart_id', $guestCartId)->findAll();
 
+        $db = db_connect();
+        $db->transStart();
+
         foreach ($guestItems as $item) {
             $existing = $this->cartItemModel->getItemByProductAndOptions(
                 $userCartId,
@@ -120,7 +136,37 @@ class CartService
             }
         }
 
+        if ($guestItems) {
+            // Snapshot فاکتور باز قبلی دیگر با سبد Mergeشده معتبر نیست.
+            $openFactors = $db->table('factor')
+                ->select('id')
+                ->where('cart_id', $userCartId)
+                ->where('status', 'awaiting_payment')
+                ->get()
+                ->getResultArray();
+
+            if ($openFactors) {
+                $factorIds = array_column($openFactors, 'id');
+                $db->table('factor')->whereIn('id', $factorIds)->update([
+                    'status' => 'expired',
+                    'updated_at' => time(),
+                ]);
+                $db->table('payment')
+                    ->whereIn('factor_id', $factorIds)
+                    ->where('status', 'created')
+                    ->update([
+                        'status' => 'expired',
+                        'updated_at' => time(),
+                    ]);
+            }
+        }
+
         $this->cartModel->delete($guestCartId);
+        $db->transComplete();
+
+        if (!$db->transStatus()) {
+            throw new \RuntimeException('Guest cart merge failed.');
+        }
     }
 
     public function getStock($productId, $colorOptionId = null, $sizeOptionId = null)

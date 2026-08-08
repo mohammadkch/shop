@@ -68,6 +68,15 @@
                                 </svg>
                             </a>
 
+                            <a href="<?= site_url(ADMIN_PATH . '/product-faq/manage/' . $item['id']) ?>"
+                               class="text-amber-500 hover:text-amber-700"
+                               title="مدیریت سؤالات متداول محصول"
+                               aria-label="مدیریت سؤالات متداول محصول">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9a3.773 3.773 0 117.544 0c0 2.83-3.772 2.83-3.772 5m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </a>
+
                             <!-- ======== دکمه مدیریت منوی سطح ۳ ======== -->
                             <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $item['id']) ?>"
                                class="text-amber-500 hover:text-amber-700"

@@ -460,7 +460,7 @@
             </li>
 
             <?php
-            $isActiveProduct = in_array($className, ['product', 'productimage', 'productmenu3', 'productoption', 'productprice', 'productfeature'], true);
+            $isActiveProduct = in_array($className, ['product', 'productimage', 'productmenu3', 'productoption', 'productprice', 'productfeature', 'productfaq'], true);
             $activeClassProduct = $isActiveProduct ? 'text-gray-800 font-bold text-primary-600 before:bg-primary-600 before:scale-y-100' : 'dark:text-gray-500 text-gray-800 hover:text-primary-600 before:scale-y-0 hover:before:scale-y-100';
             $iconStrokeProduct = $isActiveProduct ? '#4f46e5' : 'currentColor';
             ?>

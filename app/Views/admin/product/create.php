@@ -21,57 +21,44 @@
                 <div class="lg:col-span-3 space-y-8">
 
                     <div class="bg-white rounded-2xl drop-shadow-lg p-6 dark:bg-custom-dark dark:border dark:border-gray-700">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-                            <h1 class="font-black text-2xl with-highlight dark:text-gray-200">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                            <h1 class="min-w-0 font-black text-2xl with-highlight dark:text-gray-200">
                                 <?= isset($edit_row) ? 'ویرایش محصول' : 'افزودن محصول جدید' ?>
                             </h1>
-                            <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
+                            <div class="flex flex-wrap items-center gap-2 shrink-0">
                                 <?php if (isset($edit_row)): ?>
-                                    <!-- ======== دکمه مدیریت قیمت‌ها ======== -->
-                                    <a href="<?= site_url(ADMIN_PATH . '/product-price/manage/' . $edit_row['id']) ?>"
-                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
-                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 10v2m8-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
-                                        </svg>
-                                        مدیریت قیمت‌ها
-                                    </a>
-                                    <!-- ======== دکمه مدیریت تصاویر ======== -->
-                                    <a href="<?= site_url(ADMIN_PATH . '/product-image/manage/' . $edit_row['id']) ?>"
-                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
-                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <rect x="2" y="2" width="20" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
-                                            <circle cx="8.5" cy="8.5" r="2.5" stroke="currentColor" stroke-width="2"></circle>
-                                            <polyline points="21 15 16 10 5 21" stroke="currentColor" stroke-width="2"></polyline>
-                                        </svg>
-                                        مدیریت تصاویر
-                                    </a>
-                                    <!-- ======== دکمه مدیریت آپشن ======== -->
-                                    <a href="<?= site_url(ADMIN_PATH . '/product-option/form/' . $edit_row['id']) ?>"
-                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
-                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                                        </svg>
-                                        مدیریت آپشن‌ها
-                                    </a>
-                                    <!-- ======== دکمه مدیریت فیچرها ======== -->
-                                    <a href="<?= site_url(ADMIN_PATH . '/product-feature/manage/' . $edit_row['id']) ?>"
-                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm"
-                                       title="مدیریت فیچرهای محصول">
-                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2m-4 0a2 2 0 002 2h2a2 2 0 002-2m-4 0a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                                        </svg>
-                                        مدیریت فیچرها
-                                    </a>
-                                    <!-- ======== دکمه مدیریت منو ======== -->
-                                    <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $edit_row['id']) ?>"
-                                       class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
-                                        <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6v12"></path>
-                                        </svg>
-                                        مدیریت منو
-                                    </a>
-                                    <!-- ======== پایان ======== -->
+                                    <div class="relative" data-product-manage-menu>
+                                        <button type="button" data-product-manage-toggle aria-expanded="false"
+                                                class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow inline-flex items-center text-sm">
+                                            <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                            </svg>
+                                            مدیریت بخش‌های محصول
+                                            <svg class="w-4 h-4 ms-2 transition-transform" data-product-manage-arrow fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </button>
+
+                                        <div data-product-manage-dropdown class="hidden absolute end-0 mt-2 w-64 p-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-50" style="top: 100%;">
+                                            <?php
+                                            $manageLinks = [
+                                                ['url' => 'product-price/manage/', 'title' => 'مدیریت قیمت‌ها', 'icon' => 'تومان'],
+                                                ['url' => 'product-image/manage/', 'title' => 'مدیریت تصاویر', 'icon' => 'تصویر'],
+                                                ['url' => 'product-option/form/', 'title' => 'مدیریت آپشن‌ها', 'icon' => 'گزینه'],
+                                                ['url' => 'product-feature/manage/', 'title' => 'مدیریت ویژگی‌ها', 'icon' => 'ویژگی'],
+                                                ['url' => 'product-faq/manage/', 'title' => 'مدیریت سؤال‌ها', 'icon' => 'سؤال'],
+                                                ['url' => 'product-menu3/manage/', 'title' => 'مدیریت منو', 'icon' => 'منو'],
+                                            ];
+                                            ?>
+                                            <?php foreach ($manageLinks as $manageLink): ?>
+                                                <a href="<?= site_url(ADMIN_PATH . '/' . $manageLink['url'] . $edit_row['id']) ?>"
+                                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 dark:text-gray-200 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-gray-700 dark:hover:text-amber-400 transition">
+                                                    <span class="inline-flex items-center justify-center w-12 h-7 px-2 rounded-md bg-gray-100 dark:bg-gray-700 text-xs text-gray-500 dark:text-gray-300 shrink-0"><?= esc($manageLink['icon']) ?></span>
+                                                    <span><?= esc($manageLink['title']) ?></span>
+                                                </a>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
                                 <a href="<?= site_url(ADMIN_PATH . '/product') ?>" class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block text-sm">
                                     بازگشت به لیست
@@ -136,6 +123,36 @@
 <?= $this->section('scripts') ?>
     <script src="<?= base_url('assets/js/plugin/quill/quill.js') ?>"></script>
     <script>
+        (() => {
+            const menu = document.querySelector('[data-product-manage-menu]');
+            if (!menu) return;
+
+            const toggle = menu.querySelector('[data-product-manage-toggle]');
+            const dropdown = menu.querySelector('[data-product-manage-dropdown]');
+            const arrow = menu.querySelector('[data-product-manage-arrow]');
+
+            const closeMenu = () => {
+                dropdown.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+                toggle.setAttribute('aria-expanded', 'false');
+            };
+
+            toggle.addEventListener('click', () => {
+                const willOpen = dropdown.classList.contains('hidden');
+                dropdown.classList.toggle('hidden', !willOpen);
+                arrow.classList.toggle('rotate-180', willOpen);
+                toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!menu.contains(event.target)) closeMenu();
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') closeMenu();
+            });
+        })();
+
         (() => {
             const form = document.getElementById('productForm');
             const input = document.getElementById('description');

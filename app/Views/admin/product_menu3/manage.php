@@ -18,22 +18,20 @@
                                     مدیریت منوهای محصول - <?= esc($product['name']) ?>
                                 </h1>
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">
-                                    شناسه محصول: <?= $product['id'] ?> |
-                                    <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
-                                        ویرایش محصول
-                                    </a>
+                                    شناسه محصول: <?= $product['id'] ?>
                                 </p>
                             </div>
                             <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
+                                <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 py-2.5 px-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition text-sm">ویرایش محصول</a>
                                 <a href="<?= site_url(ADMIN_PATH . '/product-menu3/create/' . $product['id']) ?>"
-                                   class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center">
-                                    <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                   class="bg-amber-500 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
+                                    <svg class="w-4 h-4 me-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                     </svg>
                                     افزودن منو جدید
                                 </a>
                                 <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
-                                   class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center">
+                                   class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow flex items-center text-sm">
                                     بازگشت به لیست محصولات
                                 </a>
                             </div>

@@ -412,6 +412,13 @@
                                 </button>
                             </li>
                         <?php endif; ?>
+                        <?php if (!empty($faqs)): ?>
+                            <li>
+                                <button type="button" class="tab-btn whitespace-nowrap px-6 py-3 rounded-xl transition-all" data-tab="product-faqs">
+                                    سؤالات متداول
+                                </button>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
 
@@ -448,6 +455,29 @@
                             </div>
                         </section>
                     <?php endif; ?>
+
+                    <?php if (!empty($faqs)): ?>
+                        <section id="product-faqs"
+                                 class="tab-section p-5 sm:p-8 bg-white dark:bg-custom-dark dark:border-gray-700 rounded-2xl shadow-md border border-gray-200"
+                                 style="scroll-margin-top: 9rem">
+                            <h2 class="text-xl sm:text-2xl pb-3 mb-5 font-black text-zinc-800 relative before:absolute before:bottom-0 before:right-0 before:h-1 before:w-22 before:bg-secondary-500 before:rounded dark:text-white">
+                                سؤالات متداول محصول
+                            </h2>
+                            <div class="space-y-3" data-product-faq-list>
+                                <?php foreach ($faqs as $faq): ?>
+                                    <article class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                                        <button type="button" class="product-faq-question w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-4 text-right bg-gray-50 hover:bg-gray-100 dark:bg-[#1e232a] dark:hover:bg-[#252b33] transition" aria-expanded="false">
+                                            <span class="font-bold text-gray-800 dark:text-gray-100 leading-7"><?= esc($faq['question']) ?></span>
+                                            <svg class="product-faq-icon w-5 h-5 shrink-0 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </button>
+                                        <div class="product-faq-answer hidden px-4 sm:px-5 py-4 text-gray-600 dark:text-gray-300 leading-8 whitespace-pre-line"><?= esc($faq['answer']) ?></div>
+                                    </article>
+                                <?php endforeach; ?>
+                            </div>
+                        </section>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -458,6 +488,16 @@
     <script>
         window.stockMap = <?= json_encode($options['stock_map']) ?>;
         window.priceMap = <?= json_encode($priceMap) ?>;
+
+        document.querySelectorAll('.product-faq-question').forEach((button) => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const isOpen = button.getAttribute('aria-expanded') === 'true';
+                button.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+                answer.classList.toggle('hidden', isOpen);
+                button.querySelector('.product-faq-icon')?.classList.toggle('rotate-180', !isOpen);
+            });
+        });
     </script>
 
     <!-- ====== استایل‌های اضافه ====== -->

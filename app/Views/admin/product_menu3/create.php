@@ -18,15 +18,13 @@
                                     افزودن منو به محصول - <?= esc($product['name']) ?>
                                 </h1>
                                 <p class="text-gray-600 dark:text-gray-400 mt-1">
-                                    شناسه محصول: <?= $product['id'] ?> |
-                                    <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
-                                        ویرایش محصول
-                                    </a>
+                                    شناسه محصول: <?= $product['id'] ?>
                                 </p>
                             </div>
-                            <div class="mt-4 md:mt-0">
+                            <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
+                                <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 py-2.5 px-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition text-sm">ویرایش محصول</a>
                                 <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $product['id']) ?>"
-                                   class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block">
+                                   class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow inline-block text-sm">
                                     بازگشت به مدیریت منوها
                                 </a>
                             </div>

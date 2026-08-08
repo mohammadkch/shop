@@ -16,22 +16,19 @@
                             </h1>
                             <p class="text-gray-600 dark:text-gray-400 mt-1">
                                 شناسه محصول: <?= $product['id'] ?> |
-                                <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="text-primary hover:underline">
-                                    ویرایش محصول
-                                </a>
-                                |
                                 <?= count($colors) ?> رنگ،
                                 <?= count($sizes) ?> سایز،
                                 <?= count($combinations) ?> ترکیب
                             </p>
                         </div>
                         <div class="flex flex-wrap gap-2">
+                            <a href="<?= site_url(ADMIN_PATH . '/product/edit/' . $product['id']) ?>" class="bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 py-2.5 px-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition text-sm">ویرایش محصول</a>
                             <a href="<?= site_url(ADMIN_PATH . '/product-option/form/' . $product['id']) ?>"
-                               class="bg-purple-500 text-white py-2.5 px-4 rounded-lg hover:bg-purple-600 transition">
+                               class="bg-purple-500 text-white py-2.5 px-4 rounded-lg hover:bg-purple-600 transition text-sm">
                                 مدیریت آپشن‌ها
                             </a>
                             <a href="<?= site_url(ADMIN_PATH . '/product') ?>"
-                               class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow">
+                               class="bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-600 transition duration-200 shadow-sm hover:shadow text-sm">
                                 بازگشت به لیست محصولات
                             </a>
                         </div>

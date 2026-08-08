@@ -210,6 +210,14 @@ $routes->group(ADMIN_PATH, ['namespace' => 'App\Controllers\Admin', 'filter' => 
     $routes->post('product-feature/toggle-active/(:num)/(:num)', 'ProductFeature::toggleActive/$1/$2');
     $routes->post('product-feature/delete/(:num)/(:num)', 'ProductFeature::delete/$1/$2');
 
+    // ======== Product FAQ ========
+    $routes->get('product-faq/manage/(:num)', 'ProductFaq::manage/$1');
+    $routes->post('product-faq/store/(:num)', 'ProductFaq::store/$1');
+    $routes->post('product-faq/update/(:num)/(:num)', 'ProductFaq::update/$1/$2');
+    $routes->post('product-faq/move/(:num)/(:num)/up', 'ProductFaq::move/$1/$2/up');
+    $routes->post('product-faq/move/(:num)/(:num)/down', 'ProductFaq::move/$1/$2/down');
+    $routes->post('product-faq/delete/(:num)/(:num)', 'ProductFaq::delete/$1/$2');
+
     // ======== Product Price ========
     $routes->get('product-price/manage/(:num)', 'ProductPrice::manage/$1');
     $routes->post('product-price/save/(:num)', 'ProductPrice::save/$1');

@@ -445,10 +445,10 @@
                             <div class="grid grid-cols-2 gap-3 sm:gap-4 text-right">
                                 <?php foreach ($features as $feature): ?>
                                     <div class="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
-                                        <div class="bg-gray-200 border border-gray-300 dark:border-gray-700 px-4 rounded text-gray-900 text-sm py-4 flex items-center dark:bg-[#1e232a] dark:text-white">
+                                        <div class="bg-gray-200 border border-gray-300 dark:border-gray-700 px-4 rounded text-gray-900 text-sm py-4 flex items-center dark:bg-gray-800 dark:text-gray-100">
                                             <?= esc($feature['feature_key']) ?>
                                         </div>
-                                        <div class="bg-gray-100 border border-gray-200 px-4 py-4 text-sm text-gray-900 flex items-center dark:bg-[#252b33] dark:border-gray-700 rounded dark:text-white"
+                                        <div class="bg-gray-100 border border-gray-200 px-4 py-4 text-sm text-gray-900 flex items-center dark:bg-zinc-800 dark:border-gray-700 rounded dark:text-gray-300"
                                              style="white-space: pre-line"><?= esc($feature['feature_value']) ?></div>
                                     </div>
                                 <?php endforeach; ?>
@@ -466,7 +466,7 @@
                             <div class="space-y-3" data-product-faq-list>
                                 <?php foreach ($faqs as $faq): ?>
                                     <article class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
-                                        <button type="button" class="product-faq-question w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-4 text-right bg-gray-50 hover:bg-gray-100 dark:bg-[#1e232a] dark:hover:bg-[#252b33] transition" aria-expanded="false">
+                                        <button type="button" class="product-faq-question w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-4 text-right bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 transition" aria-expanded="false">
                                             <span class="font-bold text-gray-800 dark:text-gray-100 leading-7"><?= esc($faq['question']) ?></span>
                                             <svg class="product-faq-icon w-5 h-5 shrink-0 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>

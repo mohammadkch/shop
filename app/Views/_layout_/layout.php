@@ -15,7 +15,7 @@
     <meta name="description" content="<?= esc($metaDescription ?? 'فروشگاه اینترنتی پوشاک') ?>">
     <meta name="keywords" content="قالب فروشگاهی, قالب دیارا, فروشگاه اینترنتی, طراحی واکنش‌گرا">
     <meta name="robots" content="<?= esc($robots ?? 'index, follow') ?>">
-    <meta name="author" content="امیر رضایی">
+    <meta name="author" content="محمد کوچنانی">
     <meta name="copyright" content="All rights belong to diara.">
     <link rel="icon" href="<?= base_url('images/favicon/favicon.ico') ?>" sizes="any">
     <link rel="icon" type="image/svg+xml" href="<?= base_url('images/favicon/favicon.svg') ?>">

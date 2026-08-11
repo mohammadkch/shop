@@ -77,6 +77,15 @@
                                 </svg>
                             </a>
 
+                            <a href="<?= site_url(ADMIN_PATH . '/product-slug/manage/' . $item['id']) ?>"
+                               class="text-amber-500 hover:text-amber-700"
+                               title="تاریخچه و Redirectهای Slug محصول"
+                               aria-label="تاریخچه و Redirectهای Slug محصول">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 010 5.656l-2 2a4 4 0 01-5.656-5.656l1-1m3-3 2-2a4 4 0 015.656 5.656l-1 1m-5.656-1.656 2.656 2.656"></path>
+                                </svg>
+                            </a>
+
                             <!-- ======== دکمه مدیریت منوی سطح ۳ ======== -->
                             <a href="<?= site_url(ADMIN_PATH . '/product-menu3/manage/' . $item['id']) ?>"
                                class="text-amber-500 hover:text-amber-700"

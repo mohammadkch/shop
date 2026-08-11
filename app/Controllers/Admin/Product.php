@@ -274,11 +274,36 @@ class Product extends BaseController
             }
         } else {
             $productId = $id;
-            $update_result = $productModel->update($productId, $model_data);
+            $currentProduct = $productModel->find($productId);
+            if (!$currentProduct) {
+                $this->flash('product_not_found');
+                return redirect()->to(ADMIN_PATH . '/product');
+            }
 
-            if (!$update_result) {
+            $db = db_connect();
+            $db->transStart();
+
+            if ((string) $currentProduct['slug'] !== $slug) {
+                $historyInserted = model('App\Models\ProductSlugHistoryModel')->insert([
+                    'product_id' => $productId,
+                    'old_slug' => (string) $currentProduct['slug'],
+                    'new_slug' => $slug,
+                    'created_at' => time(),
+                ]);
+
+                if (!$historyInserted) {
+                    $db->transRollback();
+                    $this->flash('product_update_error', 'ثبت تاریخچه Slug انجام نشد و محصول تغییری نکرد.');
+                    return redirect()->to(ADMIN_PATH . '/product/edit/' . $productId)->withInput();
+                }
+            }
+
+            $update_result = $productModel->update($productId, $model_data);
+            $db->transComplete();
+
+            if (!$update_result || !$db->transStatus()) {
                 $this->flash('product_update_error');
-                return redirect()->to(ADMIN_PATH . '/product/edit/' . $productId);
+                return redirect()->to(ADMIN_PATH . '/product/edit/' . $productId)->withInput();
             }
         }
 

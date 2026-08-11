@@ -47,6 +47,7 @@
                                                 ['url' => 'product-option/form/', 'title' => 'مدیریت آپشن‌ها', 'icon' => 'گزینه'],
                                                 ['url' => 'product-feature/manage/', 'title' => 'مدیریت ویژگی‌ها', 'icon' => 'ویژگی'],
                                                 ['url' => 'product-faq/manage/', 'title' => 'مدیریت سؤال‌ها', 'icon' => 'سؤال'],
+                                                ['url' => 'product-slug/manage/', 'title' => 'تاریخچه Slug', 'icon' => 'URL'],
                                                 ['url' => 'product-menu3/manage/', 'title' => 'مدیریت منو', 'icon' => 'منو'],
                                             ];
                                             ?>

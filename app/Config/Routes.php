@@ -180,6 +180,11 @@ $routes->group(ADMIN_PATH, ['namespace' => 'App\Controllers\Admin', 'filter' => 
     $routes->delete('product/delete/(:num)', 'Product::delete/$1');
     $routes->post('product/toggleActive/(:num)', 'Product::toggleActive/$1');
 
+    // product slug history and manual redirects
+    $routes->get('product-slug/manage/(:num)', 'ProductSlug::manage/$1');
+    $routes->post('product-slug/enable/(:num)/(:num)', 'ProductSlug::enable/$1/$2');
+    $routes->post('product-slug/disable/(:num)/(:num)', 'ProductSlug::disable/$1/$2');
+
     // product-image
     $routes->get('product-image/manage/(:num)', 'ProductImage::manage/$1');
     $routes->post('product-image/manage/(:num)', 'ProductImage::manage/$1');

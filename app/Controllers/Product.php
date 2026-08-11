@@ -28,6 +28,13 @@ class Product extends BaseController
 
         $canonicalUrl = product_url($data['product']);
         if ($slug !== $data['product']['slug']) {
+            $redirect = model('App\Models\ProductSlugRedirectModel')
+                ->findForProduct((int) $data['product']['id'], $slug);
+
+            if (!$redirect) {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('آدرس محصول معتبر نیست');
+            }
+
             return redirect()->to($canonicalUrl)->setStatusCode(301);
         }
 

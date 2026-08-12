@@ -316,7 +316,9 @@
                                         <div class="border-t border-gray-300 dark:border-gray-700 pt-3 mt-3">
                                             <div class="flex justify-between">
                                                 <span class="text-gray-800 dark:text-white font-bold">مبلغ قابل پرداخت:</span>
-                                                <span class="text-gray-800 dark:text-white font-bold text-lg" id="totalPayable">
+                                                <span class="text-gray-800 dark:text-white font-bold text-lg"
+                                                      id="totalPayable"
+                                                      data-cart-total="<?= (float) $cart['total_price'] ?>">
                                                 <?php
                                                 $shippingCost = 0;
                                                 if (!empty($selected_address_id) && !empty($selected_shipping_type_id) && isset($shipping_prices[$selected_shipping_type_id])) {

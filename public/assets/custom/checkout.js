@@ -174,15 +174,11 @@ function updateShippingCostDisplay(price) {
 // بروزرسانی مبلغ قابل پرداخت
 // ==============================================
 function updateTotalPayable(shippingPrice) {
-    // دریافت مبلغ کل از صفحه (از مقدار موجود در viewData)
-    const subtotalElement = document.querySelector('.cart-subtotal-value');
-    if (subtotalElement) {
-        const subtotal = parseInt(subtotalElement.dataset.subtotal) || 0;
-        const total = subtotal + shippingPrice;
-        const totalElement = document.getElementById('totalPayable');
-        if (totalElement) {
-            totalElement.textContent = Number(total).toLocaleString('fa-IR') + ' تومان';
-        }
+    const totalElement = document.getElementById('totalPayable');
+    if (totalElement) {
+        const cartTotal = Number(totalElement.dataset.cartTotal) || 0;
+        const total = cartTotal + (Number(shippingPrice) || 0);
+        totalElement.textContent = Number(total).toLocaleString('fa-IR') + ' تومان';
     }
 }
 

@@ -115,6 +115,11 @@ class Product extends BaseController
                 'data' => ['class' => 'form-control', 'id' => 'meta_description', 'name' => 'meta_description', 'placeholder' => 'توضیحات متای صفحه محصول', 'rows' => 4, 'maxlength' => 320],
                 'type' => 'textarea'
             ],
+            'weight' => [
+                'input' => 'form_input',
+                'data' => ['class' => 'form-control', 'id' => 'weight', 'name' => 'weight', 'placeholder' => 'وزن محصول به گرم', 'type' => 'number', 'min' => 1, 'step' => 1],
+                'type' => 'number'
+            ],
             'is_active' => [
                 'input' => 'form_dropdown',
                 'data' => ['class' => 'form-control', 'id' => 'is_active', 'name' => 'is_active'],
@@ -131,6 +136,7 @@ class Product extends BaseController
             'description' => 'توضیحات',
             'meta_title' => 'عنوان سئو',
             'meta_description' => 'توضیحات متا',
+            'weight' => 'وزن محصول (گرم)',
             'is_active' => 'وضعیت'
         ];
 
@@ -154,6 +160,8 @@ class Product extends BaseController
             $this->flash('product_not_found');
             return redirect()->to(ADMIN_PATH . '/product');
         }
+
+        $edit_row['weight'] = (int) $edit_row['weight'];
 
         $this->viewData['edit_row'] = $edit_row;
         $this->viewData['form_action'] = ADMIN_PATH . '/product/edit/' . $id . '/handle';
@@ -183,6 +191,11 @@ class Product extends BaseController
                 'data' => ['class' => 'form-control', 'id' => 'meta_description', 'name' => 'meta_description', 'placeholder' => 'توضیحات متای صفحه محصول', 'rows' => 4, 'maxlength' => 320],
                 'type' => 'textarea'
             ],
+            'weight' => [
+                'input' => 'form_input',
+                'data' => ['class' => 'form-control', 'id' => 'weight', 'name' => 'weight', 'placeholder' => 'وزن محصول به گرم', 'type' => 'number', 'min' => 1, 'step' => 1],
+                'type' => 'number'
+            ],
             'is_active' => [
                 'input' => 'form_dropdown',
                 'data' => ['class' => 'form-control', 'id' => 'is_active', 'name' => 'is_active'],
@@ -199,6 +212,7 @@ class Product extends BaseController
             'description' => 'توضیحات',
             'meta_title' => 'عنوان سئو',
             'meta_description' => 'توضیحات متا',
+            'weight' => 'وزن محصول (گرم)',
             'is_active' => 'وضعیت'
         ];
 
@@ -231,6 +245,10 @@ class Product extends BaseController
             'meta_description' => [
                 'label' => 'توضیحات متا',
                 'rules' => 'permit_empty|max_length[320]'
+            ],
+            'weight' => [
+                'label' => 'وزن محصول',
+                'rules' => 'required|integer|greater_than[0]'
             ]
         ];
 
@@ -259,6 +277,7 @@ class Product extends BaseController
             'description' => sanitizeBlogHtml((string) $this->request->getPost('description')),
             'meta_title' => trim(strip_tags((string) $this->request->getPost('meta_title'))) ?: null,
             'meta_description' => trim(strip_tags((string) $this->request->getPost('meta_description'))) ?: null,
+            'weight' => (int) $this->request->getPost('weight', FILTER_VALIDATE_INT),
             'is_active' => (int) $this->request->getPost('is_active', FILTER_VALIDATE_INT),
             'published_at' => time(),
             'updated_at' => time()

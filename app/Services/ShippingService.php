@@ -30,9 +30,9 @@ class ShippingService
     /**
      * دریافت قیمت ارسال بر اساس شهر و نوع ارسال
      */
-    public function getShippingPrice($cityId, $shippingTypeId)
+    public function getShippingPrice($cityId, $shippingTypeId, int $totalWeight)
     {
-        if (!$cityId || !$shippingTypeId) {
+        if (!$cityId || !$shippingTypeId || $totalWeight < 1 || $totalWeight > 4000) {
             return null;
         }
 
@@ -40,15 +40,15 @@ class ShippingService
             ->where('shipping_type_id', $shippingTypeId)
             ->first();
 
-        return $price;
+        return $this->attachPriceForWeight($price, $totalWeight);
     }
 
     /**
      * دریافت همه قیمت‌های ارسال یک شهر
      */
-    public function getShippingPricesByCity($cityId)
+    public function getShippingPricesByCity($cityId, int $totalWeight)
     {
-        if (!$cityId) {
+        if (!$cityId || $totalWeight < 1 || $totalWeight > 4000) {
             return [];
         }
 
@@ -56,20 +56,20 @@ class ShippingService
             'city_id' => $cityId
         ]);
 
-        return $prices;
+        return array_map(fn (array $price) => $this->attachPriceForWeight($price, $totalWeight), $prices);
     }
 
     /**
      * دریافت قیمت‌های ارسال با فرمت مناسب برای نمایش در ویو
      * کلید: shipping_type_id => قیمت
      */
-    public function getShippingPricesFormatted($cityId)
+    public function getShippingPricesFormatted($cityId, int $totalWeight)
     {
         if (!$cityId) {
             return [];
         }
 
-        $prices = $this->getShippingPricesByCity($cityId);
+        $prices = $this->getShippingPricesByCity($cityId, $totalWeight);
         $result = [];
 
         foreach ($prices as $price) {
@@ -85,14 +85,14 @@ class ShippingService
     /**
      * دریافت اطلاعات کامل یک روش ارسال با قیمت برای شهر مشخص
      */
-    public function getShippingTypeWithPrice($shippingTypeId, $cityId)
+    public function getShippingTypeWithPrice($shippingTypeId, $cityId, int $totalWeight)
     {
         $type = $this->shippingTypeModel->find($shippingTypeId);
         if (!$type) {
             return null;
         }
 
-        $price = $this->getShippingPrice($cityId, $shippingTypeId);
+        $price = $this->getShippingPrice($cityId, $shippingTypeId, $totalWeight);
 
         return [
             'id' => $type['id'],
@@ -124,10 +124,31 @@ class ShippingService
             return 0;
         }
 
-        $price = $this->shippingPriceModel->select('MIN(price) as min_price')
+        $price = $this->shippingPriceModel->select('MIN(price_one_kilogram) as min_price')
             ->where('city_id', $cityId)
             ->first();
 
         return $price ? (float) $price['min_price'] : 0;
+    }
+
+    private function attachPriceForWeight(?array $price, int $totalWeight): ?array
+    {
+        if (!$price) {
+            return null;
+        }
+
+        $field = [
+            1 => 'price_one_kilogram',
+            2 => 'price_two_kilogram',
+            3 => 'price_three_kilogram',
+            4 => 'price_four_kilogram',
+        ][(int) ceil($totalWeight / 1000)] ?? null;
+
+        if (!$field || $price[$field] === null) {
+            return null;
+        }
+
+        $price['price'] = $price[$field];
+        return $price;
     }
 }

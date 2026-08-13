@@ -53,6 +53,12 @@ class Checkout extends BaseController
             return redirect()->to('cart');
         }
 
+        $totalWeight = $this->calculateCartWeight($items);
+        if ($totalWeight < 1 || $totalWeight > 4000) {
+            $this->flash('shipping_weight_not_supported');
+            return redirect()->to('cart');
+        }
+
         // ====== ۳. اگر factorId داده شده، چک کن که معتبر باشه ======
         $factor = null;
         if ($factorId) {
@@ -102,7 +108,7 @@ class Checkout extends BaseController
             $address = $this->addressService->getAddressDetails($selectedAddressId);
             if ($address) {
                 $selectedCityId = $address['city_id'];
-                $shippingPrices = $this->shippingService->getShippingPricesByCity($selectedCityId);
+                $shippingPrices = $this->shippingService->getShippingPricesByCity($selectedCityId, $totalWeight);
             }
         }
 
@@ -204,13 +210,6 @@ class Checkout extends BaseController
             return redirect()->back();
         }
 
-        // ====== ۴. بررسی قیمت ارسال ======
-        $shippingPrice = $this->shippingService->getShippingPrice($address['city_id'], $shippingTypeId);
-        if (!$shippingPrice) {
-            $this->flash('not_available_shipping_type');
-            return redirect()->back();
-        }
-
         // ====== ۵. دریافت سبد خرید ======
         $cart = $this->cartService->getCart();
         if (!$cart) {
@@ -221,6 +220,19 @@ class Checkout extends BaseController
         $cartItems = $this->cartService->getItems();
         if (empty($cartItems)) {
             $this->flash('empty_cart');
+            return redirect()->back();
+        }
+
+        $totalWeight = $this->calculateCartWeight($cartItems);
+        if ($totalWeight < 1 || $totalWeight > 4000) {
+            $this->flash('shipping_weight_not_supported');
+            return redirect()->to('cart');
+        }
+
+        // قیمت ارسال فقط از ستون وزن متناظر در دیتابیس خوانده می‌شود.
+        $shippingPrice = $this->shippingService->getShippingPrice($address['city_id'], $shippingTypeId, $totalWeight);
+        if (!$shippingPrice) {
+            $this->flash('not_available_shipping_type');
             return redirect()->back();
         }
 
@@ -343,7 +355,16 @@ class Checkout extends BaseController
             return $this->response->setJSON(['status' => 'error', 'message' => 'آدرس معتبر نیست']);
         }
 
-        $shippingPrices = $this->shippingService->getShippingPricesByCity($address['city_id']);
+        $cartItems = $this->cartService->getItems();
+        $totalWeight = $this->calculateCartWeight($cartItems);
+        if ($totalWeight < 1 || $totalWeight > 4000) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'وزن سفارش باید بین ۱ گرم تا ۴ کیلوگرم باشد.'
+            ]);
+        }
+
+        $shippingPrices = $this->shippingService->getShippingPricesByCity($address['city_id'], $totalWeight);
 
         // تبدیل به فرمت key-value برای راحتی در JS
         $formattedPrices = [];
@@ -360,6 +381,16 @@ class Checkout extends BaseController
             'city_name' => $address['city_name'],
             'shipping_prices' => $formattedPrices
         ]);
+    }
+
+    private function calculateCartWeight(array $items): int
+    {
+        $totalWeight = 0;
+        foreach ($items as $item) {
+            $totalWeight += (int) $item['weight'] * (int) $item['quantity'];
+        }
+
+        return $totalWeight;
     }
 
     /**

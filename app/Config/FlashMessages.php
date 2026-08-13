@@ -182,6 +182,10 @@ class FlashMessages
             'message' => 'روش ارسال برای این شهر موجود نیست.',
             'type' => 'error'
         ],
+        'shipping_weight_not_supported' => [
+            'message' => 'وزن سفارش باید بین ۱ گرم تا ۴ کیلوگرم باشد.',
+            'type' => 'error'
+        ],
     ];
 
     public static $info = [

@@ -41,6 +41,7 @@ class CartItemModel extends Model
         cart_item.*, 
         product.name as product_name, 
         product.slug,
+        product.weight,
         color_option.value as color_value,
         color_option.color_code,
         size_option.value as size_value

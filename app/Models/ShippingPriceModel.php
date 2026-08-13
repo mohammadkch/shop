@@ -12,7 +12,10 @@ class ShippingPriceModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['shipping_type_id', 'city_id', 'price'];
+    protected $allowedFields    = [
+        'shipping_type_id', 'city_id', 'price_one_kilogram', 'price_two_kilogram',
+        'price_three_kilogram', 'price_four_kilogram'
+    ];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'int';
@@ -40,11 +43,6 @@ class ShippingPriceModel extends Model
         if (isset($where['city_id']) && !empty($where['city_id'])) {
             $builder->where('shipping_price.city_id', $where['city_id']);
             unset($where['city_id']);
-        }
-
-        if (isset($where['price']) && !empty($where['price'])) {
-            $builder->where('shipping_price.price', $where['price']);
-            unset($where['price']);
         }
 
         if (isset($where['shipping_type_name']) && !empty($where['shipping_type_name'])) {

@@ -120,11 +120,14 @@ class Category extends BaseController
         $this->viewData['breadcrumb'] = $breadcrumb;
         $this->viewData['title'] = $isAllProductsPage
             ? (!empty($allProductsPage['meta_title']) ? $allProductsPage['meta_title'] : $pageHeading . ' | فروشگاه مومو')
-            : $menu['name'];
+            : (($menu['level'] === 1 && !empty($menu['meta_title'])) ? $menu['meta_title'] : $menu['name']);
         if ($isAllProductsPage) {
             $this->viewData['metaDescription'] = $allProductsPage['meta_description']
                 ?: 'مشاهده و خرید همه محصولات فروشگاه مومو با امکان فیلتر و مرتب‌سازی.';
             $this->viewData['canonicalUrl'] = site_url('category');
+        } elseif ($menu['level'] === 1) {
+            $this->viewData['metaDescription'] = $menu['meta_description']
+                ?: ($menu['description'] ?: 'مشاهده و خرید محصولات دسته‌بندی ' . $menu['name'] . ' از فروشگاه مومو.');
         }
         $this->viewData['pagination'] = $pagination;
         $this->viewData['sortField'] = $sortField;

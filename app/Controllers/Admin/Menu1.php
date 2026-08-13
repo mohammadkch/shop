@@ -127,6 +127,16 @@ class Menu1 extends BaseController
                 'data' => ['class' => 'form-control', 'id' => 'description', 'name' => 'description', 'placeholder' => 'توضیحات منو (اختیاری)', 'rows' => 4],
                 'type' => 'textarea'
             ],
+            'meta_title' => [
+                'input' => 'form_input',
+                'data' => ['class' => 'form-control', 'id' => 'meta_title', 'name' => 'meta_title', 'placeholder' => 'عنوان متا (اختیاری)'],
+                'type' => 'text'
+            ],
+            'meta_description' => [
+                'input' => 'form_textarea',
+                'data' => ['class' => 'form-control', 'id' => 'meta_description', 'name' => 'meta_description', 'placeholder' => 'توضیحات متا (اختیاری)', 'rows' => 3],
+                'type' => 'textarea'
+            ],
             'sort_order' => [
                 'input' => 'form_input',
                 'data' => ['class' => 'form-control', 'id' => 'sort_order', 'name' => 'sort_order', 'placeholder' => 'عدد بزرگتر = اولویت بیشتر', 'type' => 'number', 'min' => 0],
@@ -149,6 +159,8 @@ class Menu1 extends BaseController
 
         // ترکیب لیبل‌های دیتابیس با لیبل‌های سفارشی
         $this->viewData['fields_name'] = mergeFieldsName($dbFields, $this->viewData['inputs']);
+        $this->viewData['fields_name']['meta_title'] = 'meta title';
+        $this->viewData['fields_name']['meta_description'] = 'meta description';
 
         $this->viewData['form_action'] = ADMIN_PATH . '/menu1/create/handle';
 
@@ -228,6 +240,16 @@ class Menu1 extends BaseController
                 'data' => ['class' => 'form-control', 'id' => 'description', 'name' => 'description', 'placeholder' => 'توضیحات منو (اختیاری)', 'rows' => 4],
                 'type' => 'textarea'
             ],
+            'meta_title' => [
+                'input' => 'form_input',
+                'data' => ['class' => 'form-control', 'id' => 'meta_title', 'name' => 'meta_title', 'placeholder' => 'عنوان متا (اختیاری)'],
+                'type' => 'text'
+            ],
+            'meta_description' => [
+                'input' => 'form_textarea',
+                'data' => ['class' => 'form-control', 'id' => 'meta_description', 'name' => 'meta_description', 'placeholder' => 'توضیحات متا (اختیاری)', 'rows' => 3],
+                'type' => 'textarea'
+            ],
             'sort_order' => [
                 'input' => 'form_input',
                 'data' => ['class' => 'form-control', 'id' => 'sort_order', 'name' => 'sort_order', 'placeholder' => 'عدد بزرگتر = اولویت بیشتر', 'type' => 'number', 'min' => 0],
@@ -248,6 +270,8 @@ class Menu1 extends BaseController
             'name' => 'نام منو',
             'slug' => 'slug',
             'description' => 'توضیحات',
+            'meta_title' => 'meta title',
+            'meta_description' => 'meta description',
             'sort_order' => 'ترتیب',
             'is_active' => 'وضعیت'
         ];
@@ -282,6 +306,14 @@ class Menu1 extends BaseController
             'description' => [
                 'label' => 'توضیحات',
                 'rules' => 'permit_empty|max_length[65535]'
+            ],
+            'meta_title' => [
+                'label' => 'عنوان متا',
+                'rules' => 'permit_empty|max_length[255]'
+            ],
+            'meta_description' => [
+                'label' => 'توضیحات متا',
+                'rules' => 'permit_empty|max_length[320]'
             ],
             'sort_order' => [
                 'label' => 'ترتیب',
@@ -321,6 +353,8 @@ class Menu1 extends BaseController
             'name' => $this->request->getPost('name', FILTER_SANITIZE_STRING),
             'slug' => $slug,
             'description' => $this->request->getPost('description', FILTER_SANITIZE_STRING),
+            'meta_title' => trim(strip_tags((string) $this->request->getPost('meta_title'))) ?: null,
+            'meta_description' => trim(strip_tags((string) $this->request->getPost('meta_description'))) ?: null,
             'sort_order' => (int) ($this->request->getPost('sort_order', FILTER_VALIDATE_INT) ?: 0),
             'is_active' => (int) $this->request->getPost('is_active', FILTER_VALIDATE_INT),
             'updated_at' => time()

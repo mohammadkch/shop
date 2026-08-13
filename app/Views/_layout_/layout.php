@@ -13,7 +13,7 @@
     </script>
     <title><?= esc($title ?? 'فروشگاه لباس') ?></title>
     <meta name="description" content="<?= esc($metaDescription ?? 'فروشگاه اینترنتی پوشاک') ?>">
-    <meta name="keywords" content="قالب فروشگاهی, قالب دیارا, فروشگاه اینترنتی, طراحی واکنش‌گرا">
+    <meta name="keywords" content="پوشاک زنانه مومو، خرید شومیز زنانه، خرید بامبر زنانه، لباس زنانه با کیفیت">
     <meta name="robots" content="<?= esc($robots ?? 'index, follow') ?>">
     <meta name="author" content="محمد کوچنانی">
     <meta name="copyright" content="All rights belong to diara.">

@@ -61,7 +61,7 @@
 
 <?= $this->include('_layout_/partials/menu_offcanvas') ?>
 
-<?php //= $this->include('_layout_/partials/login_modal') ?>
+<?= $this->include('_layout_/partials/search_modal') ?>
 
 <?= $this->include('_layout_/partials/nav_mobile') ?>
 

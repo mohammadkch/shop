@@ -30,12 +30,14 @@
                     <!-- search -->
                     <div class="flex w-full items-center">
                         <!--Search component-->
-                        <div class="relative flex items-center w-full">
-                            <input type="text" id="searchInput"
+                        <?php $headerSearchQuery = service('request')->getGet('q'); ?>
+                        <form action="<?= site_url('search') ?>" method="get" class="relative flex items-center w-full" data-shop-search>
+                            <input type="search" id="shopSearchInput" data-search-input name="q" value="<?= esc(is_scalar($headerSearchQuery) ? (string) $headerSearchQuery : '', 'attr') ?>"
+                                   autocomplete="off" aria-label="جستجوی محصولات" aria-controls="shopSearchResults" aria-expanded="false"
                                    class="w-full appearance-none rounded-xl border border-gray-300 dark:border-gray-700 py-3 ps-4 pe-10 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-custom-dark text-gray-900 dark:text-gray-100 transition-colors duration-300"
-                                   placeholder="جستجوی محصولات ...."/>
+                                   placeholder="جستجوی محصولات..."/>
 
-                            <button class="p-2 rounded-3xl absolute end-1 hover:opacity-90 transition-opacity">
+                            <button type="submit" class="p-2 rounded-3xl absolute end-1 hover:opacity-90 transition-opacity" aria-label="جستجو">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -43,11 +45,11 @@
                                 </svg>
                             </button>
                             <!--Search results-->
-                            <div id="searchResults"
-                                 class="absolute top-13 end-0 start-0 z-10 bg-white dark:bg-custom-dark border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg dark:shadow-[0_4px_12px_rgba(0,0,0,0.4)] overflow-hidden transition-colors duration-300 hidden">
+                            <div id="shopSearchResults" data-search-results role="listbox" aria-label="پیشنهادهای جستجو"
+                                 class="absolute top-13 end-0 start-0 z-30 bg-white dark:bg-custom-dark border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg dark:shadow-[0_4px_12px_rgba(0,0,0,0.4)] overflow-hidden transition-colors duration-300 hidden">
                                 <!-- The results content will be filled by JavaScript -->
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

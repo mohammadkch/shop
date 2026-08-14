@@ -59,6 +59,171 @@
 })();
 
 // ==============================================
+// جستجوی عمومی فروشگاه
+// ==============================================
+document.addEventListener('DOMContentLoaded', function() {
+    var forms = document.querySelectorAll('[data-shop-search]');
+
+    forms.forEach(function(form) {
+    var input = form.querySelector('[data-search-input]');
+    var results = form.querySelector('[data-search-results]');
+    if (!input || !results) return;
+    var debounceTimer = null;
+    var activeRequest = null;
+
+    function closeResults() {
+        results.classList.add('hidden');
+        input.setAttribute('aria-expanded', 'false');
+    }
+
+    function openResults() {
+        results.classList.remove('hidden');
+        input.setAttribute('aria-expanded', 'true');
+    }
+
+    function addMessage(message) {
+        results.replaceChildren();
+        var element = document.createElement('p');
+        element.className = 'p-4 text-sm text-gray-500 dark:text-gray-400 text-center';
+        element.textContent = message;
+        results.appendChild(element);
+        openResults();
+    }
+
+    function addSuggestion(item) {
+        var link = document.createElement('a');
+        link.href = item.url;
+        link.className = 'flex items-center gap-3 p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors';
+        link.setAttribute('role', 'option');
+
+        var image = document.createElement('img');
+        image.src = item.image;
+        image.alt = '';
+        image.loading = 'lazy';
+        image.className = 'w-12 h-12 object-cover rounded-lg shrink-0 bg-gray-100 dark:bg-gray-800';
+
+        var content = document.createElement('div');
+        content.className = 'min-w-0 flex-1';
+        var type = document.createElement('span');
+        type.className = item.type === 'product'
+            ? 'text-xs text-primary-600 dark:text-primary-400'
+            : 'text-xs text-gray-500 dark:text-gray-400';
+        type.textContent = item.type === 'category' ? 'دسته‌بندی' : (item.type === 'article' ? 'مقاله' : 'محصول');
+        var title = document.createElement('p');
+        title.className = 'text-sm font-bold text-gray-800 dark:text-gray-100 truncate';
+        title.textContent = item.title;
+        var price = document.createElement('p');
+        if (item.type === 'product') {
+            price.className = item.is_in_stock
+                ? 'mt-1 text-xs text-gray-600 dark:text-gray-300'
+                : 'mt-1 text-xs text-red-500';
+            price.textContent = item.is_in_stock
+                ? Number(item.final_price).toLocaleString('fa-IR') + ' تومان'
+                : 'ناموجود';
+        } else {
+            price.className = 'mt-1 text-xs text-gray-500 dark:text-gray-400 truncate';
+            price.textContent = item.subtitle || '';
+        }
+
+        content.append(type, title, price);
+        link.append(image, content);
+        results.appendChild(link);
+    }
+
+    function renderSuggestions(data) {
+        results.replaceChildren();
+        if (!data.items.length) {
+            addMessage('محصولی پیدا نشد');
+            return;
+        }
+
+        var currentType = null;
+        var typeLabels = {product: 'محصولات', article: 'مقالات', category: 'دسته‌بندی‌ها'};
+        data.items.forEach(function(item) {
+            if (item.type !== currentType) {
+                currentType = item.type;
+                var heading = document.createElement('p');
+                heading.className = 'px-3 py-2 text-xs font-bold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800';
+                heading.textContent = typeLabels[item.type] || 'نتایج';
+                results.appendChild(heading);
+            }
+            addSuggestion(item);
+        });
+
+        var allResults = document.createElement('a');
+        var url = new URL(form.action, window.location.href);
+        url.searchParams.set('q', data.query);
+        allResults.href = url.toString();
+        allResults.className = 'flex items-center justify-center gap-1 p-3 text-center text-sm font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors';
+
+        var allResultsLabel = document.createElement('span');
+        allResultsLabel.className = 'text-primary-600 dark:text-primary-400';
+        allResultsLabel.textContent = 'مشاهده همه';
+
+        var allResultsCount = document.createElement('span');
+        allResultsCount.className = 'text-gray-500 dark:text-gray-400';
+        allResultsCount.textContent = Number(data.total).toLocaleString('fa-IR') + ' نتیجه';
+
+        allResults.append(allResultsLabel, allResultsCount);
+        results.appendChild(allResults);
+        openResults();
+    }
+
+    function loadSuggestions(query) {
+        if (activeRequest) activeRequest.abort();
+        activeRequest = new AbortController();
+
+        var endpoint = new URL(form.action.replace(/\/?$/, '/suggestions'), window.location.href);
+        endpoint.searchParams.set('q', query);
+
+        fetch(endpoint.toString(), {
+            headers: {'X-Requested-With': 'XMLHttpRequest'},
+            signal: activeRequest.signal
+        })
+            .then(function(response) {
+                if (!response.ok) throw new Error('Search request failed');
+                return response.json();
+            })
+            .then(renderSuggestions)
+            .catch(function(error) {
+                if (error.name !== 'AbortError') addMessage('خطا در دریافت نتایج جستجو');
+            });
+    }
+
+    input.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        var query = input.value.trim();
+        if (query.length < 2) {
+            if (activeRequest) activeRequest.abort();
+            closeResults();
+            return;
+        }
+        debounceTimer = setTimeout(function() { loadSuggestions(query); }, 300);
+    });
+
+    input.addEventListener('focus', function() {
+        if (results.childElementCount && input.value.trim().length >= 2) openResults();
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!form.contains(event.target)) closeResults();
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') closeResults();
+    });
+    });
+
+    var mobileSearchTrigger = document.querySelector('[data-modal-target="SearchModal"]');
+    var mobileSearchInput = document.getElementById('mobileShopSearchInput');
+    if (mobileSearchTrigger && mobileSearchInput) {
+        mobileSearchTrigger.addEventListener('click', function() {
+            setTimeout(function() { mobileSearchInput.focus(); }, 50);
+        });
+    }
+});
+
+// ==============================================
 // نمایش نوتیفیکیشن
 // ==============================================
 function showNotification(message, type = 'info') {

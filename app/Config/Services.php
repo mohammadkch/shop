@@ -98,6 +98,19 @@ class Services extends BaseService
         return new \App\Services\CategoryService();
     }
 
+    public static function searchService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('searchService');
+        }
+
+        return new \App\Services\SearchService([
+            new \App\Services\Search\ProductSearchProvider(),
+            new \App\Services\Search\ArticleSearchProvider(),
+            new \App\Services\Search\CategorySearchProvider(),
+        ]);
+    }
+
     public static function homeService($getShared = true)
     {
         if ($getShared) {

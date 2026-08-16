@@ -48,6 +48,8 @@ abstract class BaseController extends Controller
 
         $className = $this->urlLib->getClassName();
         $this->viewData['controllerScripts'] = $scriptMap[$className] ?? [];
+        $this->viewData['usesSwiper'] = in_array($className, ['home', 'category', 'product'], true);
+        $this->viewData['usesStoryPlayer'] = $className === 'home';
 
         if (!$request->isAJAX()) {
             $this->viewData['shopMenus'] = $menuService->getShopMenus();

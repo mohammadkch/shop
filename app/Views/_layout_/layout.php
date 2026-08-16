@@ -29,8 +29,12 @@
     <meta property="og:title" content="<?= esc($title ?? 'فروشگاه لباس', 'attr') ?>">
     <meta property="og:description" content="<?= esc($metaDescription ?? '', 'attr') ?>">
     <meta property="og:url" content="<?= esc($canonicalUrl ?? current_url(), 'attr') ?>">
-    <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/story-player/styles.css">
-    <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/swiper/swiper-bundle.min.css">
+    <?php if (!empty($usesStoryPlayer)): ?>
+        <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/story-player/styles.css">
+    <?php endif; ?>
+    <?php if (!empty($usesSwiper)): ?>
+        <link rel="stylesheet" href="<?= $assetsPath ?>js/plugin/swiper/swiper-bundle.min.css">
+    <?php endif; ?>
     <link rel="stylesheet" href="<?= $assetsPath ?>css/app.css">
     <link rel="stylesheet" href="<?= $assetsPath ?>custom/shop.css?v=<?= filemtime(FCPATH . 'assets/custom/shop.css') ?>">
 

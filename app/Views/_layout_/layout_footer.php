@@ -324,7 +324,7 @@
                                         </span>
                                         <div>
                                             <a href="https://gateway.zibal.ir/trustMe/momomod.ir" target="_blank" rel="noopener">
-                                                <img style="max-width: 110px; height: 125px;" src="https://zibal.ir/trust/assets/2.png" />
+                                                <img style="max-width: 110px; height: 125px;" alt="درگاه پرداخت زیبال" src="https://zibal.ir/trust/assets/2.png" />
                                             </a>
                                         </div>
                                     </div>

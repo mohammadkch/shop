@@ -11,7 +11,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('images/favicon/apple-touch-icon.png') ?>">
     <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('images/favicon/icon-192.png') ?>">
     <link rel="icon" type="image/png" sizes="512x512" href="<?= base_url('images/favicon/icon-512.png') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/js/plugin/swiper/swiper-bundle.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
 </head>
 

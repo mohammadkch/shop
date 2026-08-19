@@ -28,7 +28,7 @@ if (!empty($controllerScripts)):
         $filePath = FCPATH . 'assets/custom/' . $script . '.js';
         if (file_exists($filePath)):
             ?>
-            <script src="<?= $assetsPath ?>custom/<?= $script ?>.js?v=<?= filemtime($filePath) ?>"></script>
+            <script src="<?= vite_asset($script) ?>"></script>
         <?php
         endif;
     endforeach;

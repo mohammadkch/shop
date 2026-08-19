@@ -524,3 +524,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Public API used by the inline onclick handlers in the checkout view.
+Object.assign(window, {
+    selectAddress,
+    selectTime,
+    selectShippingMethod,
+    closeAddressModal,
+});

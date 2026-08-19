@@ -265,6 +265,9 @@ function showNotification(message, type = 'info') {
     }, 4000);
 }
 
+// Public API used by inline scripts and page-specific bundles.
+window.showNotification = showNotification;
+
 // ==============================================
 // عملیات سبد خرید (مشترک بین همه صفحه‌ها)
 // ==============================================
@@ -284,16 +287,17 @@ const Cart = {
             .then(r => r.json())
             .then(function(data) {
                 if (data.status === 'success') {
-                    ShopCart.updateBadge();
-                    ShopCart.loadOffcanvas();
-                    showNotification(data.message, 'success');
+                    window.showNotification(data.message || 'به سبد خرید اضافه شد', 'success');
+                    window.ShopCart.updateBadge();
+                    window.ShopCart.loadOffcanvas();
                 } else {
-                    showNotification(data.message, 'error');
+                    window.showNotification(data.message || 'افزودن به سبد خرید انجام نشد', 'error');
                 }
                 return data;
             })
-            .catch(function() {
-                showNotification('خطا در افزودن به سبد خرید', 'error');
+            .catch(function(error) {
+                console.error('Error adding item to cart:', error);
+                window.showNotification('خطا در افزودن به سبد خرید', 'error');
             });
     },
 
@@ -310,8 +314,8 @@ const Cart = {
             .then(r => r.json())
             .then(function(data) {
                 if (data.status === 'success') {
-                    ShopCart.updateBadge();
-                    ShopCart.loadOffcanvas();
+                    window.ShopCart.updateBadge();
+                    window.ShopCart.loadOffcanvas();
                     showNotification(data.message, 'success');
                 } else {
                     showNotification(data.message, 'error');
@@ -335,8 +339,8 @@ const Cart = {
             .then(r => r.json())
             .then(function(data) {
                 if (data.status === 'success') {
-                    ShopCart.updateBadge();
-                    ShopCart.loadOffcanvas();
+                    window.ShopCart.updateBadge();
+                    window.ShopCart.loadOffcanvas();
                     showNotification(data.message, 'success');
                 } else {
                     showNotification(data.message, 'error');
@@ -385,7 +389,7 @@ const ShopCart = {
                 var container = document.querySelector('#offcanvas-left main');
                 if (container) {
                     container.innerHTML = data.html;
-                    ShopCart.bindOffcanvasEvents();
+                    window.ShopCart.bindOffcanvasEvents();
                 }
 
                 // آپدیت جمع کل
@@ -464,10 +468,14 @@ const ShopCart = {
     }
 };
 
+// Public API used by cart.js and dynamically rendered cart controls.
+window.Cart = Cart;
+window.ShopCart = ShopCart;
+
 // ==============================================
 // اجرا در DOM ready
 // ==============================================
 document.addEventListener('DOMContentLoaded', function() {
-    ShopCart.updateBadge();
-    ShopCart.loadOffcanvas();
+    window.ShopCart.updateBadge();
+    window.ShopCart.loadOffcanvas();
 });

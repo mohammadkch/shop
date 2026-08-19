@@ -1,0 +1,38 @@
+{
+  "public/assets/custom/cart.js": {
+    "file": "assets/cart-1T6D1A7r.js",
+    "name": "cart",
+    "src": "public/assets/custom/cart.js",
+    "isEntry": true
+  },
+  "public/assets/custom/category.js": {
+    "file": "assets/category-C3nWMMjz.js",
+    "name": "category",
+    "src": "public/assets/custom/category.js",
+    "isEntry": true
+  },
+  "public/assets/custom/checkout.js": {
+    "file": "assets/checkout-BCwI1a1A.js",
+    "name": "checkout",
+    "src": "public/assets/custom/checkout.js",
+    "isEntry": true
+  },
+  "public/assets/custom/home.js": {
+    "file": "assets/home-qoWfstWg.js",
+    "name": "home",
+    "src": "public/assets/custom/home.js",
+    "isEntry": true
+  },
+  "public/assets/custom/product.js": {
+    "file": "assets/product-DeGu1WcT.js",
+    "name": "product",
+    "src": "public/assets/custom/product.js",
+    "isEntry": true
+  },
+  "public/assets/custom/shop.js": {
+    "file": "assets/shop-D3XVButd.js",
+    "name": "shop",
+    "src": "public/assets/custom/shop.js",
+    "isEntry": true
+  }
+}

@@ -137,3 +137,7 @@ php_errors.log
 
 # Public images are managed outside Git.
 /public/images/
+
+# Local frontend dependencies and npm cache.
+/theme-src/node_modules/
+/theme-src/.npm-cache/

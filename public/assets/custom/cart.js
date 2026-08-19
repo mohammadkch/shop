@@ -11,7 +11,7 @@ window.addToCart = function(productId, colorOptionId, sizeOptionId) {
         btn.textContent = 'در حال افزودن...';
     }
 
-    Cart.add(productId, colorOptionId, sizeOptionId, quantity)
+    window.Cart.add(productId, colorOptionId, sizeOptionId, quantity)
         .finally(function() {
             if (btn) {
                 btn.disabled = false;
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 var qty = oldQty + 1;
                 qtyEl.textContent = qty;
 
-                Cart.updateQuantity(item.dataset.itemId, qty).then(function(data) {
+                window.Cart.updateQuantity(item.dataset.itemId, qty).then(function(data) {
                     if (data && data.status === 'success') {
                         updateCartPageSummary(data);
                     } else {
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 var qty = oldQty - 1;
                 qtyEl.textContent = qty;
 
-                Cart.updateQuantity(item.dataset.itemId, qty).then(function(data) {
+                window.Cart.updateQuantity(item.dataset.itemId, qty).then(function(data) {
                     if (data && data.status === 'success') {
                         updateCartPageSummary(data);
                     } else {
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 var item = this.closest('.cart-item');
                 if (!item) return;
                 if (confirm('آیا از حذف این آیتم اطمینان دارید؟')) {
-                    Cart.remove(item.dataset.itemId).then(function(data) {
+                    window.Cart.remove(item.dataset.itemId).then(function(data) {
                         if (data && data.status === 'success') {
                             // اگر سبد خالی شد، مستقیم ریلود کن
                             if (data.total_items === 0) {

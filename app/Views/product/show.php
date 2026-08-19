@@ -129,8 +129,8 @@
                                 <section class="mt-7 pb-10 w-full dark:text-gray-200">
 
                                     <ul class="space-x-2 flex items-center">
-                                        <?php if (isset($product['category'])): ?>
-                                            <li><a href="/category/<?= $product['category']['slug'] ?>" class="text-primary"><?= esc($product['category']['name']) ?></a></li>
+                                        <?php if (!empty($product['category']['menu_1_name']) && !empty($product['category']['menu_1_slug'])): ?>
+                                            <li><a href="<?= site_url('category/' . $product['category']['menu_1_slug']) ?>" class="text-primary"><?= esc($product['category']['menu_1_name']) ?></a></li>
                                         <?php endif; ?>
                                     </ul>
 

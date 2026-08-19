@@ -1,0 +1,1 @@
+(function(){document.getElementById(`stories-container`)&&window.storiesData!==void 0&&Array.isArray(window.storiesData)&&window.storiesData.length>0&&new StoryPlayer(`stories-container`,window.storiesData)})();

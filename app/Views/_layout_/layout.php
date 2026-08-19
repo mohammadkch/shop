@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="<?= $assetsPath ?>custom/shop.css?v=<?= filemtime(FCPATH . 'assets/custom/shop.css') ?>">
 
     <!-- ====== فایل‌های داخل custom ====== -->
-    <script src="<?= $assetsPath ?>custom/shop.js?v=<?= filemtime(FCPATH . 'assets/custom/shop.js') ?>"></script>
+    <script src="<?= vite_asset('shop') ?>"></script>
     <?= $this->renderSection('styles') ?>
 </head>
 <!-- Google tag (gtag.js) -->
